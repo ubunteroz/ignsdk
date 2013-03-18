@@ -1,0 +1,14 @@
+Source: ignsdk-debian
+Section: devel
+Priority: optional
+Maintainer: Surya Handika Putratama <ubunteroz@gmail.com>
+Build-Depends: debhelper (>= 8.0.0)
+Standards-Version: 3.9.3
+Homepage: http://ignsdk.toroo.org/
+
+Package: ignsdk-debian
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: IGN Source Development Kit
+ This is Debian-compatible version of IGN Source Development
+ Kit (IGNSDK).
