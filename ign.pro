@@ -9,6 +9,9 @@ QT       += network core gui webkit
 TARGET = ignsdk
 TEMPLATE = app
 
+target.path = /usr/bin/
+INSTALLS += target
+
 
 SOURCES += main.cpp\
         ign.cpp \
