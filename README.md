@@ -1,6 +1,6 @@
 #IGN SDK#
 ##Author##
-Ibnu Yahya (anak10thn@gmail.com)
+Eka Tresna Irawan/Ibnu Yahya (anak10thn@gmail.com)
 ##Contributor Wiki##
 * Eko Yunianto (eyeyunianto@gmail.com)
 
@@ -9,7 +9,7 @@ Ibnu Yahya (anak10thn@gmail.com)
 * Maintainer : Surya Handika Putratama (ubunteroz@gmail.com)
 
 ##Build##
-* `$sudo yum install qt-devel qtwebkit-devel`
+* `$sudo yum install qt-devel qtwebkit-devel qjson`
 * `$cd ign-sdk-directory`
 * `$qmake`
 * `$make`

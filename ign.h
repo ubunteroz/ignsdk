@@ -15,7 +15,7 @@
 //      by ibnu.yahya@toroo.org
 #ifndef IGN_H
 #define IGN_H
-
+#include "fs.h"
 #include <QtGui/QMainWindow>
 #include <QWidget>
 #include <QLayout>
@@ -27,6 +27,7 @@
 #include <QtWebKit/QWebSettings>
 #include <QSize>
 #include <QtGui>
+#include <QVariant>
 
 class ign: public QObject
 {
@@ -61,9 +62,11 @@ public slots:
     void WidgetSizeMax(int w,int h);
     void WidgetSizeMin(int w,int h);
     void getToggleFullScreen();
+    void getFullScreen(bool screen);
     void showMaximized();
     void showMinimized();
     QString cliOut(const QString& cli);
+    void config(QString path);
 };
 
 #endif // IGN_H
