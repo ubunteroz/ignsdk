@@ -1,3 +1,10 @@
+ignsdk-debian (1.0.1-2) unstable; urgency=low
+
+  * Webstorage support
+  * Many bugs were fixed
+
+ -- Surya Handika Putratama <surya@debbybox>  Mon, 22 Apr 2013 19:41:14 +0700
+
 ignsdk-debian (1.0.1-1) unstable; urgency=low
 
   * Initial release
