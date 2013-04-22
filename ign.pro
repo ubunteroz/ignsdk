@@ -20,6 +20,8 @@ SOURCES += main.cpp\
 HEADERS  += ign.h \
     fs.h
 
+LIBS += -L/usr/lib -lqjson
+
 OTHER_FILES += \
     js/jquery.js \
     js/ign.js \
