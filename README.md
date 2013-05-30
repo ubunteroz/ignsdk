@@ -1,16 +1,19 @@
-#IGN SDK#
-##Author##
+#IGOS Nusantara Software Development Kit (IGNSDK)
+##Author
 Eka Tresna Irawan/Ibnu Yahya (anak10thn@gmail.com)
-##Contributor Wiki##
+
+##Contributors
+###Wiki
 * Eko Yunianto (eyeyunianto@gmail.com)
 * Arif Eko Pratono (arifep2000@gmail.com)
 
-##Contributor IGNSDK For Debian##
-* Github : https://github.com/ubunteroz/ignsdk-debian
-* Maintainer : Surya Handika Putratama (ubunteroz@gmail.com)
+###IGNSDK for Debian
+* Surya Handika Putratama (ubunteroz@gmail.com)
 
-##Build##
-* `$sudo yum install qt-devel qtwebkit-devel qjson`
-* `$cd ign-sdk-directory`
-* `$qmake`
-* `$make`
+##How To
+###Build and Install
+* `$ sudo aptitude install qt4-qmake libqt4-dev libqtwebkit-dev libqjson-dev`
+* `$ cd ignsdk-debian`
+* `$ qmake`
+* `$ make`
+* `$ sudo make install`
