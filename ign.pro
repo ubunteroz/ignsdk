@@ -1,9 +1,3 @@
-#-------------------------------------------------
-#
-# Project created by QtCreator 2013-02-03T23:13:36
-#
-#-------------------------------------------------
-
 QT       += network core gui webkit
 
 TARGET = ignsdk
@@ -15,10 +9,12 @@ INSTALLS += target
 
 SOURCES += main.cpp\
         ign.cpp \
-    fs.cpp
+    fs.cpp \
+    igndownload.cpp
 
 HEADERS  += ign.h \
-    fs.h
+    fs.h \
+    igndownload.h
 
 LIBS += -L/usr/lib -lqjson
 
