@@ -10,6 +10,9 @@ Eka Tresna Irawan/Ibnu Yahya (anak10thn@gmail.com)
 ###IGNSDK for Debian
 * Surya Handika Putratama (ubunteroz@gmail.com)
 
+###IGNSDK for Archlinux
+* Sofyan Saputra a.k.a Iank (meongbego@gmail.com)
+
 ##How To
 ###Build and Install
 * `$ sudo aptitude install qt4-qmake libqt4-dev libqtwebkit-dev libqjson-dev`
