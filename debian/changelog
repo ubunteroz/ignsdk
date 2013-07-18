@@ -1,3 +1,10 @@
+ignsdk-debian (1.0.1-5) testing; urgency=low
+
+  * Integrate new class: igndownloader
+  * Various fixes
+
+ -- Surya Handika Putratama <ubunteroz@gmail.com>  Thu, 18 Jul 2013 13:01:26 +0700
+
 ignsdk-debian (1.0.1-4) testing; urgency=low
 
   * Split example apps from binary package
