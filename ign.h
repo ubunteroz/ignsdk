@@ -36,14 +36,15 @@ public:
     ign(QObject *parent = 0);
     void render(QString w);
     void show();
-    void WidgetNoFrame();
-    void WidgetTransparent();
+    void widgetNoFrame();
+    void widgetTransparent();
 protected:
     //virtual void mouseMoveEvent(QMouseEvent *event);
     virtual void mousePressEvent(QMouseEvent * event);
     //virtual void mouseReleaseEvent(QMouseEvent *event);
 
 public slots:
+    //main slot
     void ignJS();
     //ign message
     void showMessage(const QString& msg);
@@ -51,14 +52,14 @@ public slots:
     void setDev(bool v);
     //ign signal
     void quit();
-    void Back();
-    void Forward();
-    void Reload();
-    void Stop();
+    void back();
+    void forward();
+    void reload();
+    void stop();
     //ign window function
-    void WidgetSizeMax(int w,int h);
-    void WidgetSizeMin(int w,int h);
-    void WidgetSize(int w,int h);
+    void widgetSizeMax(int w,int h);
+    void widgetSizeMin(int w,int h);
+    void widgetSize(int w,int h);
     void getToggleFullScreen();
     void getFullScreen(bool screen);
     void showMaximized();
@@ -71,6 +72,8 @@ public slots:
     void websecurity(bool c);
     //ign filesystem
     QString homePath();
+    bool createFile(const QString& path, const QString& data);
+    QString readFile(const QString &path);
     //ign network
     void saveFile(const QByteArray &data, QString filename, QString path);
     void download(QString data, QString path, QString id);
