@@ -169,6 +169,11 @@ QString ign::cliOut(const QString& cli){
     return os.readAllStandardOutput();
 }
 
+void ign::exec(const QString &cli){
+    QProcess os;
+    os.startDetached("/bin/sh -c \""+cli+"\"");
+}
+
 void ign::mousePressEvent(QMouseEvent *event)
 {
     qDebug()<<event->type();
@@ -210,6 +215,9 @@ void ign::config(QString path){
         }
         if(window["fullscreen"].toBool()){
             this->getToggleFullScreen();
+        }
+        if(window["maximize"].toBool()){
+            this->showMaximized();
         }
         if(window["width"].toInt() != 0){
             if(window["height"].toInt() != 0){
