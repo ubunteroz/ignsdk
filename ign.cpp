@@ -14,6 +14,7 @@
 using namespace std;
 ign::ign(QObject *parent)
     : QObject(parent)
+    , m_ignsystem(0)
 {
     frame = web.page()->mainFrame();
     connect(frame,SIGNAL(javaScriptWindowObjectCleared()), SLOT(ignJS()));
@@ -21,15 +22,7 @@ ign::ign(QObject *parent)
     this->dl = new QtDownload;
     this->sqldrv = new ignsql;
 
-    QFile jqueryfile;
 
-    QString jquery;
-    jqueryfile.setFileName(":/js/jquery.js");
-    if(jqueryfile.open(QIODevice::ReadOnly)){
-        jquery = jqueryfile.readAll();
-        frame->evaluateJavaScript(jquery);
-    }
-    jqueryfile.close();
 
     QWebSettings::globalSettings()->setAttribute(QWebSettings::PluginsEnabled, true);
     web.settings()->setAttribute(QWebSettings::PluginsEnabled, true);
@@ -64,8 +57,6 @@ ign::ign(QObject *parent)
 
 void ign::ignJS(){
     this->frame->addToJavaScriptWindowObject("ign",this);
-    //fs filesystem;
-    //this->frame->addToJavaScriptWindowObject("fs",filesystem);
 }
 void ign::getToggleFullScreen(){
     if(this->fullscreen){
@@ -91,6 +82,27 @@ void ign::getFullScreen(bool screen){
 
 void ign::render(QString w){
      this->web.load(QUrl(w));
+
+    /*QFile jqueryfile;
+
+    QString jquery;
+    jqueryfile.setFileName(":/js/jquery.js");
+    if(jqueryfile.open(QIODevice::ReadOnly)){
+        jquery = jqueryfile.readAll();
+        frame->evaluateJavaScript(jquery);
+    }
+    jqueryfile.close();
+
+    QFile incJsFile;
+    QString incJs;
+    incJsFile.setFileName(":/js/include.js");
+    if(incJsFile.open(QIODevice::ReadOnly)){
+        incJs = incJsFile.readAll();
+        frame->evaluateJavaScript(incJs);
+    }
+    incJsFile.close();
+
+    frame->evaluateJavaScript("include('tes')");*/
 }
 
 void ign::show(){
@@ -165,13 +177,34 @@ void ign::widgetTransparent(){
 QString ign::cliOut(const QString& cli){
     QProcess os;
     os.start(cli);
+    int pid = os.pid();
+    qDebug() << pid;
     os.waitForFinished(-1);
     return os.readAllStandardOutput();
+
 }
 
 void ign::exec(const QString &cli){
     QProcess os;
     os.startDetached("/bin/sh -c \""+cli+"\"");
+}
+
+QString ign::loadBin(const QString &script){
+    QStringList list = this->pathApp.split("/");
+
+    QString pwd("");
+    char * PWD;
+    PWD = getenv ("PWD");
+    pwd.append(PWD);
+
+    QString path_bin;
+    if(list.at(0) != ""){
+        path_bin = pwd+"/"+this->pathApp;
+    }
+    else{
+        path_bin = this->pathApp;
+    }
+    return path_bin+"/bin/"+script;
 }
 
 void ign::mousePressEvent(QMouseEvent *event)
@@ -286,9 +319,8 @@ void ign::saveFile(const QByteArray &data, QString filename, QString path){
     localFile.close();
 }
 
-void ign::download(QString data,QString path,QString id){
+void ign::download(QString data,QString path){
     this->dl = new QtDownload;
-    this->id = id;
     this->dl->setTarget(data);
     this->dl->save(path);
     this->dl->download();
@@ -296,19 +328,18 @@ void ign::download(QString data,QString path,QString id){
 }
 
 void ign::download_signal(qint64 recieved, qint64 total){
-    QString r = QString::number(recieved);
-    QString t = QString::number(total);
-    float pr = (r.toFloat()/t.toFloat())*100;
-    QString prs = QString::number(pr,'g',5);
-    qDebug() << prs;
-    QString idx = this->id;
-    frame->evaluateJavaScript("document.getElementById('"+idx+"').setAttribute('style','width : "+prs+"%')");
-
+    emit downloadProgress(recieved,total);
 }
 
 /*IGN SQL*/
 void ign::sql(const QString &drv, QString connect){
     this->sqldrv->driver(drv,connect);
+}
+
+QObject *ign::sys(){
+    if(!m_ignsystem)
+        m_ignsystem = new ignsystem;
+    return m_ignsystem;
 }
 
 /*void ign::mousePressEvent(QMouseEvent *event)

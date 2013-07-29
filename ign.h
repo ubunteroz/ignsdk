@@ -4,6 +4,7 @@
 #include "fs.h"
 #include "igndownload.h"
 #include "ignsql.h"
+#include "ignsystem.h"
 #include <QtGui/QMainWindow>
 #include <QWidget>
 #include <QLayout>
@@ -29,7 +30,7 @@ private:
     fs *filesystem;
     QtDownload *dl;
     ignsql *sqldrv;
-    QString id;
+    ignsystem *m_ignsystem;
     QPoint mLastMousePosition;
     bool mMoving;
 public:
@@ -38,11 +39,15 @@ public:
     void show();
     void widgetNoFrame();
     void widgetTransparent();
+    QString pathApp;
 protected:
     //virtual void mouseMoveEvent(QMouseEvent *event);
     virtual void mousePressEvent(QMouseEvent * event);
     //virtual void mouseReleaseEvent(QMouseEvent *event);
 
+signals:
+    void downloadProgress(qint64 recieved, qint64 total);
+    /*void bash(QString out, QString err);*/
 public slots:
     //main slot
     void ignJS();
@@ -67,6 +72,8 @@ public slots:
     //ign system
     QString cliOut(const QString& cli);
     void exec(const QString& cli);
+    QString loadBin(const QString &script);
+    /*void bash(QString out, QString err);*/
     //ign manifest
     void config(QString path);
     //ign settings
@@ -77,12 +84,14 @@ public slots:
     QString readFile(const QString &path);
     //ign network
     void saveFile(const QByteArray &data, QString filename, QString path);
-    void download(QString data, QString path, QString id);
+    void download(QString data, QString path);
     void download_signal(qint64 recieved, qint64 total);
     //hash function
     QString hash(const QString& data, QString hash_func);
     //ign sql
     void sql(const QString& drv, QString connect);
+    //experiment
+    QObject *sys();
 };
 
 #endif // IGN_H
