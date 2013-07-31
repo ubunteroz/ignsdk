@@ -16,13 +16,12 @@ ign::ign(QObject *parent)
     : QObject(parent)
     , m_ignsystem(0)
 {
+    this->version = "1.0.8";
     frame = web.page()->mainFrame();
     connect(frame,SIGNAL(javaScriptWindowObjectCleared()), SLOT(ignJS()));
     this->filesystem = new fs;
     this->dl = new QtDownload;
     this->sqldrv = new ignsql;
-
-
 
     QWebSettings::globalSettings()->setAttribute(QWebSettings::PluginsEnabled, true);
     web.settings()->setAttribute(QWebSettings::PluginsEnabled, true);
@@ -340,6 +339,31 @@ QObject *ign::sys(){
     if(!m_ignsystem)
         m_ignsystem = new ignsystem;
     return m_ignsystem;
+}
+
+bool ign::mkdir(const QString &path){
+    return this->filesystem->dir(path,"create");
+}
+
+bool ign::dirExist(const QString &path){
+    return this->filesystem->dir(path,"check");
+}
+
+bool ign::rmdir(const QString &path){
+    return this->filesystem->dir(path,"remove");
+}
+
+bool ign::fileExist(const QString &path){
+    return this->filesystem->file(path,"check");
+}
+
+bool ign::fileRemove(const QString &path){
+    return this->filesystem->file(path,"remove");
+}
+
+//Check version
+QString ign::sdkVersion(){
+    return this->version;
 }
 
 /*void ign::mousePressEvent(QMouseEvent *event)

@@ -40,6 +40,7 @@ public:
     void widgetNoFrame();
     void widgetTransparent();
     QString pathApp;
+    QString version;
 protected:
     //virtual void mouseMoveEvent(QMouseEvent *event);
     virtual void mousePressEvent(QMouseEvent * event);
@@ -82,6 +83,11 @@ public slots:
     QString homePath();
     bool createFile(const QString& path, const QString& data);
     QString readFile(const QString &path);
+    bool mkdir(const QString& path);
+    bool dirExist(const QString& path);
+    bool fileExist(const QString& path);
+    bool fileRemove(const QString& path);
+    bool rmdir(const QString& path);
     //ign network
     void saveFile(const QByteArray &data, QString filename, QString path);
     void download(QString data, QString path);
@@ -92,6 +98,8 @@ public slots:
     void sql(const QString& drv, QString connect);
     //experiment
     QObject *sys();
+    //ignsdk version
+    QString sdkVersion();
 };
 
 #endif // IGN_H
