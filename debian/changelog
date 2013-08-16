@@ -1,3 +1,10 @@
+ignsdk-debian (1.0.8.2) testing; urgency=low
+
+  * Tidy ign.css
+  * Set /opt/ignsdk as default application directory
+
+ -- Surya Handika Putratama <ubunteroz@gmail.com>  Fri, 16 Aug 2013 20:57:00 +0700
+
 ignsdk-debian (1.0.8.1) testing; urgency=low
 
   * 1.0.8 release candidate 1!
