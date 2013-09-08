@@ -29,7 +29,7 @@ private:
     bool fullscreen;
     fs *filesystem;
     QtDownload *dl;
-    ignsql *sqldrv;
+    ignsql *m_sqldrv;
     ignsystem *m_ignsystem;
     QPoint mLastMousePosition;
     bool mMoving;
@@ -41,6 +41,7 @@ public:
     void widgetTransparent();
     QString pathApp;
     QString version;
+
 protected:
     //virtual void mouseMoveEvent(QMouseEvent *event);
     virtual void mousePressEvent(QMouseEvent * event);
@@ -95,7 +96,7 @@ public slots:
     //hash function
     QString hash(const QString& data, QString hash_func);
     //ign sql
-    void sql(const QString& drv, QString connect);
+    QObject *sql();
     //experiment
     QObject *sys();
     //ignsdk version
