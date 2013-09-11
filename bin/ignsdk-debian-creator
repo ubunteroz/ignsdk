@@ -44,13 +44,14 @@ echo ""
 pushd $project_dir
 
 echo "-> dh_make"
+echo "   License is set to GPLv3 (default). You can change it in debian/copyright."
 DEBFULLNAME="$packagers_name" DEBEMAIL="$packagers_mail" dh_make --single --native --copyright gpl3 --packagename "$deb_package_name"_"$deb_package_version" --yes
 rm debian/*.ex debian/*.EX debian/README.Debian debian/README.source
 
 echo "-> debian/changelog"
 rm debian/changelog
 cat > debian/changelog <<EOF
-$package_name ($deb_package_version) $release; urgency=low
+$deb_package_name ($deb_package_version) $release; urgency=low
 
   * Initial release.
 
