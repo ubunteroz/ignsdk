@@ -50,7 +50,7 @@ rm debian/*.ex debian/*.EX debian/README.Debian debian/README.source
 echo "-> debian/changelog"
 rm debian/changelog
 cat > debian/changelog <<EOF
-$package_name ($package_version) $release; urgency=low
+$package_name ($deb_package_version) $release; urgency=low
 
   * Initial release.
 
