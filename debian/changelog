@@ -1,6 +1,7 @@
 ignsdk-debian (1.0.9.1) testing; urgency=low
 
   * debian/control: remove hardening-wrapper and hardening-includes
+  * Add dev tools
   * New package: ignsdk-debian-dev
   * Update Sql API
 
