@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "IGNSDK Package Creator (Debian GNU/Linux)"
+echo -e "\n\nIGNSDK Package Creator (Debian GNU/Linux)"
 
 package_name=$1
 deb_package_name=$(echo $package_name | sed 's/\.ign//')
@@ -74,7 +74,7 @@ sed -i -e "s/Source: \(.*\)/Source: http:\/\/ignsdk.web.id/" \
 echo "-> debian/README"
 rm debian/README
 cat > debian/README <<EOF
-IGN SDK Application $package_name.ign
+IGN SDK Application $deb_package_name.ign
 -------------------------------------
 
 This application is built using IGOS Nusantara Software Development Kit
