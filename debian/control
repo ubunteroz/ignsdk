@@ -8,7 +8,7 @@ Homepage: http://ignsdk.web.id/
 
 Package: ignsdk-debian
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}, libqtwebkit4 (>= 2.2.1), libqtgui4 (>= 4:4.8.5), libqt4-network (>= 4:4.8.5), libqtcore4 (>= 4:4.8.5), libqjson0 (>= 0.8.1), libmysqlclient18 (>= 5.5.33)
+Depends: ${misc:Depends}, ${shlibs:Depends}
 Recommends: ignsdk-debian-example
 Suggests: ignsdk-debian-dev
 Description: IGOS Nusantara Software Development Kit (IGNSDK) (launcher)
