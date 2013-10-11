@@ -1,3 +1,9 @@
+ignsdk-debian (1.1.1.1) testing; urgency=low
+
+  * Ported to Qt5
+
+ -- Surya Handika Putratama <ubunteroz@gmail.com>  Fri, 11 Oct 2013 11:58:19 +0700
+
 ignsdk-debian (1.1.0.3) testing; urgency=low
 
   * Source version: 1.1.0 (Alamang)

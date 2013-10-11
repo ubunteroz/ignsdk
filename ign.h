@@ -5,20 +5,23 @@
 #include "igndownload.h"
 #include "ignsql.h"
 #include "ignsystem.h"
-#include <QtGui/QMainWindow>
-#include <QWidget>
-#include <QLayout>
+#include <QtWidgets/QMainWindow>
+#include <QtWidgets/QWidget>
+#include <QtWidgets/QLayout>
 #include <QObject>
-#include <QMessageBox>
+#include <QtWidgets/QMessageBox>
 #include <QProcess>
-#include <QtWebKit>
+#include <QtWebKitWidgets/QtWebKitWidgets>
 #include <QSize>
-#include <QtGui>
 #include <QVariant>
 #include <QCryptographicHash>
 #include <QPixmap>
-#include <QSplashScreen>
+#include <QtWidgets/QSplashScreen>
 #include <QTimer>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QJsonParseError>
 
 class ign: public QObject
 {
