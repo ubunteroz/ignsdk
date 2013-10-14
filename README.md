@@ -13,9 +13,8 @@ Eka Tresna Irawan/Ibnu Yahya (anak10thn@gmail.com)
 * Slackware: Dwiyan Galuh W. a.k.a wajatmaka (wajatmaka@gmail.com)
 
 ##How To
-###Build and Install
-* `$ sudo aptitude install qt4-qmake libqt4-dev libqtwebkit-dev libqjson-dev libmysqlclient-dev`
+###Build using Pbuilder
+* `$ sudo aptitude install pbuilder`
+* `$ sudo pbuilder create --distribution testing --debootstrapopts --variant=buildd`
 * `$ cd ignsdk-debian`
-* `$ qmake`
-* `$ make`
-* `$ sudo make install`
+* `$ pdebuild --use-pdebuild-internal`
