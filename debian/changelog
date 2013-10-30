@@ -1,3 +1,9 @@
+ignsdk-debian (1.1.1.2) testing; urgency=low
+
+  * Update ignsdk-debian-creator and ignsdk-debian-builder
+
+ -- Surya Handika Putratama <ubunteroz@gmail.com>  Wed, 30 Oct 2013 17:28:59 +0700
+
 ignsdk-debian (1.1.1.1) testing; urgency=low
 
   * Ported to Qt5
