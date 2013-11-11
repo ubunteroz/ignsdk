@@ -5,16 +5,16 @@
 #include "igndownload.h"
 #include "ignsql.h"
 #include "ignsystem.h"
+#include <QObject>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QWidget>
 #include <QtWidgets/QLayout>
-#include <QObject>
 #include <QtWidgets/QMessageBox>
-#include <QProcess>
 #include <QtWebKitWidgets/QtWebKitWidgets>
+#include <QWebView>
+#include <QWebPage>
 #include <QSize>
 #include <QVariant>
-#include <QCryptographicHash>
 #include <QPixmap>
 #include <QtWidgets/QSplashScreen>
 #include <QTimer>
@@ -29,6 +29,7 @@ class ign: public QObject
 private:
     QWebView web;
     QWebFrame *frame;
+    QWebView *createWindow(QWebPage::WebWindowType type);
     bool fullscreen;
     fs *m_filesystem;
     QtDownload *dl;
@@ -60,12 +61,17 @@ public slots:
     void showMessage(const QString& msg);
     //ign developer mode
     void setDev(bool v);
-    //ign signal
+    //ign action
     void quit();
     void back();
     void forward();
     void reload();
     void stop();
+    void cut();
+    void copy();
+    void paste();
+    void undo();
+    void redo();
     //ign window function
     void widgetSizeMax(int w,int h);
     void widgetSizeMin(int w,int h);
@@ -74,31 +80,18 @@ public slots:
     void getFullScreen(bool screen);
     void showMaximized();
     void showMinimized();
-    //ign system
-    QString cliOut(const QString& cli);
-    void exec(const QString& cli);
+    //ign load external binary
     QString loadBin(const QString &script);
-    /*void bash(QString out, QString err);*/
     //ign manifest
     void config(QString path);
     //ign settings
     void websecurity(bool c);
     //ign filesystem
-    /*QString homePath();
-    bool createFile(const QString& path, const QString& data);
-    QString readFile(const QString &path);
-    bool mkdir(const QString& path);
-    bool dirExist(const QString& path);
-    bool fileExist(const QString& path);
-    bool fileRemove(const QString& path);
-    bool rmdir(const QString& path);*/
     QObject *filesystem();
     //ign network
     void saveFile(const QByteArray &data, QString filename, QString path);
     void download(QString data, QString path);
     void download_signal(qint64 recieved, qint64 total);
-    //hash function
-    QString hash(const QString& data, QString hash_func);
     //ign sql
     QObject *sql();
     //experiment

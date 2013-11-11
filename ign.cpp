@@ -52,26 +52,17 @@ ign::ign(QObject *parent)
 void ign::ignJS(){
     this->frame->addToJavaScriptWindowObject("ign",this);
 }
-void ign::getToggleFullScreen(){
-    if(this->fullscreen){
-        this->web.showNormal();
-        this->fullscreen = false;
-    }
-    else{
-        this->web.showFullScreen();
-        this->fullscreen = true;
-    }
-}
 
-void ign::getFullScreen(bool screen){
-    if(screen){
-        this->web.showFullScreen();
-        this->fullscreen = true;
-    }
-    else {
-        this->web.showNormal();
-        this->fullscreen = false;
-    }
+QWebView *ign::createWindow(QWebPage::WebWindowType type){
+    QWebView *webView = new QWebView;
+    QWebPage *newWeb = new QWebPage(webView);
+    if (type == QWebPage::WebModalDialog)
+        webView->setWindowModality(Qt::ApplicationModal);
+    webView->setAttribute(Qt::WA_DeleteOnClose, true);
+    webView->setPage(newWeb);
+    webView->show();
+
+    return webView;
 }
 
 void ign::render(QString w){
@@ -113,34 +104,56 @@ void ign::showMessage(const QString &msg)
     QMessageBox::information(0, "Information", msg);
 }
 
+/*action trigger*/
 void ign::quit(){
     this->web.close();
 }
 
 void ign::back(){
-    this->web.page()->action(QWebPage::Back)->setVisible(true);
+    this->web.page()->triggerAction(QWebPage::Back,true);
 }
 
 void ign::forward(){
-    this->web.page()->action(QWebPage::Forward)->setVisible(true);
+    this->web.page()->triggerAction(QWebPage::Forward,true);
 }
 
 void ign::stop(){
-    this->web.page()->action(QWebPage::Stop)->setVisible(true);
+    this->web.page()->triggerAction(QWebPage::Stop,true);
 }
 
 void ign::reload(){
-    this->web.page()->action(QWebPage::Reload)->setVisible(true);
+    this->web.page()->triggerAction(QWebPage::Reload,true);
 }
 
+void ign::cut(){
+    this->web.page()->triggerAction(QWebPage::Cut,true);
+}
+
+void ign::copy(){
+    this->web.page()->triggerAction(QWebPage::Copy,true);
+}
+
+void ign::paste(){
+    this->web.page()->triggerAction(QWebPage::Paste,true);
+}
+
+void ign::undo(){
+    this->web.page()->triggerAction(QWebPage::Undo,true);
+}
+
+void ign::redo(){
+    this->web.page()->triggerAction(QWebPage::Redo,true);
+}
+
+/* debuging mode */
 void ign::setDev(bool v){
     this->web.settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, v);
 }
-
+/* web security */
 void ign::websecurity(bool c){
     web.settings()->setAttribute(QWebSettings::LocalContentCanAccessRemoteUrls,c);
 }
-
+/* window config */
 void ign::widgetSizeMax(int w, int h){
     this->web.setMaximumSize(w,h);
 }
@@ -165,21 +178,29 @@ void ign::widgetTransparent(){
     this->web.setAttribute(Qt::WA_TranslucentBackground, true);
 }
 
-QString ign::cliOut(const QString& cli){
-    QProcess os;
-    os.start(cli);
-    int pid = os.pid();
-    qDebug() << pid;
-    os.waitForFinished(-1);
-    return os.readAllStandardOutput();
-
+void ign::getToggleFullScreen(){
+    if(this->fullscreen){
+        this->web.showNormal();
+        this->fullscreen = false;
+    }
+    else{
+        this->web.showFullScreen();
+        this->fullscreen = true;
+    }
 }
 
-void ign::exec(const QString &cli){
-    QProcess os;
-    os.startDetached("/bin/sh -c \""+cli+"\"");
+void ign::getFullScreen(bool screen){
+    if(screen){
+        this->web.showFullScreen();
+        this->fullscreen = true;
+    }
+    else {
+        this->web.showNormal();
+        this->fullscreen = false;
+    }
 }
 
+/*load external binary*/
 QString ign::loadBin(const QString &script){
     QStringList list = this->pathApp.split("/");
 
@@ -277,34 +298,6 @@ void ign::config(QString path){
     config_file.close();
 }
 
-QString ign::hash(const QString &data,QString hash_func){
-    QByteArray hash;
-    QByteArray byteArray = data.toLatin1();
-    if(hash_func == "md4"){
-        hash=QCryptographicHash::hash(byteArray,QCryptographicHash::Md4);
-    }
-    else if(hash_func == "md5"){
-        hash=QCryptographicHash::hash(byteArray,QCryptographicHash::Md5);
-    }
-    else if(hash_func == "sha1"){
-        hash=QCryptographicHash::hash(byteArray,QCryptographicHash::Sha1);
-    }
-
-    return hash.toHex();
-}
-
-/*QString ign::homePath(){
-    return this->filesystem->home_path();
-}
-
-bool ign::createFile(const QString &path, const QString &data){
-    return this->filesystem->create_file(path,data);
-}
-
-QString ign::readFile(const QString &path){
-    return this->filesystem->read_file(path);
-}*/
-
 void ign::saveFile(const QByteArray &data, QString filename, QString path){
     QByteArray byteArray = QByteArray::fromBase64(data);
     QString home;
@@ -351,54 +344,7 @@ QObject *ign::filesystem(){
     return m_filesystem;
 }
 
-/*bool ign::mkdir(const QString &path){
-    return this->filesystem->dir(path,"create");
-}
-
-bool ign::dirExist(const QString &path){
-    return this->filesystem->dir(path,"check");
-}
-
-bool ign::rmdir(const QString &path){
-    return this->filesystem->dir(path,"remove");
-}
-
-bool ign::fileExist(const QString &path){
-    return this->filesystem->file(path,"check");
-}
-
-bool ign::fileRemove(const QString &path){
-    return this->filesystem->file(path,"remove");
-}*/
-
 //Check version
 QString ign::sdkVersion(){
     return this->version;
 }
-
-/*void ign::mousePressEvent(QMouseEvent *event)
-{
-    if(event->button() == Qt::LeftButton)
-    {
-        QMessageBox::information(0, "Information", "press");
-        mMoving = true;
-        mLastMousePosition = event->pos();
-    }
-}
-
-void ign::mouseMoveEvent(QMouseEvent *event)
-{
-    if( event->buttons().testFlag(Qt::LeftButton) && mMoving)
-    {
-        this->web.move(this->web.pos() + (event->pos() - mLastMousePosition));
-        mLastMousePosition = event->pos();
-    }
-}
-
-void ign::mouseReleaseEvent(QMouseEvent *event)
-{
-    if(event->button() == Qt::LeftButton)
-    {
-        mMoving = false;
-    }
-}*/

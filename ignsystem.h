@@ -3,14 +3,17 @@
 
 #include <QObject>
 #include <QtGlobal>
-
+#include <QProcess>
+#include <QCryptographicHash>
 class ignsystem : public QObject
 {
     Q_OBJECT
 public:
     ignsystem(QObject *parent = 0);
 public slots:
-    void tes();
+    QString cliOut(const QString& cli);
+    void exec(const QString& cli);
+    QString hash(const QString& data, QString hash_func);
 };
 
 #endif // IGNSYSTEM_H
