@@ -6,13 +6,14 @@
 #include <QtCore/QVariant>
 #include <iostream>
 using namespace std;
+
 ign::ign(QObject *parent)
     : QObject(parent),
     m_sqldrv(0),
     m_ignsystem(0),
     m_filesystem(0)
 {
-    this->version = "1.1.1";
+    this->version = "1.1.2-alpha1";
     frame = web.page()->mainFrame();
     connect(frame,SIGNAL(javaScriptWindowObjectCleared()), SLOT(ignJS()));
     //this->filesystem = new fs;
@@ -51,18 +52,6 @@ ign::ign(QObject *parent)
 
 void ign::ignJS(){
     this->frame->addToJavaScriptWindowObject("ign",this);
-}
-
-QWebView *ign::createWindow(QWebPage::WebWindowType type){
-    QWebView *webView = new QWebView;
-    QWebPage *newWeb = new QWebPage(webView);
-    if (type == QWebPage::WebModalDialog)
-        webView->setWindowModality(Qt::ApplicationModal);
-    webView->setAttribute(Qt::WA_DeleteOnClose, true);
-    webView->setPage(newWeb);
-    webView->show();
-
-    return webView;
 }
 
 void ign::render(QString w){
@@ -149,6 +138,26 @@ void ign::redo(){
 void ign::setDev(bool v){
     this->web.settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, v);
 }
+
+void ign::setDevRemote(int port){
+    QString host;
+    Q_FOREACH(QHostAddress address, QNetworkInterface::allAddresses()) {
+      if (!address.isLoopback() && (address.protocol() == QAbstractSocket::IPv4Protocol)) {
+         host = address.toString();
+         break;
+       }
+    }
+    QString server;
+       if (host.isEmpty()) {
+          server = QString::number(port);
+        } else {
+          server = QString("%1:%2").arg(host, QString::number(port));
+        }
+    qDebug() << "Remote debugging is enable : "<< server.toUtf8();
+    qputenv("QTWEBKIT_INSPECTOR_SERVER", server.toUtf8());
+    this->web.page()->setProperty("_q_webInspectorServerPort",port);
+}
+
 /* web security */
 void ign::websecurity(bool c){
     web.settings()->setAttribute(QWebSettings::LocalContentCanAccessRemoteUrls,c);
@@ -279,16 +288,16 @@ void ign::config(QString path){
         foreach (QVariant button, result["button"].toList()) {
 
           if (button.toString() == "back"){
-              this->back();
+              web.page()->action(QWebPage::Back)->setVisible(true);
           }
           if (button.toString() == "forward"){
-              this->forward();
+              web.page()->action(QWebPage::Forward)->setVisible(true);
           }
           if (button.toString() == "stop"){
-              this->stop();
+              web.page()->action(QWebPage::Stop)->setVisible(true);
           }
           if (button.toString() == "reload"){
-              this->reload();
+              web.page()->action(QWebPage::Reload)->setVisible(true);
           }
 
         }

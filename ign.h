@@ -11,8 +11,7 @@
 #include <QtWidgets/QLayout>
 #include <QtWidgets/QMessageBox>
 #include <QtWebKitWidgets/QtWebKitWidgets>
-#include <QWebView>
-#include <QWebPage>
+#include <QtNetwork/QNetworkInterface>
 #include <QSize>
 #include <QVariant>
 #include <QPixmap>
@@ -29,7 +28,6 @@ class ign: public QObject
 private:
     QWebView web;
     QWebFrame *frame;
-    QWebView *createWindow(QWebPage::WebWindowType type);
     bool fullscreen;
     fs *m_filesystem;
     QtDownload *dl;
@@ -61,6 +59,7 @@ public slots:
     void showMessage(const QString& msg);
     //ign developer mode
     void setDev(bool v);
+    void setDevRemote(int port);
     //ign action
     void quit();
     void back();
