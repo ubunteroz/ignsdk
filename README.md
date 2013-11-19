@@ -1,4 +1,4 @@
-#IGOS Nusantara Software Development Kit (IGNSDK)
+#IGOS Nusantara Software Development Kit (IGNSDK) [![Build Status](https://travis-ci.org/ubunteroz/ignsdk-debian.png)](https://travis-ci.org/ubunteroz/ignsdk-debian)
 ##Author
 Eka Tresna Irawan/Ibnu Yahya (anak10thn@gmail.com)
 
