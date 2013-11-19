@@ -1,0 +1,19 @@
+language: cpp
+
+compiler: gcc
+
+script: pdebuild
+
+install: true
+
+before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq pbuilder devscripts
+  - wget http://debian.ignsdk.web.id/pkg/debootstrap_1.0.55_all.deb -O /home/travis/debootstrap.deb
+  - wget http://debian.ignsdk.web.id/pkg/debian-archive-keyring_2012.4_all.deb -O /home/travis/debian-archive-keyring.deb
+  - sudo dpkg -i /home/travis/*.deb
+  - sudo pbuilder create --distribution testing --mirror http://ftp.us.debian.org/debian/ --allow-untrusted --debootstrapopts "--no-check-gpg --variant=buildd"
+
+branches:
+  only:
+    - master
