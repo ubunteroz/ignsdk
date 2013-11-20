@@ -14,6 +14,8 @@ before_install:
   - sudo dpkg -i /home/travis/*.deb
   - mkdir -p /home/travis/builder/result
   - echo "BUILDRESULT=/home/travis/builder/result/" > /home/travis/.pbuilderrc
+  - echo "EXTRAPACKAGES=eatmydata" >> /home/travis/.pbuilderrc
+  - echo "export LD_PRELOAD=${LD_PRELOAD:+$LD_PRELOAD:}/usr/lib/libeatmydata/libeatmydata.so" >> /home/travis/.pbuilderrc
   - sudo pbuilder create --distribution testing --mirror http://ftp.us.debian.org/debian/ --allow-untrusted --debootstrapopts --no-check-gpg --debootstrapopts --variant=buildd
 
 branches:
