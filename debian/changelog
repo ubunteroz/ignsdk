@@ -1,3 +1,10 @@
+ignsdk-debian (1.1.2.2) testing; urgency=low
+
+  * Source version: 1.1.2 beta (Alamang)
+  * Remove Bootstrap
+
+ -- Surya Handika Putratama <ubunteroz@gmail.com>  Thu, 21 Nov 2013 22:20:39 +0700
+
 ignsdk-debian (1.1.2.1) testing; urgency=low
 
   * Source version: 1.1.2 alpha (Alamang)
