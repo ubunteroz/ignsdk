@@ -1,3 +1,9 @@
+ignsdk-debian (1.1.2.3) testing; urgency=low
+
+  * New API: ign.widgetNoTaskbar()
+
+ -- Surya Handika Putratama <ubunteroz@gmail.com>  Fri, 22 Nov 2013 19:21:21 +0700
+
 ignsdk-debian (1.1.2.2) testing; urgency=low
 
   * Source version: 1.1.2 beta (Alamang)
