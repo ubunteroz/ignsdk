@@ -33,7 +33,7 @@ private:
     QtDownload *dl;
     ignsql *m_sqldrv;
     ignsystem *m_ignsystem;
-    QPoint mLastMousePosition;
+    QPoint offset;
     bool mMoving;
 public:
     ign(QObject *parent = 0);
@@ -43,11 +43,6 @@ public:
     void widgetTransparent();
     QString pathApp;
     QString version;
-
-protected:
-    //virtual void mouseMoveEvent(QMouseEvent *event);
-    virtual void mousePressEvent(QMouseEvent * event);
-    //virtual void mouseReleaseEvent(QMouseEvent *event);
 
 signals:
     void downloadProgress(qint64 recieved, qint64 total);
@@ -75,6 +70,7 @@ public slots:
     void widgetSizeMax(int w,int h);
     void widgetSizeMin(int w,int h);
     void widgetSize(int w,int h);
+    void widgetNoTaskbar();
     void getToggleFullScreen();
     void getFullScreen(bool screen);
     void showMaximized();
