@@ -1,3 +1,9 @@
+ignsdk-debian (1.1.2.4) testing; urgency=low
+
+  * css/ign.css: delete unnecessary styles
+
+ -- Surya Handika Putratama <ubunteroz@gmail.com>  Wed, 27 Nov 2013 23:03:21 +0700
+
 ignsdk-debian (1.1.2.3) testing; urgency=low
 
   * New API: ign.widgetNoTaskbar()
