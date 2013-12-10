@@ -13,7 +13,7 @@ ign::ign(QObject *parent)
     m_ignsystem(0),
     m_filesystem(0)
 {
-    this->version = "1.1.2-beta";
+    this->version = "1.1.3";
     frame = web.page()->mainFrame();
     connect(frame,SIGNAL(javaScriptWindowObjectCleared()), SLOT(ignJS()));
     //this->filesystem = new fs;
@@ -61,7 +61,7 @@ void ign::render(QString w){
     PWD = getenv ("PWD");
     pwd.append(PWD);
     QStringList url_exp = w.split("/");
-    if(url_exp.at(0) == "http:"){
+    if(url_exp.at(0) == "http:" || url_exp.at(0) == "https:"){
         url_fix = w;
     }
     else if(url_exp.at(0) == ".."){
