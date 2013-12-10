@@ -2,7 +2,7 @@ language: cpp
 
 compiler: gcc
 
-script: pdebuild --use-pdebuild-internal
+script: pdebuild --use-pdebuild-internal --architecture $PKGARCH
 
 install: true
 
