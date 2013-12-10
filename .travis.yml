@@ -12,12 +12,19 @@ before_install:
   - wget http://debian.ignsdk.web.id/pkg/debootstrap_1.0.55_all.deb -O /home/travis/debootstrap.deb
   - wget http://debian.ignsdk.web.id/pkg/debian-archive-keyring_2012.4_all.deb -O /home/travis/debian-archive-keyring.deb
   - sudo dpkg -i /home/travis/*.deb
-  - mkdir -p /home/travis/builder/result
-  - echo "BUILDRESULT=/home/travis/builder/result/" > /home/travis/.pbuilderrc
-  - echo "EXTRAPACKAGES=eatmydata" >> /home/travis/.pbuilderrc
-  - echo "export LD_PRELOAD=${LD_PRELOAD:+$LD_PRELOAD:}/usr/lib/libeatmydata/libeatmydata.so" >> /home/travis/.pbuilderrc
-  - sudo pbuilder create --distribution testing --mirror http://ftp.us.debian.org/debian/ --allow-untrusted --debootstrapopts --no-check-gpg --debootstrapopts --variant=buildd
+  - mkdir -p /home/travis/builder/result/$PKGARCH
+  - echo "BUILDRESULT=/home/travis/builder/result/$PKGARCH" > /home/travis/.pbuilderrc
+  - sudo pbuilder create --distribution testing --architecture $PKGARCH --mirror http://ftp.us.debian.org/debian/ --allow-untrusted --debootstrapopts --no-check-gpg --debootstrapopts --variant=buildd
 
 branches:
   only:
     - master
+
+notifications:
+  email:
+    - secure: "p4GKlhlB37qUnKgAABPvmV/KD3JbGam85kgybisbd3Z9twEYhS9NwvraYZHyqdgRvSddUWCD5aRYgvaKO27xy/Qc3z3TkNfaOoIkuAWBXQIie7eyyNVC1vZozMPaeVDI9pT6WCjvTYDqT+SOO1FT4yS+nsrTiO5SkjMMJ2F53vM="
+
+matrix:
+  env:
+    - PKGARCH=i386
+    - PKGARCH=amd64
