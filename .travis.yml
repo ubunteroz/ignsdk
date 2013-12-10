@@ -24,7 +24,7 @@ notifications:
   email:
     - secure: "p4GKlhlB37qUnKgAABPvmV/KD3JbGam85kgybisbd3Z9twEYhS9NwvraYZHyqdgRvSddUWCD5aRYgvaKO27xy/Qc3z3TkNfaOoIkuAWBXQIie7eyyNVC1vZozMPaeVDI9pT6WCjvTYDqT+SOO1FT4yS+nsrTiO5SkjMMJ2F53vM="
 
-matrix:
-  env:
+env:
+  matrix:
     - PKGARCH=i386
     - PKGARCH=amd64
