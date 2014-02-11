@@ -1,3 +1,9 @@
+ignsdk-debian (1.1.4.1) testing; urgency=low
+
+  * New API: HTTP Proxy
+
+ -- Surya Handika Putratama <ubunteroz@gmail.com>  Mon, 10 Feb 2014 11:03:02 +0700
+
 ignsdk-debian (1.1.3.5) testing; urgency=medium
 
   * Add libqt5sql5-mysql and libqt5sql5-sqlite as recommended packages
