@@ -1,3 +1,10 @@
+ignsdk-debian (1.1.4.4) testing; urgency=medium
+
+  * ignsdk-app-builder: fix error in project listing
+  * main.tpl: exclude app.spec from default app template
+
+ -- Surya Handika Putratama <ubunteroz@gmail.com>  Mon, 17 Mar 2014 00:34:51 +0700
+
 ignsdk-debian (1.1.4.3) testing; urgency=low
 
   * Add global proxy setting
