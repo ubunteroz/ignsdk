@@ -28,3 +28,5 @@ env:
   matrix:
     - PKGARCH=i386
     - PKGARCH=amd64
+    - PKGARCH=armel
+    - PKGARCH=armhf
