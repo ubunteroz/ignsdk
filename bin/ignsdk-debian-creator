@@ -126,4 +126,6 @@ This application is built using IGOS Nusantara Software Development Kit
  -- $packagers_name <$packagers_mail> $(date +"%a, %d %b %Y %T %z")
 EOF
 
+echo -e "\nDone. Please adjust configurations inside debian/ manually."
+
 popd > /dev/null 2>&1
