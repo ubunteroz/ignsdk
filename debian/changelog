@@ -1,3 +1,9 @@
+ignsdk-debian (1.1.5.99+build3) testing; urgency=medium
+
+  * debian/control: Remove unnecessary lines (Breaks, Replaces, Provides)
+
+ -- Surya Handika Putratama <ubunteroz@gmail.com>  Sun, 14 Sep 2014 07:58:22 +0700
+
 ignsdk-debian (1.1.5.99+build2) testing; urgency=medium
 
   * Rebuild against new Qt version
