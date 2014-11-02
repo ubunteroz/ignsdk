@@ -1,3 +1,11 @@
+ignsdk-debian (1.1.6) testing; urgency=medium
+
+  * Fix bug on readFile() API (Closed #136)
+  * New API: saveFileDialog() (Closed #137)
+  * Include JavascriptEvaluate (Closed #138)
+
+ -- Surya Handika Putratama <ubunteroz@gmail.com>  Sun, 02 Nov 2014 10:40:17 +0700
+
 ignsdk-debian (1.1.5.99+build3) testing; urgency=medium
 
   * debian/control: Remove unnecessary lines (Breaks, Replaces, Provides)
