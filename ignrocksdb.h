@@ -11,9 +11,12 @@ class ignrocksdb : public QObject {
 public:
 	explicit ignrocksdb(QObject* parent = 0);
 public slots:
-	void init();
+	void init(QString wal_dir);
 	void close();
 	bool put(QString key, QString value);
+	void bput(QString key, QString value);
+	void bdel(QString key);
+	bool bwrite();
 	QString get(QString key);
 	void del(QString key);
 };
