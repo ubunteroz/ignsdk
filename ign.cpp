@@ -12,7 +12,8 @@ ign::ign(QObject *parent)
     m_sqldrv(0),
     m_ignsystem(0),
     m_filesystem(0),
-    m_ignnetwork(0)
+    m_ignnetwork(0),
+    m_ignrocksdb(0)
 {
     this->version = "1.1.6";
     this->debugging = false;
@@ -457,6 +458,13 @@ QObject *ign::net(){
         m_ignnetwork = new ignnetwork;
     }
     return m_ignnetwork;
+}
+
+QObject *ign::rdb(){
+    if(!m_ignrocksdb){
+        m_ignrocksdb = new ignrocksdb;
+    }
+    return m_ignrocksdb;
 }
 
 /*live coding*/

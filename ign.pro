@@ -8,7 +8,14 @@ QT       += network core webkitwidgets sql
 
 TARGET = ignsdk
 TEMPLATE = app
-CONFIG += qt
+CONFIG += qt c++11
+
+# RocksDB
+INCLUDEPATH += external/rocksdb/include/
+rocksdb.commands = make -C external/rocksdb/ static_lib
+QMAKE_EXTRA_TARGETS += rocksdb
+PRE_TARGETDEPS += rocksdb
+LIBS += external/rocksdb/librocksdb.a -lz -lbz2
 
 SOURCES += main.cpp\
         ign.cpp \
@@ -17,7 +24,8 @@ SOURCES += main.cpp\
     ignsql.cpp \
     ignsystem.cpp \
     ignmovedrag.cpp \
-    ignnetwork.cpp
+    ignnetwork.cpp \
+    ignrocksdb.cpp
 
 HEADERS  += ign.h \
     fs.h \
@@ -25,7 +33,8 @@ HEADERS  += ign.h \
     ignsql.h \
     ignsystem.h \
     ignmovedrag.h \
-    ignnetwork.h
+    ignnetwork.h \
+    ignrocksdb.h
 
 RESOURCES += \
     ign.qrc
