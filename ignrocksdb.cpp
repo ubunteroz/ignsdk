@@ -65,3 +65,14 @@ QString ignrocksdb::get(QString key){
 void ignrocksdb::del(QString key){
 	rdbDB->Delete(rocksdb::WriteOptions(), key.toStdString());
 }
+
+void ignrocksdb::flush(){
+	rdbDB->Flush(rocksdb::FlushOptions());
+}
+
+QString ignrocksdb::keyMayExist(QString key){
+	std::string value;
+	rdbDB->KeyMayExist(rocksdb::ReadOptions(), key.toStdString(), &value);
+	QString value_ = QString::fromUtf8(value.c_str());
+	return value_;
+}

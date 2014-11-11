@@ -19,6 +19,8 @@ public slots:
 	bool bwrite();
 	QString get(QString key);
 	void del(QString key);
+	void flush();
+	QString keyMayExist(QString key);
 };
 
 #endif
