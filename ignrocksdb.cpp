@@ -76,3 +76,11 @@ QString ignrocksdb::keyMayExist(QString key){
 	QString value_ = QString::fromUtf8(value.c_str());
 	return value_;
 }
+
+QString ignrocksdb::version(){
+	QString version_major = QString::number(ROCKSDB_MAJOR);
+	QString version_minor = QString::number(ROCKSDB_MINOR);
+	QString version_patch = QString::number(ROCKSDB_PATCH);
+	QString version = version_major + "." + version_minor + "." + version_patch;
+	return version;
+}

@@ -5,6 +5,7 @@
 #include <string>
 #include "rocksdb/db.h"
 #include "rocksdb/options.h"
+#include "rocksdb/version.h"
 
 class ignrocksdb : public QObject {
 	Q_OBJECT
@@ -21,6 +22,7 @@ public slots:
 	void del(QString key);
 	void flush();
 	QString keyMayExist(QString key);
+	QString version();
 };
 
 #endif
