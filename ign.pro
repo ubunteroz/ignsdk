@@ -8,7 +8,7 @@ QT       += network core webkitwidgets sql
 
 TARGET = ignsdk
 TEMPLATE = app
-CONFIG += qt c++11
+CONFIG += qt c++11 silent
 
 # RocksDB
 INCLUDEPATH += external/rocksdb/include/
