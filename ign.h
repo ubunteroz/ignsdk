@@ -34,10 +34,10 @@ private:
     QWebView web;
     QWebFrame *frame;
     bool fullscreen;
-    fs *m_filesystem;
     QtDownload *dl;
     ignsql *m_sqldrv;
     ignsystem *m_ignsystem;
+    fs *m_filesystem;
     ignnetwork *m_ignnetwork;
     ignrocksdb *m_ignrocksdb;
     QPoint offset;
