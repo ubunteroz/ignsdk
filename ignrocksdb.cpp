@@ -62,7 +62,7 @@ QString ignrocksdb::get(QString key){
 	return value_;
 }
 
-void ignrocksdb::delete(QString key){
+void ignrocksdb::del(QString key){
 	rdbDB->Delete(rocksdb::WriteOptions(), key.toStdString());
 }
 

@@ -19,7 +19,7 @@ public slots:
 	void batchDelete(QString key);
 	bool batchWrite();
 	QString get(QString key);
-	void delete(QString key);
+	void del(QString key);
 	void flush();
 	QString keyMayExist(QString key);
 	QString version();
