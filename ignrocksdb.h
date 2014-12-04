@@ -15,11 +15,11 @@ public slots:
 	void init(QString wal_dir);
 	void close();
 	bool put(QString key, QString value);
-	void bput(QString key, QString value);
-	void bdel(QString key);
-	bool bwrite();
+	void batchPut(QString key, QString value);
+	void batchDelete(QString key);
+	bool batchWrite();
 	QString get(QString key);
-	void del(QString key);
+	void delete(QString key);
 	void flush();
 	QString keyMayExist(QString key);
 	QString version();

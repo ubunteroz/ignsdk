@@ -42,15 +42,15 @@ bool ignrocksdb::put(QString key, QString value){
 	return status.ok();
 }
 
-void ignrocksdb::bput(QString key, QString value){
+void ignrocksdb::batchPut(QString key, QString value){
 	rdbWriteBatch.Put(key.toStdString(), value.toStdString());
 }
 
-void ignrocksdb::bdel(QString key){
+void ignrocksdb::batchDelete(QString key){
 	rdbWriteBatch.Delete(key.toStdString());
 }
 
-bool ignrocksdb::bwrite(){
+bool ignrocksdb::batchWrite(){
 	rocksdb::Status status = rdbDB->Write(rocksdb::WriteOptions(), &rdbWriteBatch);
 	return status.ok();
 }
@@ -62,7 +62,7 @@ QString ignrocksdb::get(QString key){
 	return value_;
 }
 
-void ignrocksdb::del(QString key){
+void ignrocksdb::delete(QString key){
 	rdbDB->Delete(rocksdb::WriteOptions(), key.toStdString());
 }
 
