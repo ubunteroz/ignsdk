@@ -12,9 +12,6 @@ CONFIG += qt c++11 silent
 
 # RocksDB
 INCLUDEPATH += external/rocksdb/include/
-rocksdb.commands = make -C external/rocksdb/ static_lib
-QMAKE_EXTRA_TARGETS += rocksdb
-PRE_TARGETDEPS += rocksdb
 LIBS += external/rocksdb/librocksdb.a -lz -lbz2 -lsnappy
 
 SOURCES += main.cpp\
