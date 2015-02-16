@@ -11,7 +11,7 @@ echo -e "\n\nIGNSDK Package Creator (Debian GNU/Linux)"
 package_name=$1
 deb_package_name=$(echo $package_name | sed 's/\.ign//')
 project_dir=$2
-lsb_release=$(lsb_release -rs)
+lsb_release=$(lsb_release -cs)
 if [ "$lsb_release" == "" ]; then lsb_release="testing"; fi
 build_deps="dch dh_make"
 read -p 'Enter package version [1.0]: ' deb_package_version
