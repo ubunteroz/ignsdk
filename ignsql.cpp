@@ -24,8 +24,10 @@ bool ignsql::driver(const QString &drv, QString connect){
         this->db = QSqlDatabase::addDatabase("QSQLITE");
         this->db.setDatabaseName(connect);
         return this->db.open();
+    } else {
+        qDebug() << "Error: Invalid database driver specified. Available drivers: mysql, sqlite, sqlite2.";
+        return false;
     }
-
 }
 
 QVariant ignsql::query(const QString &qr){

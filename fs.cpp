@@ -45,6 +45,7 @@ QString fs::fileRead(const QString &path){
         return data;
     }
     else {
+        return NULL;
         qDebug()<< "Err : File not found";
     }
 }
@@ -65,6 +66,8 @@ bool fs::dir(const QString &opt, const QString &path){
     }
     else if(opt == "remove"){
         return dir.rmdir(path);
+    } else {
+        return false;
     }
 }
 
@@ -124,7 +127,7 @@ QString fs::openFileDialog(){
         return directory;
     }
     else {
-        return false;
+        return NULL;
     }
 }
 
@@ -144,6 +147,8 @@ QString fs::openDirDialog(){
     {
         directory = fd->selectedFiles()[0];
         return directory;
+    } else {
+        return NULL;
     }
 }
 
