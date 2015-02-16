@@ -465,16 +465,25 @@ void ign::liveCode(){
     QString file = this->pathLive;
     QDir dirApp = QFileInfo(file).absoluteDir();
     QStringList list = this->m_filesystem->list(dirApp.absolutePath());
+    QRegularExpression regex("(./[\\.\\.\\-])");
+    int dirCount = 0;
+    int fileCount = 0;
     foreach (const QString &file, list) {
-        if (file != dirApp.absolutePath() + "/.."){
-            this->live.addPath(file);
-            qDebug() << "Monitoring changes on" << file;
+        if ((!regex.match(file).hasMatch()) || (file == dirApp.absolutePath() + "/.")){
+            if (this->m_filesystem->isDirectory(file)){
+                this->live.addPath(file);
+                dirCount = dirCount + 1;
+            } else {
+                this->live.addPath(file);
+                fileCount = fileCount + 1;
+            }
         }
     }
     connect(&live,SIGNAL(directoryChanged(const QString &)),
             this, SLOT(fileChanged(const QString &)));
     connect(&live,SIGNAL(fileChanged(const QString &)),
             this, SLOT(fileChanged(const QString &)));
+    printf("Monitoring changes in %i files and %i directories\n", fileCount, dirCount);
 }
 
 /*Check version*/
