@@ -10,10 +10,6 @@ TARGET = ignsdk
 TEMPLATE = app
 CONFIG += qt c++11 silent
 
-# RocksDB
-INCLUDEPATH += external/rocksdb/include/
-LIBS += external/rocksdb/librocksdb.a -lz -lbz2 -lsnappy
-
 SOURCES += main.cpp\
         ign.cpp \
     fs.cpp \
@@ -21,8 +17,7 @@ SOURCES += main.cpp\
     ignsql.cpp \
     ignsystem.cpp \
     ignmovedrag.cpp \
-    ignnetwork.cpp \
-    ignrocksdb.cpp
+    ignnetwork.cpp
 
 HEADERS  += ign.h \
     fs.h \
@@ -30,8 +25,7 @@ HEADERS  += ign.h \
     ignsql.h \
     ignsystem.h \
     ignmovedrag.h \
-    ignnetwork.h \
-    ignrocksdb.h
+    ignnetwork.h
 
 RESOURCES += \
     ign.qrc

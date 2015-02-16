@@ -6,7 +6,6 @@
 #include "ignsql.h"
 #include "ignsystem.h"
 #include "ignnetwork.h"
-#include "ignrocksdb.h"
 #include <QObject>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QWidget>
@@ -39,7 +38,6 @@ private:
     ignsystem *m_ignsystem;
     fs *m_filesystem;
     ignnetwork *m_ignnetwork;
-    ignrocksdb *m_ignrocksdb;
     QPoint offset;
     bool mMoving;
 
@@ -115,8 +113,6 @@ public slots:
     QObject *sys();
     //ign network
     QObject *net();
-    //ign rocksdb
-    QObject *rdb();
     //ignsdk version
     QString sdkVersion();
 };
