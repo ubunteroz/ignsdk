@@ -30,3 +30,7 @@
 # Moc and Qrc
 moc_*.cpp
 qrc_*.cpp
+
+# Makefile and ignsdk binary
+/Makefile
+/ignsdk
