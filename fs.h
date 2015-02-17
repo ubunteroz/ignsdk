@@ -32,6 +32,8 @@ public slots:
     bool fileWrite(const QString& path, const QString& data);
     QString fileRead(const QString& path);
     bool dir(const QString& opt,const QString& path);
+    bool dirCreate(const QString &path);
+    bool dirRemove(const QString &path);
     //checking file or directory
     bool isExist(const QString &path);
     bool isDirectory(const QString &path);

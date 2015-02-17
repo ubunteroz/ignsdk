@@ -71,6 +71,16 @@ bool fs::dir(const QString &opt, const QString &path){
     }
 }
 
+bool fs::dirCreate(const QString &path){
+    QDir dir;
+    return dir.mkdir(path);
+}
+
+bool fs::dirRemove(const QString &path){
+    QDir dir;
+    return dir.rmdir(path);
+}
+
 bool fs::isExist(const QString &path)
 {
     return QFile::exists(path);
