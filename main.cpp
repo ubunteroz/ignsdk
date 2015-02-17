@@ -4,7 +4,6 @@
 #include <QtWebKitWidgets/QWebView>
 #include <QFileDialog>
 #include <iostream>
-#include <getopt.h>
 #include "version.h"
 #include <QCommandLineParser>
 using namespace std;
