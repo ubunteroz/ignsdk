@@ -25,6 +25,8 @@
 #include <QNetworkProxy>
 #include <QFileSystemWatcher>
 #include <QThread>
+#include <QPrinter>
+#include <QPrintDialog>
 
 class ign: public QObject
 {
@@ -53,6 +55,7 @@ public:
     QString version;
     bool debugging;
     QFileSystemWatcher live;
+    QPrinter printer;
 
 signals:
     void downloadProgress(qint64 recieved, qint64 total);
@@ -71,6 +74,8 @@ public slots:
     //ign message
     /*void showMessage(const QString& msg);*/
     QString showMessageBox(const QString &title, const QString &message, const QString &button);
+    //ign print
+    void print();
     //ign developer mode
     void setDev(bool v);
     void setDevRemote(int port);

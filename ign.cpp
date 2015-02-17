@@ -190,6 +190,14 @@ QString ign::showMessageBox(const QString &title, const QString &message, const 
     return response;
 }
 
+/* very basic print support */
+void ign::print(){
+    QPrintDialog *printDialog = new QPrintDialog(&printer);
+    if (printDialog->exec() == QDialog::Accepted){
+        this->web.print(&printer);
+    }
+}
+
 /*action trigger*/
 void ign::quit(){
     this->web.close();
