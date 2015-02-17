@@ -18,6 +18,7 @@ QString ignsystem::cliOut(const QString& cli){
 }
 
 QString ignsystem::hash(const QString &data,QString hash_func){
+    bool isValid = true;
     QByteArray hash;
     QByteArray byteArray = data.toLatin1();
     if(hash_func == "md4"){
@@ -40,9 +41,16 @@ QString ignsystem::hash(const QString &data,QString hash_func){
     }
     else if(hash_func == "sha512"){
         hash=QCryptographicHash::hash(byteArray,QCryptographicHash::Sha512);
+    } else {
+        isValid = false;
     }
 
-    return hash.toHex();
+    if (isValid){
+        return hash.toHex();
+    } else {
+        qDebug() << "Unknown hash algorithm:" << hash_func;
+        return NULL;
+    }
 }
 
 void ignsystem::desktopService(const QString &link){
