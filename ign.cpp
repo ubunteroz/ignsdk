@@ -97,9 +97,97 @@ void ign::showMinimized(){
     this->web.showMinimized();
 }
 
-void ign::showMessage(const QString &msg)
-{
-    QMessageBox::information(0, "Information", msg);
+QString ign::showMessageBox(const QString &title, const QString &message, const QString &button){
+    QMessageBox msgBox;
+    #ifdef OSX
+    msgBox.setText(title);
+    #else
+    msgBox.setWindowTitle(title);
+    #endif
+    msgBox.setInformativeText(message);
+
+    QStringList btnlist = button.split(":");
+    btnlist.removeDuplicates();
+
+    for (int n = 0; n < btnlist.size(); n++){
+        if (btnlist[n] == "ok"){
+            msgBox.addButton(QMessageBox::Ok);
+        } else if (btnlist[n] == "open"){
+            msgBox.addButton(QMessageBox::Open);
+        } else if (btnlist[n] == "save"){
+            msgBox.addButton(QMessageBox::Save);
+        } else if (btnlist[n] == "cancel"){
+            msgBox.addButton(QMessageBox::Cancel);
+        } else if (btnlist[n] == "close"){
+            msgBox.addButton(QMessageBox::Close);
+        } else if (btnlist[n] == "discard"){
+            msgBox.addButton(QMessageBox::Discard);
+        } else if (btnlist[n] == "apply"){
+            msgBox.addButton(QMessageBox::Apply);
+        } else if (btnlist[n] == "reset"){
+            msgBox.addButton(QMessageBox::Reset);
+        } else if (btnlist[n] == "yes"){
+            msgBox.addButton(QMessageBox::Yes);
+        } else if (btnlist[n] == "no"){
+            msgBox.addButton(QMessageBox::No);
+        } else if (btnlist[n] == "abort"){
+            msgBox.addButton(QMessageBox::Abort);
+        } else if (btnlist[n] == "retry"){
+            msgBox.addButton(QMessageBox::Retry);
+        } else if (btnlist[n] == "ignore"){
+            msgBox.addButton(QMessageBox::Ignore);
+        } else {
+            qDebug() << "Warning: Unknown message box button:" << btnlist[n];
+        }
+    }
+
+    int ret = msgBox.exec();
+    QString response;
+    switch (ret){
+        case QMessageBox::Ok:
+            response = "ok";
+            break;
+        case QMessageBox::Open:
+            response = "open";
+            break;
+        case QMessageBox::Save:
+            response = "save";
+            break;
+        case QMessageBox::Cancel:
+            response = "cancel";
+            break;
+        case QMessageBox::Close:
+            response = "close";
+            break;
+        case QMessageBox::Discard:
+            response = "discard";
+            break;
+        case QMessageBox::Apply:
+            response = "apply";
+            break;
+        case QMessageBox::Reset:
+            response = "reset";
+            break;
+        case QMessageBox::Yes:
+            response = "yes";
+            break;
+        case QMessageBox::No:
+            response = "no";
+            break;
+        case QMessageBox::Abort:
+            response = "abort";
+            break;
+        case QMessageBox::Retry:
+            response = "retry";
+            break;
+        case QMessageBox::Ignore:
+            response = "ignore";
+            break;
+        default:
+            break;
+    }
+
+    return response;
 }
 
 /*action trigger*/

@@ -69,7 +69,8 @@ public slots:
     void ignJS();
     void setUrl(const QString& url);
     //ign message
-    void showMessage(const QString& msg);
+    /*void showMessage(const QString& msg);*/
+    QString showMessageBox(const QString &title, const QString &message, const QString &button);
     //ign developer mode
     void setDev(bool v);
     void setDevRemote(int port);
