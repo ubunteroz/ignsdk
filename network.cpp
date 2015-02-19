@@ -1,4 +1,4 @@
-#include "ignnetwork.h"
+#include "network.h"
 
 ignnetwork::ignnetwork(QObject *parent):
     QObject(parent)

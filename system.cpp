@@ -1,4 +1,4 @@
-#include "ignsystem.h"
+#include "system.h"
 #include <QDebug>
 
 ignsystem::ignsystem(QObject *parent)

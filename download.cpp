@@ -1,5 +1,5 @@
 //ibnu.yahya@toroo.org
-#include "igndownload.h"
+#include "download.h"
 #include <QCoreApplication>
 #include <QUrl>
 #include <QtNetwork/QNetworkRequest>

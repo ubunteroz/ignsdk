@@ -1,11 +1,11 @@
 //ibnu.yahya@toroo.org
 #ifndef IGN_H
 #define IGN_H
-#include "fs.h"
-#include "igndownload.h"
-#include "ignsql.h"
-#include "ignsystem.h"
-#include "ignnetwork.h"
+#include "filesystem.h"
+#include "download.h"
+#include "sql.h"
+#include "system.h"
+#include "network.h"
 #include <QObject>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QWidget>

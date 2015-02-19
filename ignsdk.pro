@@ -10,25 +10,25 @@ TARGET = ignsdk
 TEMPLATE = app
 CONFIG += qt c++11 silent
 
-SOURCES += main.cpp\
-        ign.cpp \
-    fs.cpp \
-    igndownload.cpp \
-    ignsql.cpp \
-    ignsystem.cpp \
-    ignmovedrag.cpp \
-    ignnetwork.cpp
+SOURCES += main.cpp \
+    ignsdk.cpp \
+    filesystem.cpp \
+    download.cpp \
+    sql.cpp \
+    system.cpp \
+    movedrag.cpp \
+    network.cpp
 
-HEADERS  += ign.h \
-    fs.h \
-    igndownload.h \
-    ignsql.h \
-    ignsystem.h \
-    ignmovedrag.h \
-    ignnetwork.h
+HEADERS  += ignsdk.h \
+    filesystem.h \
+    download.h \
+    sql.h \
+    system.h \
+    movedrag.h \
+    network.h
 
 RESOURCES += \
-    ign.qrc
+    ignsdk.qrc
 
 macx{
 ICON += icon/ignsdk-logo.icns

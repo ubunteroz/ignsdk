@@ -1,5 +1,5 @@
 //ibnu.yahya@toroo.org
-#include "fs.h"
+#include "filesystem.h"
 #include <QDebug>
 
 fs::fs(QObject *parent) :

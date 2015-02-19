@@ -1,6 +1,6 @@
 /*ibnu.yahya@toroo.org*/
 #include <QtWidgets/QApplication>
-#include "ign.h"
+#include "ignsdk.h"
 #include <QtWebKitWidgets/QWebView>
 #include <QFileDialog>
 #include <iostream>

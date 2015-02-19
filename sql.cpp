@@ -1,4 +1,4 @@
-#include "ignsql.h"
+#include "sql.h"
 
 ignsql::ignsql(QObject *parent) :
     QObject(parent)

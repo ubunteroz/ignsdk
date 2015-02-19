@@ -21,7 +21,7 @@
 **
 ****************************************************************************/
 
-#include "ignmovedrag.h"
+#include "movedrag.h"
 
 #include <QEvent>
 #include <QHash>
