@@ -1,6 +1,6 @@
 //ibnu.yahya@toroo.org
-#ifndef FS_H
-#define FS_H
+#ifndef FILESYSTEM_H
+#define FILESYSTEM_H
 
 #include <QObject>
 #include <QSize>
@@ -16,22 +16,22 @@
 #include <QJsonArray>
 #include <QJsonParseError>
 #include <QDateTime>
-class fs : public QObject
-{
+
+class ignfilesystem: public QObject{
     Q_OBJECT
 
 public:
-    fs(QObject *parent = 0);
+    ignfilesystem(QObject *parent = 0);
 
 signals:
 
 public slots:
-    bool fileRemove(const QString& path);
+    bool fileRemove(const QString &path);
     QString appPath();
     QString homePath();
-    bool fileWrite(const QString& path, const QString& data);
-    QString fileRead(const QString& path);
-    bool dir(const QString& opt,const QString& path);
+    bool fileWrite(const QString &path, const QString &data);
+    QString fileRead(const QString &path);
+    bool dir(const QString &opt, const QString &path);
     bool dirCreate(const QString &path);
     bool dirRemove(const QString &path);
     //checking file or directory
@@ -43,7 +43,7 @@ public slots:
     bool isReadable(const QString &path);
     bool isWritable(const QString &path);
     bool isSymlink(const QString &path);
-    bool copy(const QString &src, const QString &des);
+    bool copy(const QString &source, const QString &destination);
     QString openFileDialog();
     QString openDirDialog();
     QString saveFileDialog();
@@ -51,4 +51,4 @@ public slots:
     QVariant info(const QString &path);
 };
 
-#endif // FS_H
+#endif // FILESYSTEM_H

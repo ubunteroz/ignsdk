@@ -1,6 +1,7 @@
 //ibnu.yahya@toroo.org
-#ifndef IGN_H
-#define IGN_H
+#ifndef IGNSDK_H
+#define IGNSDK_H
+
 #include "filesystem.h"
 #include "download.h"
 #include "sql.h"
@@ -28,18 +29,18 @@
 #include <QPrinter>
 #include <QPrintDialog>
 
-class ign: public QObject
-{
+class ign: public QObject {
     Q_OBJECT
+
 private:
     QWebView web;
     QWebFrame *frame;
     bool fullscreen;
     QtDownload *dl;
-    ignsql *m_sqldrv;
-    ignsystem *m_ignsystem;
-    fs *m_filesystem;
-    ignnetwork *m_ignnetwork;
+    ignsql *m_sql;
+    ignsystem *m_system;
+    ignfilesystem *m_filesystem;
+    ignnetwork *m_network;
     QPoint offset;
     bool mMoving;
 
@@ -58,28 +59,30 @@ public:
     QPrinter printer;
 
 signals:
-    void downloadProgress(qint64 recieved, qint64 total);
+    void downloadProgress(qint64 received, qint64 total);
 
 private slots:
-    void fileChanged(const QString& path) {
+    void fileChanged(const QString& path){
         qDebug() << "Changes detected on" << path;
         QThread::msleep(50);
         this->web.page()->triggerAction(QWebPage::Reload,true);
     }
 
 public slots:
-    //main slot
     void ignJS();
     void setUrl(const QString& url);
-    //ign message
-    /*void showMessage(const QString& msg);*/
+
+    // Message box
     QString showMessageBox(const QString &title, const QString &message, const QString &button);
-    //ign print
+
+    // Print support
     void print();
-    //ign developer mode
+
+    // Development mode
     void setDev(bool v);
     void setDevRemote(int port);
-    //ign action
+
+    // Action
     void quit();
     void back();
     void forward();
@@ -90,36 +93,47 @@ public slots:
     void paste();
     void undo();
     void redo();
-    //ign window function
-    void widgetSizeMax(int w,int h);
-    void widgetSizeMin(int w,int h);
-    void widgetSize(int w,int h);
+
+    // Window manipulation
+    void widgetSizeMax(int w, int h);
+    void widgetSizeMin(int w, int h);
+    void widgetSize(int w, int h);
     void widgetNoTaskbar();
     void getToggleFullScreen();
     void getFullScreen(bool screen);
     void showMaximized();
     void showMinimized();
-    //ign load external binary
+
+    // Load executable file in bin/
     QString loadBin(const QString &script);
-    //ign manifest
+
+    // Load app configuration
     void config(QString path);
-    //ign settings
+
+    // Websecurity
     void websecurity(bool c);
-    //ign network
+
+    // Network
     void saveFile(const QByteArray &data, QString filename, QString path);
     void download(QString data, QString path);
-    void download_signal(qint64 recieved, qint64 total);
-    //javascript evaluate include external script
+    void download_signal(qint64 received, qint64 total);
+
+    // Evaluate external JS
     void include(QString path);
-    //ign filesystem
+
+    // Filesystem
     QObject *filesystem();
-    //ign sql
+
+    // SQL
     QObject *sql();
-    //ign system
-    QObject *sys();
-    //ign network
-    QObject *net();
-    //ignsdk version
+
+    // System
+    QObject *system();
+
+    // Network
+    QObject *network();
+
+    // IGNSDK Version
     QString sdkVersion();
 };
 

@@ -1,12 +1,9 @@
 #include "sql.h"
 
-ignsql::ignsql(QObject *parent) :
-    QObject(parent)
-{
-}
+ignsql::ignsql(QObject *parent): QObject(parent){}
 
 bool ignsql::driver(const QString &drv, QString connect){
-    if(drv == "mysql"){
+    if (drv == "mysql"){
         QStringList con = connect.split(":");
         this->db = QSqlDatabase::addDatabase("QMYSQL");
         this->db.setHostName(con.value(0));
@@ -14,13 +11,11 @@ bool ignsql::driver(const QString &drv, QString connect){
         this->db.setPassword(con.value(2));
         this->db.setDatabaseName(con.value(3));
         return this->db.open();
-    }
-    else if (drv == "sqlite2"){
+    } else if (drv == "sqlite2"){
         this->db = QSqlDatabase::addDatabase("QSQLITE2");
         this->db.setDatabaseName(connect);
         return this->db.open();
-    }
-    else if (drv == "sqlite"){
+    } else if (drv == "sqlite"){
         this->db = QSqlDatabase::addDatabase("QSQLITE");
         this->db.setDatabaseName(connect);
         return this->db.open();
@@ -39,12 +34,12 @@ QVariant ignsql::query(const QString &qr){
     QSqlQuery qry(this->db);
 
     qry.prepare(qr);
-    if(qry.exec()){
+    
+    if (qry.exec()){
         status = true;
-    }
-    else{
+    } else {
         status = false;
-        contentmap.insert("error",qry.lastError().text());
+        contentmap.insert("error", qry.lastError().text());
     }
 
     contentmap.insert("status",status);
@@ -62,12 +57,11 @@ QVariant ignsql::query(const QString &qr){
 
     contentmap.insert("content",datarec);
 
-    if(qry.size() > 0){
+    if (qry.size() > 0){
         size = qry.size();
-        contentmap.insert("size",size);
+        contentmap.insert("size", size);
     }
 
     QJsonDocument json_enc = QJsonDocument::fromVariant(contentmap);
     return json_enc.toVariant();
 }
-

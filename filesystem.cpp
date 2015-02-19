@@ -2,18 +2,14 @@
 #include "filesystem.h"
 #include <QDebug>
 
-fs::fs(QObject *parent) :
-    QObject(parent)
-{
+ignfilesystem::ignfilesystem(QObject *parent): QObject(parent){}
 
-}
-
-bool fs::fileRemove(const QString &path){
+bool ignfilesystem::fileRemove(const QString &path){
     QFile file(path);
     return file.remove();
 }
 
-bool fs::fileWrite(const QString &path, const QString &data){
+bool ignfilesystem::fileWrite(const QString &path, const QString &data){
     QFile file(path);
     if (file.open(QIODevice::WriteOnly | QIODevice::Text)){
         QTextStream out(&file);
@@ -26,122 +22,101 @@ bool fs::fileWrite(const QString &path, const QString &data){
     file.close();
 }
 
-QString fs::fileRead(const QString &path){
-    //QStringList fields;
+QString ignfilesystem::fileRead(const QString &path){
     QFile file(path);
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)){
         QTextStream out(&file);
-
-        /*while(!out.atEnd()){
-            fields.append(out.readLine());
-
-        }*/
         QString data = out.readAll();
-        /*foreach (const QString text, fields){
-            qDebug() << text.toUtf8();
-        }*/
         file.close();
-        //return fields;
         return data;
-    }
-    else {
+    } else {
         return NULL;
         qDebug()<< "Err : File not found";
     }
 }
 
-QString fs::appPath(){
+QString ignfilesystem::appPath(){
     return QApplication::applicationDirPath();
 }
 
-QString fs::homePath(){
+QString ignfilesystem::homePath(){
     QString home = QDir::homePath();
     return home;
 }
 
-bool fs::dir(const QString &opt, const QString &path){
+bool ignfilesystem::dir(const QString &opt, const QString &path){
     QDir dir;
     if(opt == "create"){
         return dir.mkdir(path);
     }
-    else if(opt == "remove"){
+    else if (opt == "remove"){
         return dir.rmdir(path);
     } else {
         return false;
     }
 }
 
-bool fs::dirCreate(const QString &path){
+bool ignfilesystem::dirCreate(const QString &path){
     QDir dir;
     return dir.mkdir(path);
 }
 
-bool fs::dirRemove(const QString &path){
+bool ignfilesystem::dirRemove(const QString &path){
     QDir dir;
     return dir.rmdir(path);
 }
 
-bool fs::isExist(const QString &path)
-{
+bool ignfilesystem::isExist(const QString &path){
     return QFile::exists(path);
 }
 
-bool fs::isDirectory(const QString &path)
-{
+bool ignfilesystem::isDirectory(const QString &path){
     return QFileInfo(path).isDir();
 }
 
-bool fs::isFile(const QString &path)
-{
+bool ignfilesystem::isFile(const QString &path){
     return QFileInfo(path).isFile();
 }
 
-bool fs::isAbsolute(const QString &path)
-{
+bool ignfilesystem::isAbsolute(const QString &path){
    return QFileInfo(path).isAbsolute();
 }
 
-bool fs::isExecutable(const QString &path)
-{
+bool ignfilesystem::isExecutable(const QString &path){
    return QFileInfo(path).isExecutable();
 }
 
-bool fs::isSymlink(const QString &path)
-{
+bool ignfilesystem::isSymlink(const QString &path){
    return QFileInfo(path).isSymLink();
 }
 
-bool fs::isReadable(const QString &path)
-{
+bool ignfilesystem::isReadable(const QString &path){
    return QFileInfo(path).isReadable();
 }
 
-bool fs::isWritable(const QString &path)
-{
+bool ignfilesystem::isWritable(const QString &path){
    return QFileInfo(path).isWritable();
 }
 
-bool fs::copy(const QString &src, const QString &des){
-    if(QFile::exists(des)){
-        QFile::remove(des);
+bool ignfilesystem::copy(const QString &source, const QString &destination){
+    if(QFile::exists(destination)){
+        QFile::remove(destination);
     }
-    return QFile::copy(src,des);
+    return QFile::copy(source, destination);
 }
 
-QString fs::openFileDialog(){
+QString ignfilesystem::openFileDialog(){
     QFileDialog *fd = new QFileDialog;
     int result = fd->exec();
-    if (result)
-    {
+    if (result){
         QString directory = fd->selectedFiles()[0];
         return directory;
-    }
-    else {
+    } else {
         return NULL;
     }
 }
 
-QString fs::openDirDialog(){
+QString ignfilesystem::openDirDialog(){
     QFileDialog *fd = new QFileDialog;
 #ifdef Linux
     QTreeView *tree = fd->findChild <QTreeView*>();
@@ -153,8 +128,7 @@ QString fs::openDirDialog(){
     fd->setViewMode(QFileDialog::Detail);
     int result = fd->exec();
     QString directory;
-    if (result)
-    {
+    if (result){
         directory = fd->selectedFiles()[0];
         return directory;
     } else {
@@ -162,23 +136,23 @@ QString fs::openDirDialog(){
     }
 }
 
-QString fs::saveFileDialog(){
+QString ignfilesystem::saveFileDialog(){
     QFileDialog *fd = new QFileDialog;
     QString directory = fd->getSaveFileName();
     return directory;
 }
 
-QStringList fs::list(const QString &path){
-    QDirIterator dirIt(path,QDirIterator::Subdirectories);
+QStringList ignfilesystem::list(const QString &path){
+    QDirIterator dirIt(path, QDirIterator::Subdirectories);
     QStringList list;
-    while (dirIt.hasNext()) {
+    while (dirIt.hasNext()){
         dirIt.next();
         list.push_front(dirIt.filePath());
     }
     return list;
 }
 
-QVariant fs::info(const QString &path){
+QVariant ignfilesystem::info(const QString &path){
     QVariantMap map;
     QFileInfo info(path);
     QVariant size = info.size();
@@ -202,27 +176,27 @@ QVariant fs::info(const QString &path){
     QVariant group = info.group();
     QVariant lastModified = info.lastModified();
     QVariant lastRead = info.lastRead();
-    map.insert("size",size);
-    map.insert("absoluteFilePath",absoluteFilePath);
-    map.insert("baseName",baseName);
-    map.insert("isSymlink",isSymlink);
-    map.insert("isAbsolute",isAbsolute);
-    map.insert("isBundle",isBundle);
-    map.insert("isDir",isDir);
-    map.insert("isExecutable",isExecutable);
-    map.insert("isFile",isFile);
-    map.insert("isHidden",isHidden);
-    map.insert("isReadable",isReadable);
-    map.insert("isRelative",isRelative);
-    map.insert("isRoot",isRoot);
-    map.insert("isWritable",isWritable);
-    map.insert("filePath",filePath);
-    map.insert("bundleName",bundleName);
-    map.insert("exists",exists);
-    map.insert("fileName",fileName);
-    map.insert("group",group);
-    map.insert("lastModified",lastModified);
-    map.insert("lastRead",lastRead);
+    map.insert("size", size);
+    map.insert("absoluteFilePath", absoluteFilePath);
+    map.insert("baseName", baseName);
+    map.insert("isSymlink", isSymlink);
+    map.insert("isAbsolute", isAbsolute);
+    map.insert("isBundle", isBundle);
+    map.insert("isDir", isDir);
+    map.insert("isExecutable", isExecutable);
+    map.insert("isFile", isFile);
+    map.insert("isHidden", isHidden);
+    map.insert("isReadable", isReadable);
+    map.insert("isRelative", isRelative);
+    map.insert("isRoot", isRoot);
+    map.insert("isWritable", isWritable);
+    map.insert("filePath", filePath);
+    map.insert("bundleName", bundleName);
+    map.insert("exists", exists);
+    map.insert("fileName", fileName);
+    map.insert("group", group);
+    map.insert("lastModified", lastModified);
+    map.insert("lastRead", lastRead);
     QJsonDocument json_enc = QJsonDocument::fromVariant(map);
     return json_enc.toVariant();
 }

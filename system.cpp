@@ -1,11 +1,7 @@
 #include "system.h"
 #include <QDebug>
 
-ignsystem::ignsystem(QObject *parent)
-    : QObject(parent)
-{
-
-}
+ignsystem::ignsystem(QObject *parent): QObject(parent){}
 
 QString ignsystem::cliOut(const QString& cli){
     QProcess os;
@@ -17,30 +13,24 @@ QString ignsystem::cliOut(const QString& cli){
     return os.readAllStandardOutput();
 }
 
-QString ignsystem::hash(const QString &data,QString hash_func){
+QString ignsystem::hash(const QString &data, QString hash_func){
     bool isValid = true;
     QByteArray hash;
     QByteArray byteArray = data.toLatin1();
-    if(hash_func == "md4"){
-        hash=QCryptographicHash::hash(byteArray,QCryptographicHash::Md4);
-    }
-    else if(hash_func == "md5"){
-        hash=QCryptographicHash::hash(byteArray,QCryptographicHash::Md5);
-    }
-    else if(hash_func == "sha1"){
-        hash=QCryptographicHash::hash(byteArray,QCryptographicHash::Sha1);
-    }
-    else if(hash_func == "sha224"){
-        hash=QCryptographicHash::hash(byteArray,QCryptographicHash::Sha224);
-    }
-    else if(hash_func == "sha256"){
-        hash=QCryptographicHash::hash(byteArray,QCryptographicHash::Sha256);
-    }
-    else if(hash_func == "sha384"){
-        hash=QCryptographicHash::hash(byteArray,QCryptographicHash::Sha384);
-    }
-    else if(hash_func == "sha512"){
-        hash=QCryptographicHash::hash(byteArray,QCryptographicHash::Sha512);
+    if (hash_func == "md4"){
+        hash = QCryptographicHash::hash(byteArray, QCryptographicHash::Md4);
+    } else if (hash_func == "md5"){
+        hash = QCryptographicHash::hash(byteArray, QCryptographicHash::Md5);
+    } else if (hash_func == "sha1"){
+        hash = QCryptographicHash::hash(byteArray, QCryptographicHash::Sha1);
+    } else if (hash_func == "sha224"){
+        hash = QCryptographicHash::hash(byteArray, QCryptographicHash::Sha224);
+    } else if (hash_func == "sha256"){
+        hash = QCryptographicHash::hash(byteArray, QCryptographicHash::Sha256);
+    } else if (hash_func == "sha384"){
+        hash = QCryptographicHash::hash(byteArray, QCryptographicHash::Sha384);
+    } else if (hash_func == "sha512"){
+        hash = QCryptographicHash::hash(byteArray, QCryptographicHash::Sha512);
     } else {
         isValid = false;
     }
@@ -54,13 +44,13 @@ QString ignsystem::hash(const QString &data,QString hash_func){
 }
 
 void ignsystem::desktopService(const QString &link){
-    QDesktopServices ::openUrl(QUrl(link));
+    QDesktopServices::openUrl(QUrl(link));
 }
 
-void ignsystem::exec(const QString& cli){
+void ignsystem::exec(const QString &cli){
     proc = new QProcess( this );
     proc->setReadChannelMode(QProcess::MergedChannels);
-    connect( proc, SIGNAL(readyReadStandardOutput()), this, SLOT( _out()) );
+    connect(proc, SIGNAL(readyReadStandardOutput()), this, SLOT( _out()));
     proc->start(cli);
 }
 

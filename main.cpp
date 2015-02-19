@@ -6,7 +6,9 @@
 #include <iostream>
 #include "version.h"
 #include <QCommandLineParser>
+
 using namespace std;
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -33,30 +35,30 @@ int main(int argc, char *argv[])
 
     cmd_parser.process(a);
 
-    if (cmd_parser.isSet(cmd_version)) {
-      printf("IGNSDK version %s (%s). Compiled on %s %s. Maintained by %s.\n", IGNSDK_VERSION, IGNSDK_CODENAME, __DATE__, __TIME__, IGNSDK_MAINTAINER);
-      exit(0);
+    if (cmd_parser.isSet(cmd_version)){
+        printf("IGNSDK version %s (%s). Compiled on %s %s. Maintained by %s.\n", IGNSDK_VERSION, IGNSDK_CODENAME, __DATE__, __TIME__, IGNSDK_MAINTAINER);
+        exit(0);
     }
 
     url = cmd_parser.value(cmd_project);
 
-    if (cmd_parser.isSet(cmd_remote)) {
-      w.setDevRemote(cmd_parser.value(cmd_remote).toInt());
+    if (cmd_parser.isSet(cmd_remote)){
+        w.setDevRemote(cmd_parser.value(cmd_remote).toInt());
     }
 
-    if (cmd_parser.isSet(cmd_file)) {
-      if (cmd_parser.isSet(cmd_project)) {
-        file = true;
-        optional = cmd_parser.value(cmd_file);
-      } else {
-        qDebug() << "Error: Project directory must be specified.";
-        exit(1);
-      }
+    if (cmd_parser.isSet(cmd_file)){
+        if (cmd_parser.isSet(cmd_project)){
+            file = true;
+            optional = cmd_parser.value(cmd_file);
+        } else {
+            qDebug() << "Error: Project directory must be specified.";
+            exit(1);
+        }
     }
 
     QString opt = url;
     QString path = url;
-    if(!opt.isEmpty()){
+    if (!opt.isEmpty()){
         w.pathApp = opt;
         /*icon set*/
         a.setWindowIcon(QIcon(path+"icons/app.png"));
@@ -64,22 +66,20 @@ int main(int argc, char *argv[])
         if(file){
             opt += "/";
             opt += optional;
-        }
-        else {
+        } else {
             opt += "/index.html";
         }
 
         if (QFile::exists(opt)){
-          w.render(opt);
-          w.config(url);
-          w.show();
+            w.render(opt);
+            w.config(url);
+            w.show();
         } else {
-          qDebug() << "Error:" << opt << "is not exist.";
-          exit(1);
+            qDebug() << "Error:" << opt << "is not exist.";
+            exit(1);
         }
 
-    }
-    else{
+    } else {
         QFileDialog *fd = new QFileDialog;
 #ifdef Linux
         QTreeView *tree = fd->findChild <QTreeView*>();
@@ -91,20 +91,18 @@ int main(int argc, char *argv[])
         fd->setViewMode(QFileDialog::Detail);
         int result = fd->exec();
         QString directory;
-        if (result)
-        {
+        if (result){
             directory = fd->selectedFiles()[0];
             if (QFile::exists(directory + "/index.html"))
             {
-              w.config(directory);
-              w.render(directory+"/index.html");
-              w.show();
+                w.config(directory);
+                w.render(directory+"/index.html");
+                w.show();
             } else {
-              qDebug() << "Error:" << (directory + "/index.html") << "is not exist.";
-              exit(1);
+                qDebug() << "Error:" << (directory + "/index.html") << "is not exist.";
+                exit(1);
             }
-        }
-        else {
+        } else {
             exit(1);
         }
     }
