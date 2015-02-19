@@ -11,8 +11,8 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
-    ign w;
+    QApplication app(argc, argv);
+    ign ignsdk;
 
     QString url = NULL;
     bool file = false;
@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
     cmd_parser.addOption(cmd_version);
     cmd_parser.addHelpOption();
 
-    cmd_parser.process(a);
+    cmd_parser.process(app);
 
     if (cmd_parser.isSet(cmd_version)){
         printf("IGNSDK version %s (%s). Compiled on %s %s. Maintained by %s.\n", IGNSDK_VERSION, IGNSDK_CODENAME, __DATE__, __TIME__, IGNSDK_MAINTAINER);
@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
     url = cmd_parser.value(cmd_project);
 
     if (cmd_parser.isSet(cmd_remote)){
-        w.setDevRemote(cmd_parser.value(cmd_remote).toInt());
+        ignsdk.setDevRemote(cmd_parser.value(cmd_remote).toInt());
     }
 
     if (cmd_parser.isSet(cmd_file)){
@@ -58,10 +58,10 @@ int main(int argc, char *argv[])
 
     QString opt = url;
     QString path = url;
+
     if (!opt.isEmpty()){
-        w.pathApp = opt;
-        /*icon set*/
-        a.setWindowIcon(QIcon(path+"icons/app.png"));
+        ignsdk.pathApp = opt;
+        app.setWindowIcon(QIcon(path+"icons/app.png"));
 
         if(file){
             opt += "/";
@@ -71,33 +71,35 @@ int main(int argc, char *argv[])
         }
 
         if (QFile::exists(opt)){
-            w.render(opt);
-            w.config(url);
-            w.show();
+            ignsdk.render(opt);
+            ignsdk.config(url);
+            ignsdk.show();
         } else {
             qDebug() << "Error:" << opt << "is not exist.";
             exit(1);
         }
 
     } else {
-        QFileDialog *fd = new QFileDialog;
+        QFileDialog *fileDialog = new QFileDialog;
 #ifdef Linux
-        QTreeView *tree = fd->findChild <QTreeView*>();
+        QTreeView *tree = fileDialog->findChild <QTreeView*>();
         tree->setRootIsDecorated(true);
         tree->setItemsExpandable(true);
 #endif
-        fd->setFileMode(QFileDialog::Directory);
-        fd->setOption(QFileDialog::ShowDirsOnly);
-        fd->setViewMode(QFileDialog::Detail);
-        int result = fd->exec();
+        fileDialog->setFileMode(QFileDialog::Directory);
+        fileDialog->setOption(QFileDialog::ShowDirsOnly);
+        fileDialog->setViewMode(QFileDialog::Detail);
+        int result = fileDialog->exec();
         QString directory;
+
         if (result){
-            directory = fd->selectedFiles()[0];
+            directory = fileDialog->selectedFiles()[0];
+
             if (QFile::exists(directory + "/index.html"))
             {
-                w.config(directory);
-                w.render(directory+"/index.html");
-                w.show();
+                ignsdk.config(directory);
+                ignsdk.render(directory + "/index.html");
+                ignsdk.show();
             } else {
                 qDebug() << "Error:" << (directory + "/index.html") << "is not exist.";
                 exit(1);
@@ -107,5 +109,5 @@ int main(int argc, char *argv[])
         }
     }
 
-    return a.exec();
+    return app.exec();
 }
