@@ -9,8 +9,7 @@
 
 using namespace std;
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]){
     QApplication app(argc, argv);
     ign ignsdk;
 
@@ -63,7 +62,7 @@ int main(int argc, char *argv[])
         ignsdk.pathApp = opt;
         app.setWindowIcon(QIcon(path+"icons/app.png"));
 
-        if(file){
+        if (file){
             opt += "/";
             opt += optional;
         } else {
