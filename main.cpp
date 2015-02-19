@@ -60,7 +60,7 @@ int main(int argc, char *argv[]){
 
     if (!opt.isEmpty()){
         ignsdk.pathApp = opt;
-        app.setWindowIcon(QIcon(path+"icons/app.png"));
+        app.setWindowIcon(QIcon(path + "icons/app.png"));
 
         if (file){
             opt += "/";
