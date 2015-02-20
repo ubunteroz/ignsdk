@@ -2,22 +2,22 @@
 
 ignsql::ignsql(QObject *parent): QObject(parent){}
 
-bool ignsql::driver(const QString &drv, QString connect){
-    if (drv == "mysql"){
-        QStringList con = connect.split(":");
+bool ignsql::driver(const QString &driver, QString connection){
+    if (driver == "mysql"){
+        QStringList details = connection.split(":");
         this->db = QSqlDatabase::addDatabase("QMYSQL");
-        this->db.setHostName(con.value(0));
-        this->db.setUserName(con.value(1));
-        this->db.setPassword(con.value(2));
-        this->db.setDatabaseName(con.value(3));
+        this->db.setHostName(details.value(0));
+        this->db.setUserName(details.value(1));
+        this->db.setPassword(details.value(2));
+        this->db.setDatabaseName(details.value(3));
         return this->db.open();
-    } else if (drv == "sqlite2"){
+    } else if (driver == "sqlite2"){
         this->db = QSqlDatabase::addDatabase("QSQLITE2");
-        this->db.setDatabaseName(connect);
+        this->db.setDatabaseName(connection);
         return this->db.open();
-    } else if (drv == "sqlite"){
+    } else if (driver == "sqlite"){
         this->db = QSqlDatabase::addDatabase("QSQLITE");
-        this->db.setDatabaseName(connect);
+        this->db.setDatabaseName(connection);
         return this->db.open();
     } else {
         qDebug() << "Error: Invalid database driver specified. Available drivers: mysql, sqlite, sqlite2.";
@@ -25,43 +25,44 @@ bool ignsql::driver(const QString &drv, QString connect){
     }
 }
 
-QVariant ignsql::query(const QString &qr){
+QVariant ignsql::query(const QString &query){
     bool status;
     int size;
-    QVariantList datarec;
+    QVariantList dataRec;
     QVariantMap map;
-    QVariantMap contentmap;
-    QSqlQuery qry(this->db);
+    QVariantMap contentMap;
+    QSqlQuery sqlQuery(this->db);
 
-    qry.prepare(qr);
+    sqlQuery.prepare(query);
     
-    if (qry.exec()){
+    if (sqlQuery.exec()){
         status = true;
     } else {
         status = false;
-        contentmap.insert("error", qry.lastError().text());
+        contentMap.insert("error", sqlQuery.lastError().text());
     }
 
-    contentmap.insert("status",status);
+    contentMap.insert("status", status);
 
-    QSqlRecord data = qry.record();
+    QSqlRecord data = sqlQuery.record();
 
-    while (qry.next()) {
-        for(int index = 0; index < data.count(); index++) {
+    while (sqlQuery.next()){
+        for (int index = 0; index < data.count(); index++){
             QString key = data.fieldName(index);
-            QVariant value = qry.value(index);
+            QVariant value = sqlQuery.value(index);
             map.insert(key, value);
         }
-        datarec << map;
+
+        dataRec << map;
     }
 
-    contentmap.insert("content",datarec);
+    contentMap.insert("content", dataRec);
 
-    if (qry.size() > 0){
-        size = qry.size();
-        contentmap.insert("size", size);
+    if (sqlQuery.size() > 0){
+        size = sqlQuery.size();
+        contentMap.insert("size", size);
     }
 
-    QJsonDocument json_enc = QJsonDocument::fromVariant(contentmap);
+    QJsonDocument json_enc = QJsonDocument::fromVariant(contentMap);
     return json_enc.toVariant();
 }

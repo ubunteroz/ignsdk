@@ -44,26 +44,25 @@ QString ignfilesystem::homePath(){
     return home;
 }
 
-bool ignfilesystem::dir(const QString &opt, const QString &path){
-    QDir dir;
-    if(opt == "create"){
-        return dir.mkdir(path);
-    }
-    else if (opt == "remove"){
-        return dir.rmdir(path);
+bool ignfilesystem::dir(const QString &option, const QString &path){
+    QDir directory;
+    if (option == "create"){
+        return directory.mkdir(path);
+    } else if (option == "remove"){
+        return directory.rmdir(path);
     } else {
         return false;
     }
 }
 
 bool ignfilesystem::dirCreate(const QString &path){
-    QDir dir;
-    return dir.mkdir(path);
+    QDir directory;
+    return directory.mkdir(path);
 }
 
 bool ignfilesystem::dirRemove(const QString &path){
-    QDir dir;
-    return dir.rmdir(path);
+    QDir directory;
+    return directory.rmdir(path);
 }
 
 bool ignfilesystem::isExist(const QString &path){
@@ -99,17 +98,19 @@ bool ignfilesystem::isWritable(const QString &path){
 }
 
 bool ignfilesystem::copy(const QString &source, const QString &destination){
-    if(QFile::exists(destination)){
+    if (QFile::exists(destination)){
         QFile::remove(destination);
     }
+
     return QFile::copy(source, destination);
 }
 
 QString ignfilesystem::openFileDialog(){
-    QFileDialog *fd = new QFileDialog;
-    int result = fd->exec();
+    QFileDialog *fileDialog = new QFileDialog;
+    int result = fileDialog->exec();
+
     if (result){
-        QString directory = fd->selectedFiles()[0];
+        QString directory = fileDialog->selectedFiles()[0];
         return directory;
     } else {
         return NULL;
@@ -117,19 +118,20 @@ QString ignfilesystem::openFileDialog(){
 }
 
 QString ignfilesystem::openDirDialog(){
-    QFileDialog *fd = new QFileDialog;
-#ifdef Linux
-    QTreeView *tree = fd->findChild <QTreeView*>();
+    QFileDialog *fileDialog = new QFileDialog;
+    #ifdef Linux
+    QTreeView *tree = fileDialog->findChild <QTreeView*>();
     tree->setRootIsDecorated(true);
     tree->setItemsExpandable(true);
-#endif
-    fd->setFileMode(QFileDialog::Directory);
-    fd->setOption(QFileDialog::ShowDirsOnly);
-    fd->setViewMode(QFileDialog::Detail);
-    int result = fd->exec();
+    #endif
+    fileDialog->setFileMode(QFileDialog::Directory);
+    fileDialog->setOption(QFileDialog::ShowDirsOnly);
+    fileDialog->setViewMode(QFileDialog::Detail);
+    int result = fileDialog->exec();
     QString directory;
+
     if (result){
-        directory = fd->selectedFiles()[0];
+        directory = fileDialog->selectedFiles()[0];
         return directory;
     } else {
         return NULL;
@@ -137,18 +139,20 @@ QString ignfilesystem::openDirDialog(){
 }
 
 QString ignfilesystem::saveFileDialog(){
-    QFileDialog *fd = new QFileDialog;
-    QString directory = fd->getSaveFileName();
+    QFileDialog *fileDialog = new QFileDialog;
+    QString directory = fileDialog->getSaveFileName();
     return directory;
 }
 
 QStringList ignfilesystem::list(const QString &path){
     QDirIterator dirIt(path, QDirIterator::Subdirectories);
     QStringList list;
+
     while (dirIt.hasNext()){
         dirIt.next();
         list.push_front(dirIt.filePath());
     }
+    
     return list;
 }
 

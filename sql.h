@@ -18,8 +18,8 @@ public:
 signals:
 
 public slots:
-    bool driver(const QString &drv, QString connect);
-    QVariant query(const QString &qr);
+    bool driver(const QString &driver, QString connection);
+    QVariant query(const QString &query);
 };
 
 #endif // SQL_H

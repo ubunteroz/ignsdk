@@ -26,15 +26,17 @@ public:
 signals:
 
 public slots:
-    bool fileRemove(const QString &path);
     QString appPath();
     QString homePath();
+
+    bool fileRemove(const QString &path);
     bool fileWrite(const QString &path, const QString &data);
     QString fileRead(const QString &path);
-    bool dir(const QString &opt, const QString &path);
+
+    bool dir(const QString &option, const QString &path);
     bool dirCreate(const QString &path);
     bool dirRemove(const QString &path);
-    //checking file or directory
+    
     bool isExist(const QString &path);
     bool isDirectory(const QString &path);
     bool isFile(const QString &path);
@@ -43,10 +45,13 @@ public slots:
     bool isReadable(const QString &path);
     bool isWritable(const QString &path);
     bool isSymlink(const QString &path);
+
     bool copy(const QString &source, const QString &destination);
+
     QString openFileDialog();
     QString openDirDialog();
     QString saveFileDialog();
+
     QStringList list(const QString &path);
     QVariant info(const QString &path);
 };

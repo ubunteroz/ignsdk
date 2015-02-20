@@ -100,7 +100,7 @@ void ign::showMinimized(){
 
 QString ign::showMessageBox(const QString &title, const QString &message, const QString &button){
     QMessageBox msgBox;
-    #ifdef OSX
+    #ifdef Q_OS_MAC
     msgBox.setText(title);
     #else
     msgBox.setWindowTitle(title);

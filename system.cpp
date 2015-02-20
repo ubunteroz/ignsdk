@@ -3,20 +3,21 @@
 
 ignsystem::ignsystem(QObject *parent): QObject(parent){}
 
-QString ignsystem::cliOut(const QString& cli){
-    QProcess os;
-    os.setProcessChannelMode(QProcess::MergedChannels);
-    os.start(cli);
-    int pid = os.pid();
+QString ignsystem::cliOut(const QString& command){
+    QProcess process;
+    process.setProcessChannelMode(QProcess::MergedChannels);
+    process.start(command);
+    int pid = process.pid();
     qDebug() << "Executing process with PID" << pid;
-    os.waitForFinished(-1);
-    return os.readAllStandardOutput();
+    process.waitForFinished(-1);
+    return process.readAllStandardOutput();
 }
 
 QString ignsystem::hash(const QString &data, QString hash_func){
     bool isValid = true;
     QByteArray hash;
     QByteArray byteArray = data.toLatin1();
+
     if (hash_func == "md4"){
         hash = QCryptographicHash::hash(byteArray, QCryptographicHash::Md4);
     } else if (hash_func == "md5"){
@@ -47,17 +48,17 @@ void ignsystem::desktopService(const QString &link){
     QDesktopServices::openUrl(QUrl(link));
 }
 
-void ignsystem::exec(const QString &cli){
-    proc = new QProcess( this );
-    proc->setReadChannelMode(QProcess::MergedChannels);
-    connect(proc, SIGNAL(readyReadStandardOutput()), this, SLOT( _out()));
-    proc->start(cli);
+void ignsystem::exec(const QString &command){
+    process = new QProcess(this);
+    process->setReadChannelMode(QProcess::MergedChannels);
+    process->start(command);
+    connect(process, SIGNAL(readyReadStandardOutput()), this, SLOT( _out()));
 }
 
 void ignsystem::_out(){
-    emit out(proc->readAllStandardOutput());
+    emit out(process->readAllStandardOutput());
 }
 
 void ignsystem::kill(){
-    proc->kill();
+    process->kill();
 }

@@ -13,11 +13,11 @@ class ignsystem: public QObject{
 
 public:
     explicit ignsystem(QObject *parent = 0);
-    QProcess *proc;
+    QProcess *process;
 
 public slots:
-    QString cliOut(const QString &cli);
-    void exec(const QString &cli);
+    QString cliOut(const QString &command);
+    void exec(const QString &command);
     QString hash(const QString &data, QString hash_func);
     void desktopService(const QString &link);
     void _out();
