@@ -129,9 +129,11 @@ public slots:
 
     // System
     QObject *system();
+    QObject *sys();
 
     // Network
     QObject *network();
+    QObject *net();
 
     // IGNSDK Version
     QString sdkVersion();

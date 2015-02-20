@@ -556,6 +556,14 @@ QObject *ign::system(){
     return m_system;
 }
 
+QObject *ign::sys(){
+    if (!m_system){
+        m_system = new ignsystem;
+    }
+
+    return m_system;
+}
+
 // Filesystem
 QObject *ign::filesystem(){
     if (!m_filesystem){
@@ -567,6 +575,14 @@ QObject *ign::filesystem(){
 
 // Network
 QObject *ign::network(){
+    if (!m_network){
+        m_network = new ignnetwork;
+    }
+
+    return m_network;
+}
+
+QObject *ign::net(){
     if (!m_network){
         m_network = new ignnetwork;
     }
