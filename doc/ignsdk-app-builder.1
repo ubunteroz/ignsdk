@@ -1,21 +1,25 @@
-.TH IGNSDK-APP-BUILDER 1 "December 3, 2013" "Version 1.1.3" "IGNSDK App Builder - General Commands Manual"
+.TH IGNSDK-APP-BUILDER 1 "February 21, 2015" "Version 1.1.6" "IGNSDK App Builder - General Commands Manual"
 .SH NAME
 IGNSDK App Builder \- IGOS Nusantara Software Development Kit (Application Builder)
 .SH SYNOPSIS
-ignsdk-app-builder [-p \fBpackage_name\fR] [-g] [-r \fBremote_url\fR]
+ignsdk-app-builder [-p|--pkgname \fBpackage_name\fR] [-d|--directory \fBproject_dir\fR] [-l|--list] [-x|--distribution \fBdistribution\fR] [-h|--help]
 .SH DESCRIPTION
+.PP
+IGNSDK App Builder is a tool that automates application packaging process for IGNSDK applications. The result is either RPM or DEB (or maybe other package format), depends on your distribution.
 .PP
 IGNSDK is a Software Development Kit (SDK) designed specifically for developing hybrid applications in IGOS Nusantara. But, now also available for other Linux distributions, 
 such as Archlinux, Slackware, Ubuntu, and Debian. You can write desktop applications in HTML and Javascript language with IGNSDK.
-.PP
-IGNSDK App Builder is a tool that automates application packaging process. The result is either RPM or DEB (or maybe other package format), depends on your distribution.
 .SH OPTIONS
-.IP "\-p, \-\-pkgname \fBpackage_name\fR" 30
+.IP "-p, --pkgname \fBpackage_name\fR" 32
 Specify package name you want to build.
-.IP "\-d, \-\-dir \fBproject_dir\fR" 30
+.IP "-d, --directory \fBproject_dir\fR" 32
 Build from custom project directory instead of $HOME/IGNSDK-APP/$project_dir.
-.IP "\-l, \-\-list" 30
+.IP "-l, --list" 32
 List existing projects.
+.IP "-x, --distribution \fBdistribution\fR" 32
+(Debian-only) Build for other distribution. Supported distribution is \fBign\fR (RPM format).
+.IP "-h, --help" 32
+Show help.
 .SH BUGS
 .PP
 See https://github.com/anak10thn/ignsdk-qt/issues/
@@ -23,4 +27,4 @@ See https://github.com/anak10thn/ignsdk-qt/issues/
 .PP
 \fBignsdk\fR(1), \fBignsdk-app-creator\fR(1)
 .SH AUTHOR
-This manual page was written by IGNSDK Developers.
+This manual page was written by Surya Handika Putratama <ubunteroz@gmail.com>.

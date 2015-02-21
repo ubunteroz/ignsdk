@@ -1,25 +1,29 @@
-.TH IGNSDK 1 "December 3, 2013" "Version 1.1.3" "IGNSDK - General Commands Manual"
+.TH IGNSDK 1 "February 21, 2015" "Version 1.1.6" "IGNSDK - General Commands Manual"
 .SH NAME
 IGNSDK \- IGOS Nusantara Software Development Kit
 .SH SYNOPSIS
-ignsdk [-d] [-v] [-r \fBport\fR] [-p \fBproject_dir\fR]
+ignsdk [-p|--project \fBproject_dir\fR] [-f|--file \fBfile\fR] [-d|--development] [-r|--remote \fBport\fR] [-v|--version] [-h|--help]
 .SH DESCRIPTION
 .PP
 IGNSDK is a Software Development Kit (SDK) designed specifically for developing hybrid applications in IGOS Nusantara. But, now also available for other Linux distributions, 
 such as Archlinux, Slackware, Ubuntu, and Debian. You can write desktop applications in HTML and Javascript language with IGNSDK.
 .PP
-Homepage: http://ignsdk.web.id
+\fBHomepage:\fR http://ignsdk.web.id
 .br
-Full documentation: https://github.com/anak10thn/ignsdk-qt/wiki
+\fBFull documentation:\fR https://github.com/anak10thn/ignsdk-qt/wiki
 .SH OPTIONS
-.IP "\-d, \-\-dev" 30
-Activate debug mode (Web Inspector).
-.IP "\-p \fBproject_dir\fR" 30
+.IP "-p, --project \fBproject_dir\fR" 30
 Run application. \fBproject_dir\fR must contain both index.html and ignsdk.json.
-.IP "\-r, \-\-dev-remote \fBport\fR" 30
+.IP "-f, --file" 30
+Load specific HTML file instead of index.html
+.IP "-d, --development" 30
+Activate development mode (Web Inspector).
+.IP "-r, --remote \fBport\fR" 30
 Set port number for remote debugging.
-.IP "\-v, --version" 30
+.IP "-v, --version" 30
 Show IGNSDK version.
+.IP "-h, --help" 30
+Show help.
 .SH BUGS
 .PP
 See https://github.com/anak10thn/ignsdk-qt/issues/
@@ -27,4 +31,4 @@ See https://github.com/anak10thn/ignsdk-qt/issues/
 .PP
 \fBignsdk-app-creator\fR(1), \fBignsdk-app-builder\fR(1)
 .SH AUTHOR
-This manual page was written by IGNSDK Developers.
+This manual page was written by Surya Handika Putratama <ubunteroz@gmail.com>.
