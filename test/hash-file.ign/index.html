@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="materialize/css/materialize.min.css" media="screen">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<style type="text/css">
+			#md4, #md5, #sha1, #sha224, #sha256, #sha384, #sha512,
+			#sha3-224, #sha3-256, #sha3-384, #sha3-512 {
+				word-wrap: break-word;
+				font-family: monospace;
+			}
+
+			.card-panel {
+				color: white;
+			}
+		</style>
+		<script type="text/javascript" src="qrc:///js/jquery.js"></script>
+		<script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+		<script type="text/javascript">
+			ign.widgetSizeMin("600", "400");
+			ign.widgetSizeMax("600", "400");
+
+			$(function(){
+				var sys = ign.system();
+				var fs = ign.filesystem();
+
+				$('#open').click(function(){
+					var file = fs.openFileDialog();
+					$('#input').val(file);
+					$('#md4').text(sys.hashFile(file, "md4"));
+					$('#md5').text(sys.hashFile(file, "md5"));
+					$('#sha1').text(sys.hashFile(file, "sha1"));
+					$('#sha224').text(sys.hashFile(file, "sha224"));
+					$('#sha256').text(sys.hashFile(file, "sha256"));
+					$('#sha384').text(sys.hashFile(file, "sha384"));
+					$('#sha512').text(sys.hashFile(file, "sha512"));
+					$('#sha3-224').text(sys.hashFile(file, "sha3-224"));
+					$('#sha3-256').text(sys.hashFile(file, "sha3-256"));
+					$('#sha3-384').text(sys.hashFile(file, "sha3-384"));
+					$('#sha3-512').text(sys.hashFile(file, "sha3-512"));
+				});
+			})
+		</script>
+	</head>
+	<body>
+		<br>
+		<div class="container">
+			<div class="row">
+				<div class="col s9">
+					<input disabled type="text" id="input" value="" placeholder="Type something here...">
+				</div>
+				<div class="col s3">
+					<a id="open" class="btn">Open...</a>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col s12">
+					<div class="card-panel teal">
+						<p><b>MD4</b><br><span id="md4"></span></p>
+						<p><b>MD5</b><br><span id="md5"></span></p>
+						<p><b>SHA1</b><br><span id="sha1"></span></p>
+						<p><b>SHA224</b><br><span id="sha224"></span></p>
+						<p><b>SHA256</b><br><span id="sha256"></span></p>
+						<p><b>SHA384</b><br><span id="sha384"></span></p>
+						<p><b>SHA512</b><br><span id="sha512"></span></p>
+						<p><b>SHA3-224</b><br><span id="sha3-224"></span></p>
+						<p><b>SHA3-256</b><br><span id="sha3-256"></span></p>
+						<p><b>SHA3-384</b><br><span id="sha3-384"></span></p>
+						<p><b>SHA3-512</b><br><span id="sha3-512"></span></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
