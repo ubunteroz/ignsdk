@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="materialize/css/materialize.min.css" media="screen">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<style type="text/css">
+			#size, #lastread, #lastmodified, #absolute, #base, #exists, #issymlink,
+			#isabsolute, #isrelative, #isbundle, #bundle, #isdir, #isfile, #isexec,
+			#ishidden, #isreadable, #iswritable, #isroot {
+				word-wrap: break-word;
+				font-family: monospace;
+			}
+
+			.card-panel {
+				color: white;
+			}
+		</style>
+		<script type="text/javascript" src="qrc:///js/jquery.js"></script>
+		<script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+		<script type="text/javascript">
+			ign.widgetSizeMin("600", "400");
+			ign.widgetSizeMax("600", "400");
+
+			$(function(){
+				var fs = ign.filesystem();
+
+				$('#openfile, #openfolder').click(function(){
+					if ($(this).attr('id') == "openfile"){
+						var file = fs.openFileDialog();
+					} else {
+						var file = fs.openDirDialog();
+					}
+					
+					var json = JSON.stringify(fs.info(file));
+					var info = $.parseJSON(json);
+					$('#input').val(file);
+
+					$('#size').text(info.size + " bytes");
+					$('#lastread').text(info.lastRead);
+					$('#lastmodified').text(info.lastModified);
+					$('#absolute').text(info.absoluteFilePath);
+					$('#base').text(info.baseName);
+					$('#exists').text(info.exists);
+					$('#issymlink').text(info.isSymlink);
+					$('#isabsolute').text(info.isAbsolute);
+					$('#isrelative').text(info.isRelative);
+					$('#isbundle').text(info.isBundle);
+					$('#bundle').text(info.bundleName);
+					$('#isdir').text(info.isDir);
+					$('#isfile').text(info.isFile);
+					$('#isexec').text(info.isExecutable);
+					$('#ishidden').text(info.isHidden);
+					$('#isreadable').text(info.isReadable);
+					$('#iswritable').text(info.isWritable);
+					$('#isroot').text(info.isRoot);
+				});
+			})
+		</script>
+	</head>
+	<body>
+		<br>
+		<div class="container">
+			<div class="row">
+				<div class="col s12">
+					<input disabled type="text" id="input" value="" placeholder="Type something here...">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col s12">
+					<a id="openfile" class="btn">Open File...</a>
+					<a id="openfolder" class="btn">Open Folder...</a>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col s12">
+					<div class="card-panel teal">
+						<p><b>File size</b><br><span id="size"></span></p>
+						<p><b>Last read</b><br><span id="lastread"></span></p>
+						<p><b>Last modified</b><br><span id="lastmodified"></span></p>
+						<p><b>Absolute path</b><br><span id="absolute"></span></p>
+						<p><b>Base name</b><br><span id="base"></span></p>
+						<p><b>Is exists?</b><br><span id="exists"></span></p>
+						<p><b>Is symbolic link?</b><br><span id="issymlink"></span></p>
+						<p><b>Is absolute path?</b><br><span id="isabsolute"></span></p>
+						<p><b>Is relative path?</b><br><span id="isrelative"></span></p>
+						<p><b>Is bundle?</b><br><span id="isbundle"></span></p>
+						<p><b>Bundle name</b><br><span id="bundle"></span></p>
+						<p><b>Is directory?</b><br><span id="isdir"></span></p>
+						<p><b>Is file?</b><br><span id="isfile"></span></p>
+						<p><b>Is executable?</b><br><span id="isexec"></span></p>
+						<p><b>Is hidden?</b><br><span id="ishidden"></span></p>
+						<p><b>Is readable?</b><br><span id="isreadable"></span></p>
+						<p><b>Is writable?</b><br><span id="iswritable"></span></p>
+						<p><b>Is root?</b><br><span id="isroot"></span></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
