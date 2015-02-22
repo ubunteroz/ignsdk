@@ -7,6 +7,8 @@
 #include <QCryptographicHash>
 #include <QDesktopServices>
 #include <QUrl>
+#include <QFile>
+#include <QFileInfo>
 
 class ignsystem: public QObject{
     Q_OBJECT
@@ -19,6 +21,7 @@ public slots:
     QString cliOut(const QString &command);
     void exec(const QString &command);
     QString hash(const QString &data, QString hash_func);
+    QString hashFile(const QString &path, QString hash_algo);
     void desktopService(const QString &link);
     void _out();
     void kill();

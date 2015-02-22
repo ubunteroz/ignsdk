@@ -52,6 +52,53 @@ QString ignsystem::hash(const QString &data, QString hash_func){
     }
 }
 
+QString ignsystem::hashFile(const QString &path, QString hash_algo){
+    bool isValid = true;
+    QCryptographicHash::Algorithm algo;
+
+    if (hash_algo == "md4"){
+        algo = QCryptographicHash::Md4;
+    } else if (hash_algo == "md5"){
+        algo = QCryptographicHash::Md5;
+    } else if (hash_algo == "sha1"){
+        algo = QCryptographicHash::Sha1;
+    } else if (hash_algo == "sha224"){
+        algo = QCryptographicHash::Sha224;
+    } else if (hash_algo == "sha256"){
+        algo = QCryptographicHash::Sha256;
+    } else if (hash_algo == "sha384"){
+        algo = QCryptographicHash::Sha384;
+    } else if (hash_algo == "sha512"){
+        algo = QCryptographicHash::Sha512;
+    } else if (hash_algo == "sha3-224"){
+        algo = QCryptographicHash::Sha3_224;
+    } else if (hash_algo == "sha3-256"){
+        algo = QCryptographicHash::Sha3_256;
+    } else if (hash_algo == "sha3-384"){
+        algo = QCryptographicHash::Sha3_384;
+    } else if (hash_algo == "sha3-512"){
+        algo = QCryptographicHash::Sha3_512;
+    } else {
+        isValid = false;
+    }
+
+    if (isValid && QFile::exists(path) && QFileInfo(path).isFile()){
+        QCryptographicHash crypto(algo);
+        QFile file(path);
+        file.open(QFile::ReadOnly);
+
+        while (!file.atEnd()){
+            crypto.addData(file.read(512));
+        }
+
+        file.close();
+        QByteArray hash = crypto.result();
+        return hash.toHex();
+    } else {
+        return NULL;
+    }
+}
+
 void ignsystem::desktopService(const QString &link){
     QDesktopServices::openUrl(QUrl(link));
 }
