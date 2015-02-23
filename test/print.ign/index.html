@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="materialize/css/materialize.min.css" media="screen, print">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<style type="text/css">
+			body {
+				background: #888;
+				font-family: serif;
+			}
+
+			@media print {
+				body {
+					background: none;
+				}
+
+				#print {
+					visibility: hidden;
+				}
+			}
+		</style>
+		<script type="text/javascript" src="qrc:///js/jquery.js"></script>
+		<script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+		<script type="text/javascript">
+			ign.widgetSizeMin("800", "600");
+			ign.widgetSizeMax("800", "600");
+
+			$(function(){
+				$('#print').click(function(){
+					ign.print();
+				});
+			})
+		</script>
+	</head>
+	<body>
+		<br>
+		<div class="container">
+			<div class="row">
+				<div class="col s12">
+					<div class="card-panel">
+						<center>
+							<h1>Aku</h1>
+							<p>Karya Chairil Anwar</p>
+							<br>
+							<p>Kalau sampai waktuku</p>
+							<p>&apos;Ku mau tak seorang kan merayu</p>
+							<p>Tidak juga kau</p>
+							<p>Aku ini binatang jalang</p>
+							<p>Dari kumpulannya terbuang</p>
+							<p>Biar peluru menembus kulitku</p>
+							<p>Aku tetap meradang menerjang</p>
+							<p>Luka dan bisa kubawa berlari</p>
+							<p>Berlari</p>
+							<p>Hingga hilang pedih peri</p>
+							<p>Dan aku akan lebih tidak perduli</p>
+							<p>Aku mau hidup seribu tahun lagi</p>
+							<br>
+							<a id="print" class="btn">Print</a>
+						</center>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
