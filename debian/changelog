@@ -1,3 +1,12 @@
+ignsdk-debian (1.1.6.99+build2) testing; urgency=medium
+
+  * Add test/print.ign to demonstrate print support API
+  * Add test/basic.ign to demonstrate basic APIs
+  * Move *.cpp and *.h to src/
+  * Move build objects to build/ and resulting binary to bin/ignsdk
+
+ -- Surya Handika Putratama <ubunteroz@gmail.com>  Tue, 24 Feb 2015 07:54:12 +0700
+
 ignsdk-debian (1.1.6.99+build1) testing; urgency=medium
 
   * New API: print()
