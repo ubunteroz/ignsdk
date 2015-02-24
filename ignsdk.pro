@@ -11,6 +11,7 @@ TEMPLATE = app
 CONFIG += qt c++11 silent
 OBJECTS_DIR = build/
 MOC_DIR = build/
+RCC_DIR = build/
 DESTDIR = bin/
 
 SOURCES += src/main.cpp \
