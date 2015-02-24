@@ -33,4 +33,4 @@ qrc_*.cpp
 
 # Makefile and ignsdk binary
 /Makefile
-/ignsdk
+bin/ignsdk
