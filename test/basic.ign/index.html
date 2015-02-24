@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="materialize/css/materialize.min.css" media="screen">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<style type="text/css">
+			body {
+				background: #888;
+			}
+
+			#response {
+				font-weight: bold;
+			}
+		</style>
+		<script type="text/javascript" src="qrc:///js/jquery.js"></script>
+		<script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+		<script type="text/javascript">
+			$(function(){
+				$('#messagebox').click(function(){
+					var title = $('#title').val();
+					var text = $('#text').val();
+					var response = ign.showMessageBox(title, text, "yes:no:ignore");
+
+					if (response == "yes"){
+						$('#response').text("You've clicked YES");
+					} else if (response == "no"){
+						$('#response').text("You've clicked NO");
+					} else {
+						$('#response').text("You've clicked IGNORE");
+					};
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<br>
+		<div class="container">
+			<div class="row">
+				<div class="col s12">
+					<div class="card-panel">
+						<center>
+							<a class="btn" onclick="ign.showMaximized();">Maximize</a>
+							<a class="btn" onclick="ign.showMinimized();">Minimize</a>
+							<a class="btn" onclick="ign.quit();">Quit</a>
+						</center>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col s12">
+					<div class="card-panel">
+						<center><p id="response"></p></center>
+						<input type="text" id="title" value="Hello!" placeholder="Message box title">
+						<input type="text" id="text" value="This is message box. Yeah!" placeholder="Message box text">
+						<center><a id="messagebox" class="btn">Show message box</a></center>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
