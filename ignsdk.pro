@@ -9,6 +9,15 @@ QT       += network core webkitwidgets sql printsupport
 TARGET = ignsdk
 TEMPLATE = app
 CONFIG += qt c++11 silent
+
+DEFINES *= _FORTIFY_SOURCE=2
+QMAKE_CFLAGS_RELEASE -= -O2
+QMAKE_CFLAGS_RELEASE += -O3 -Wformat -Wformat-security -fstack-protector
+QMAKE_CXXFLAGS_RELEASE -= -O2
+QMAKE_CXXFLAGS_RELEASE += -O3 -Wformat -Wformat-security -fstack-protector
+QMAKE_LFLAGS_RELEASE -= -Wl,-O1
+QMAKE_LFLAGS_RELEASE += -Wl,-O3 -Wl,-z,relro -Wl,-z,now -pie
+
 OBJECTS_DIR = build/
 MOC_DIR = build/
 RCC_DIR = build/
