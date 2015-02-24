@@ -13,25 +13,26 @@ OBJECTS_DIR = build/
 MOC_DIR = build/
 DESTDIR = bin/
 
-SOURCES += main.cpp \
-    ignsdk.cpp \
-    filesystem.cpp \
-    download.cpp \
-    sql.cpp \
-    system.cpp \
-    movedrag.cpp \
-    network.cpp
+SOURCES += src/main.cpp \
+    src/ignsdk.cpp \
+    src/filesystem.cpp \
+    src/download.cpp \
+    src/sql.cpp \
+    src/system.cpp \
+    src/movedrag.cpp \
+    src/network.cpp
 
-HEADERS  += ignsdk.h \
-    filesystem.h \
-    download.h \
-    sql.h \
-    system.h \
-    movedrag.h \
-    network.h
+HEADERS  += src/ignsdk.h \
+    src/filesystem.h \
+    src/download.h \
+    src/sql.h \
+    src/system.h \
+    src/movedrag.h \
+    src/network.h \
+    src/version.h
 
 RESOURCES += \
-    ignsdk.qrc
+    src/ignsdk.qrc
 
 macx{
 ICON += icon/ignsdk-logo.icns
