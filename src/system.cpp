@@ -1,7 +1,7 @@
 #include "system.h"
 #include <QDebug>
 
-ignsystem::ignsystem(QObject *parent): QObject(parent){}
+ignsystem::ignsystem(QObject *parent): QObject(parent), jsonParse(0){}
 
 QString ignsystem::cliOut(const QString& command){
     QProcess process;
@@ -116,4 +116,33 @@ void ignsystem::_out(){
 
 void ignsystem::kill(){
     process->kill();
+}
+
+bool ignsystem::print(const QVariant &config){
+    QVariantMap configuration = jsonParse->jsonParser(config).toVariantMap();
+    QPrinter printer;
+    QTextDocument *document = new QTextDocument();
+    QPrintDialog *printDialog = new QPrintDialog();
+
+    QString type = configuration["type"].toString();
+    QString content = configuration["content"].toString();
+    QString output = configuration["out"].toString();
+
+    if (type == "html"){
+        document->setHtml(content);
+    } else {
+        document->setPlainText(content);
+    }
+
+    if (output == "pdf"){
+        printer.setOutputFormat(QPrinter::PdfFormat);
+    }
+
+    if (printDialog->exec() == QDialog::Accepted){
+        document->print(&printer);
+        delete document;
+        return true;
+    } else {
+        return false;
+    }
 }
