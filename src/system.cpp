@@ -122,7 +122,7 @@ bool ignsystem::print(const QVariant &config){
     QVariantMap configuration = jsonParse->jsonParser(config).toVariantMap();
     QPrinter printer;
     QTextDocument *document = new QTextDocument();
-    QPrintDialog *printDialog = new QPrintDialog();
+    QPrintDialog *printDialog = new QPrintDialog(&printer);
 
     QString type = configuration["type"].toString();
     QString content = configuration["content"].toString();
