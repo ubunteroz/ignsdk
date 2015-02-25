@@ -1,3 +1,10 @@
+ignsdk-debian (1.1.6.99+build3) testing; urgency=medium
+
+  * New API: system.print() to print HTML or text object
+  * Bug fixes
+
+ -- Surya Handika Putratama <ubunteroz@gmail.com>  Thu, 26 Feb 2015 01:42:26 +0700
+
 ignsdk-debian (1.1.6.99+build2) testing; urgency=medium
 
   * Add test/print.ign to demonstrate print support API
