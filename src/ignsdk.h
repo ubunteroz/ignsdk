@@ -7,6 +7,7 @@
 #include "sql.h"
 #include "system.h"
 #include "network.h"
+#include "json.h"
 #include <QObject>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QWidget>
@@ -41,6 +42,7 @@ private:
     ignsystem *m_system;
     ignfilesystem *m_filesystem;
     ignnetwork *m_network;
+    ignjson *m_json;
     QPoint offset;
     bool mMoving;
 
@@ -73,7 +75,7 @@ public slots:
     void setUrl(const QString& url);
 
     // Message box
-    QString showMessageBox(const QString &title, const QString &message, const QString &button);
+    QString showMessageBox(const QVariant &config);
 
     // Print support
     void print();

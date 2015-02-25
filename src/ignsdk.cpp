@@ -13,7 +13,8 @@ ign::ign(QObject *parent): QObject(parent),
     m_sql(0),
     m_system(0),
     m_filesystem(0),
-    m_network(0)
+    m_network(0),
+    m_json(0)
 {
     this->version = QString(IGNSDK_VERSION);
     this->debugging = false;
@@ -98,7 +99,12 @@ void ign::showMinimized(){
     this->web.showMinimized();
 }
 
-QString ign::showMessageBox(const QString &title, const QString &message, const QString &button){
+QString ign::showMessageBox(const QVariant &config){
+    QVariantMap configuration = m_json->jsonParser(config).toVariantMap();
+    QString title = configuration["title"].toString();
+    QString message = configuration["message"].toString();
+    QString buttons = configuration["buttons"].toString();
+
     QMessageBox msgBox;
     #ifdef Q_OS_MAC
     msgBox.setText(title);
@@ -107,7 +113,7 @@ QString ign::showMessageBox(const QString &title, const QString &message, const 
     #endif
     msgBox.setInformativeText(message);
 
-    QStringList btnlist = button.split(":");
+    QStringList btnlist = buttons.split(":");
     btnlist.removeDuplicates();
 
     for (int n = 0; n < btnlist.size(); n++){

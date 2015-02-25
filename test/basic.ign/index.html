@@ -17,9 +17,13 @@
 		<script type="text/javascript">
 			$(function(){
 				$('#messagebox').click(function(){
-					var title = $('#title').val();
-					var text = $('#text').val();
-					var response = ign.showMessageBox(title, text, "yes:no:ignore");
+					var config = {
+						title: $('#title').val(),
+						message: $('#text').val(),
+						buttons: "yes:no:ignore"
+					}
+
+					var response = ign.showMessageBox(config);
 
 					if (response == "yes"){
 						$('#response').text("You've clicked YES");
