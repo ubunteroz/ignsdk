@@ -14,7 +14,7 @@
 					background: none;
 				}
 
-				#print {
+				#printScreen, #printHTML, #printText {
 					visibility: hidden;
 				}
 			}
@@ -26,8 +26,30 @@
 			ign.widgetSizeMax("800", "600");
 
 			$(function(){
-				$('#print').click(function(){
+				var system = ign.sys();
+				var content = "<h1>Aku</h1><p>Karya Chairil Anwar</p><br><p>Kalau sampai waktuku</p><p>&apos;Ku mau tak seorang kan merayu</p><p>Tidak juga kau</p><p>Aku ini binatang jalang</p><p>Dari kumpulannya terbuang</p><p>Biar peluru menembus kulitku</p><p>Aku tetap meradang menerjang</p><p>Luka dan bisa kubawa berlari</p><p>Berlari</p><p>Hingga hilang pedih peri</p><p>Dan aku akan lebih tidak perduli</p><p>Aku mau hidup seribu tahun lagi</p>";
+				var configHTML = {
+					type: "html",
+					content: content
+				};
+				var configText = {
+					type: "text",
+					content: content
+				};
+
+
+				$('#content-goes-here').html(content);
+
+				$('#printScreen').click(function(){
 					ign.print();
+				});
+
+				$('#printHTML').click(function(){
+					system.print(configHTML);
+				});
+
+				$('#printText').click(function(){
+					system.print(configText);
 				});
 			})
 		</script>
@@ -39,23 +61,11 @@
 				<div class="col s12">
 					<div class="card-panel">
 						<center>
-							<h1>Aku</h1>
-							<p>Karya Chairil Anwar</p>
+							<div id="content-goes-here"></div>
 							<br>
-							<p>Kalau sampai waktuku</p>
-							<p>&apos;Ku mau tak seorang kan merayu</p>
-							<p>Tidak juga kau</p>
-							<p>Aku ini binatang jalang</p>
-							<p>Dari kumpulannya terbuang</p>
-							<p>Biar peluru menembus kulitku</p>
-							<p>Aku tetap meradang menerjang</p>
-							<p>Luka dan bisa kubawa berlari</p>
-							<p>Berlari</p>
-							<p>Hingga hilang pedih peri</p>
-							<p>Dan aku akan lebih tidak perduli</p>
-							<p>Aku mau hidup seribu tahun lagi</p>
-							<br>
-							<a id="print" class="btn">Print</a>
+							<a id="printScreen" class="btn">Print Screen</a>
+							<a id="printHTML" class="btn">Print as HTML</a>
+							<a id="printHTML" class="btn">Print as Text</a>
 						</center>
 					</div>
 				</div>
