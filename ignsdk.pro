@@ -39,6 +39,7 @@ HEADERS  += src/ignsdk.h \
     src/system.h \
     src/movedrag.h \
     src/network.h \
+    src/json.h \
     src/version.h
 
 RESOURCES += \
