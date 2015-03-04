@@ -30,7 +30,8 @@ SOURCES += src/main.cpp \
     src/sql.cpp \
     src/system.cpp \
     src/movedrag.cpp \
-    src/network.cpp
+    src/network.cpp \
+    src/process.cpp
 
 HEADERS  += src/ignsdk.h \
     src/filesystem.h \
@@ -40,6 +41,7 @@ HEADERS  += src/ignsdk.h \
     src/movedrag.h \
     src/network.h \
     src/json.h \
+    src/process.h \
     src/version.h
 
 RESOURCES += \

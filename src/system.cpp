@@ -1,7 +1,7 @@
 #include "system.h"
 #include <QDebug>
 
-ignsystem::ignsystem(QObject *parent): QObject(parent), jsonParse(0){}
+ignsystem::ignsystem(QObject *parent): QObject(parent), jsonParse(0), process(0){}
 
 QString ignsystem::cliOut(const QString& command){
     QProcess process;
@@ -103,20 +103,10 @@ void ignsystem::desktopService(const QString &link){
     QDesktopServices::openUrl(QUrl(link));
 }
 
-int ignsystem::exec(const QString &command){
-    process = new QProcess(this);
-    process->setReadChannelMode(QProcess::MergedChannels);
-    process->start(command);
-    connect(process, SIGNAL(readyReadStandardOutput()), this, SLOT( _out()));
-    return process->pid();
-}
-
-void ignsystem::_out(){
-    emit out(process->readAllStandardOutput());
-}
-
-void ignsystem::kill(){
-    process->kill();
+QObject *ignsystem::exec(const QString &command){
+    process = new ignprocess;
+    process->exec(command);
+    return process;
 }
 
 bool ignsystem::print(const QVariant &config){
