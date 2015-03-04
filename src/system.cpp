@@ -103,11 +103,12 @@ void ignsystem::desktopService(const QString &link){
     QDesktopServices::openUrl(QUrl(link));
 }
 
-void ignsystem::exec(const QString &command){
+int ignsystem::exec(const QString &command){
     process = new QProcess(this);
     process->setReadChannelMode(QProcess::MergedChannels);
     process->start(command);
     connect(process, SIGNAL(readyReadStandardOutput()), this, SLOT( _out()));
+    return process->pid();
 }
 
 void ignsystem::_out(){

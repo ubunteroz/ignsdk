@@ -25,7 +25,7 @@ public:
 
 public slots:
     QString cliOut(const QString &command);
-    void exec(const QString &command);
+    int exec(const QString &command);
     QString hash(const QString &data, QString hash_func);
     QString hashFile(const QString &path, QString hash_algo);
     void desktopService(const QString &link);
