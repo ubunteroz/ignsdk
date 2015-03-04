@@ -1,6 +1,6 @@
 #include "sql.h"
 
-ignsql::ignsql(QObject *parent): QObject(parent){}
+ignsql::ignsql(QObject *parent): QObject(parent), jsonParse(0){}
 
 bool ignsql::driver(const QString &driver, QString connection){
     if (driver == "mysql"){
@@ -18,6 +18,36 @@ bool ignsql::driver(const QString &driver, QString connection){
     } else if (driver == "sqlite"){
         this->db = QSqlDatabase::addDatabase("QSQLITE");
         this->db.setDatabaseName(connection);
+        return this->db.open();
+    } else {
+        qDebug() << "Error: Invalid database driver specified. Available drivers: mysql, sqlite, sqlite2.";
+        return false;
+    }
+}
+
+bool ignsql::driver(const QVariant &config){
+    QVariantMap configuration = jsonParse->jsonParser(config).toVariantMap();
+    QString driver = configuration["driver"].toString();
+    QString hostname = configuration["hostname"].toString();
+    QString username = configuration["username"].toString();
+    QString password = configuration["password"].toString();
+    QString database = configuration["db"].toString();
+    database = configuration["database"].toString();
+
+    if (driver == "mysql"){
+        this->db = QSqlDatabase::addDatabase("QMYSQL");
+        this->db.setHostName(hostname);
+        this->db.setUserName(username);
+        this->db.setPassword(password);
+        this->db.setDatabaseName(database);
+        return this->db.open();
+    } else if (driver == "sqlite2"){
+        this->db = QSqlDatabase::addDatabase("QSQLITE2");
+        this->db.setDatabaseName(database);
+        return this->db.open();
+    } else if (driver == "sqlite"){
+        this->db = QSqlDatabase::addDatabase("QSQLITE");
+        this->db.setDatabaseName(database);
         return this->db.open();
     } else {
         qDebug() << "Error: Invalid database driver specified. Available drivers: mysql, sqlite, sqlite2.";
