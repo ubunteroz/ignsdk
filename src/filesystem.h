@@ -16,12 +16,14 @@
 #include <QJsonArray>
 #include <QJsonParseError>
 #include <QDateTime>
+#include "json.h"
 
 class ignfilesystem: public QObject{
     Q_OBJECT
 
 public:
     ignfilesystem(QObject *parent = 0);
+    ignjson *jsonParse;
 
 signals:
 
@@ -51,6 +53,7 @@ public slots:
     QString openFileDialog();
     QString openDirDialog();
     QString saveFileDialog();
+    QString saveFileDialog(const QVariant &config);
 
     QStringList list(const QString &path);
     QVariant info(const QString &path);

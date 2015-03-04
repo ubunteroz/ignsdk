@@ -2,7 +2,7 @@
 #include "filesystem.h"
 #include <QDebug>
 
-ignfilesystem::ignfilesystem(QObject *parent): QObject(parent){}
+ignfilesystem::ignfilesystem(QObject *parent): QObject(parent), jsonParse(0){}
 
 bool ignfilesystem::fileRemove(const QString &path){
     QFile file(path);
@@ -142,6 +142,28 @@ QString ignfilesystem::saveFileDialog(){
     QFileDialog *fileDialog = new QFileDialog;
     QString directory = fileDialog->getSaveFileName();
     return directory;
+}
+
+QString ignfilesystem::saveFileDialog(const QVariant &config){
+    QVariantMap configuration = jsonParse->jsonParser(config).toVariantMap();
+    QString title = "Save File", path = this->homePath(), extension = "";
+
+    if (configuration["title"].toString() != ""){
+        title = configuration["title"].toString();
+    }
+
+    if (configuration["path"].toString() != ""){
+        path = configuration["path"].toString();
+    }
+
+    if (configuration["info"].toString() != ""){
+        extension = configuration["info"].toString();
+    }
+
+    QFileDialog *fileDialog = new QFileDialog;
+    QWidget *widget = new QWidget();
+    QString savePath = fileDialog->getSaveFileName(widget, title, path, extension);
+    return savePath;
 }
 
 QStringList ignfilesystem::list(const QString &path){
