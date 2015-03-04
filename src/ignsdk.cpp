@@ -199,12 +199,19 @@ QString ign::showMessageBox(const QVariant &config){
 }
 
 // Very basic print support
-void ign::print(){
+bool ign::print(){
     QPrintDialog *printDialog = new QPrintDialog(&printer);
     
     if (printDialog->exec() == QDialog::Accepted){
         this->web.print(&printer);
+        return true;
+    } else {
+        return false;
     }
+}
+
+bool ign::print(const QVariant &config){
+    return this->m_system->print(config);
 }
 
 // Action trigger

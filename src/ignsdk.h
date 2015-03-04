@@ -78,7 +78,8 @@ public slots:
     QString showMessageBox(const QVariant &config);
 
     // Print support
-    void print();
+    bool print();
+    bool print(const QVariant &config);
 
     // Development mode
     void setDev(bool v);
