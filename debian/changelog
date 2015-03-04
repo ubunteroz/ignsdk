@@ -1,3 +1,13 @@
+ignsdk-debian (1.1.6.99+build4) testing; urgency=medium
+
+  * src/sql.cpp: New API: driver(config)
+  * src/system.cpp: exec() now supports multiple processes
+  * src/filesystem.cpp: New API: saveFileDialog(config)
+  * src/ignsdk.cpp: Move print(config) API to parent, print() API now returns boolean
+  * ignsdk.pro: Add src/json.h to HEADERS
+
+ -- Surya Handika Putratama <ubunteroz@gmail.com>  Thu, 05 Mar 2015 03:12:14 +0700
+
 ignsdk-debian (1.1.6.99+build3) testing; urgency=medium
 
   * New API: system.print() to print HTML or text object
