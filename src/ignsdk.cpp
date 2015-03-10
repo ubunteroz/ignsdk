@@ -216,7 +216,7 @@ bool ign::print(const QVariant &config){
 
 // Action trigger
 void ign::quit(){
-    this->web.close();
+    exit(0);
 }
 
 void ign::back(){
