@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += network core webkitwidgets sql printsupport
+QT       += network core webkitwidgets sql printsupport serialport
 
 TARGET = ignsdk
 TEMPLATE = app
@@ -31,7 +31,8 @@ SOURCES += src/main.cpp \
     src/system.cpp \
     src/movedrag.cpp \
     src/network.cpp \
-    src/process.cpp
+    src/process.cpp \
+    src/serial.cpp
 
 HEADERS  += src/ignsdk.h \
     src/filesystem.h \
@@ -42,6 +43,7 @@ HEADERS  += src/ignsdk.h \
     src/network.h \
     src/json.h \
     src/process.h \
+    src/serial.h \
     src/version.h
 
 RESOURCES += \

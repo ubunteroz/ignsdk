@@ -1,7 +1,7 @@
 #include "system.h"
 #include <QDebug>
 
-ignsystem::ignsystem(QObject *parent): QObject(parent), jsonParse(0), process(0){}
+ignsystem::ignsystem(QObject *parent): QObject(parent), jsonParse(0), process(0), m_serial(0){}
 
 QString ignsystem::cliOut(const QString& command){
     QProcess process;
@@ -107,6 +107,17 @@ QObject *ignsystem::exec(const QString &command){
     process = new ignprocess;
     process->exec(command);
     return process;
+}
+
+QVariant ignsystem::serial(){
+    m_serial = new ignserial;
+    return m_serial->info();
+}
+
+QObject *ignsystem::serial(const QVariant &config){
+    m_serial = new ignserial;
+    m_serial->Read(config);
+    return m_serial;
 }
 
 bool ignsystem::print(const QVariant &config){
