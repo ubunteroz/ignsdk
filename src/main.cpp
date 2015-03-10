@@ -55,6 +55,10 @@ int main(int argc, char *argv[]){
         }
     }
 
+    if (cmd_parser.isSet(cmd_dev)){
+        ignsdk.setDev(true);
+    }
+
     QString opt = url;
     QString path = url;
 
