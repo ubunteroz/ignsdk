@@ -156,8 +156,8 @@ QString ignfilesystem::saveFileDialog(const QVariant &config){
         path = configuration["path"].toString();
     }
 
-    if (configuration["info"].toString() != ""){
-        extension = configuration["info"].toString();
+    if (configuration["type"].toString() != ""){
+        extension = configuration["type"].toString();
     }
 
     QFileDialog *fileDialog = new QFileDialog;
