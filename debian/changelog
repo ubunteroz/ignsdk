@@ -1,3 +1,14 @@
+ignsdk-debian (1.1.6.99+build5) testing; urgency=medium
+
+  * src/system.cpp: New API: serial() and serial(config) to work with serial communication
+  * src/main.cpp: Add command line option to enable development mode
+  * debian/control: Add libqt5serialport5-dev as Build-Depends, update ignsdk version in subpackages' Depends
+  * src/ignsdk.cpp: ign::quit() now triggers exit(0) instead of this->web.close()
+  * src/filesystem.cpp: in saveFileDialog(config), change object name from 'info' to 'type'
+  * src/main.cpp: Fix window icon bug if project's path doesn't end with slash
+
+ -- Surya Handika Putratama <ubunteroz@gmail.com>  Wed, 11 Mar 2015 01:58:35 +0700
+
 ignsdk-debian (1.1.6.99+build4) testing; urgency=medium
 
   * src/sql.cpp: New API: driver(config)
