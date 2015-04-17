@@ -100,6 +100,7 @@ int main(int argc, char *argv[]){
 
             if (QFile::exists(directory + "/index.html"))
             {
+                app.setWindowIcon(QIcon(directory + "/icons/app.png"));
                 ignsdk.config(directory);
                 ignsdk.render(directory + "/index.html");
                 ignsdk.show();
