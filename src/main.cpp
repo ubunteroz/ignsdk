@@ -74,8 +74,8 @@ int main(int argc, char *argv[]){
         }
 
         if (QFile::exists(opt)){
-            ignsdk.render(opt);
             ignsdk.config(url);
+            ignsdk.render(opt);
             ignsdk.show();
         } else {
             qDebug() << "Error:" << opt << "is not exist.";
