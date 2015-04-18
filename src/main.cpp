@@ -64,7 +64,11 @@ int main(int argc, char *argv[]){
 
     if (!opt.isEmpty()){
         ignsdk.pathApp = opt;
-        app.setWindowIcon(QIcon(path + "/icons/app.png"));
+        if (QFile::exists(path + "/icons/app.png")){
+            app.setWindowIcon(QIcon(path + "/icons/app.png"));
+        } else {
+            app.setWindowIcon(QIcon(":/ignsdk.png"));
+        }
 
         if (file){
             opt += "/";
@@ -83,7 +87,8 @@ int main(int argc, char *argv[]){
         }
 
     } else {
-        QFileDialog *fileDialog = new QFileDialog;
+        QWidget *widget = new QWidget();
+        QFileDialog *fileDialog = new QFileDialog(widget, "Select project directory...");
 #ifdef Linux
         QTreeView *tree = fileDialog->findChild <QTreeView*>();
         tree->setRootIsDecorated(true);
@@ -97,10 +102,15 @@ int main(int argc, char *argv[]){
 
         if (result){
             directory = fileDialog->selectedFiles()[0];
+            ignsdk.pathApp = directory;
 
             if (QFile::exists(directory + "/index.html"))
             {
-                app.setWindowIcon(QIcon(directory + "/icons/app.png"));
+                if (QFile::exists(directory + "/icons/app.png")){
+                    app.setWindowIcon(QIcon(directory + "/icons/app.png"));
+                } else {
+                    app.setWindowIcon(QIcon(":/ignsdk.png"));
+                }
                 ignsdk.config(directory);
                 ignsdk.render(directory + "/index.html");
                 ignsdk.show();

@@ -53,6 +53,7 @@ public:
     void widgetNoFrame();
     void widgetTransparent();
     void liveCode();
+    bool enableLiveCode = false;
     QString pathLive;
     QString pathApp;
     QString version;

@@ -63,7 +63,7 @@ void ign::render(QString w){
     QString pwd("");
     QString url_fix;
     char *PWD;
-    PWD = getenv ("PWD");
+    PWD = getenv("PWD");
     pwd.append(PWD);
     QStringList url_exp = w.split("/");
 
@@ -80,6 +80,10 @@ void ign::render(QString w){
         this->pathLive = pwd + "/" + w;
     }
 
+    if (this->enableLiveCode){
+        this->liveCode();
+    }
+    
     this->web.load(url_fix);
 }
 
@@ -381,7 +385,7 @@ void ign::config(QString path){
 
         if (configure["debug"].toBool()){
             this->setDev(true);
-            this->liveCode();
+            this->enableLiveCode = true;
         }
 
         if (configure["debug-port"].toInt()){
