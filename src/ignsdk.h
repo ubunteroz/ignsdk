@@ -36,30 +36,28 @@ class ign: public QObject {
 private:
     QWebView web;
     QWebFrame *frame;
-    bool fullscreen;
+    QFileSystemWatcher live;
+    QPrinter printer;
+    QString pathLive;
+    QString version;
     QtDownload *dl;
+    QPoint offset;
     ignsql *m_sql;
     ignsystem *m_system;
     ignfilesystem *m_filesystem;
     ignnetwork *m_network;
     ignjson *m_json;
-    QPoint offset;
     bool mMoving;
+    bool fullscreen;
+    bool enableLiveCode = false;
+    bool debugging;
+    void liveCode();
 
 public:
     ign(QObject *parent = 0);
     void render(QString w);
     void show();
-    void widgetNoFrame();
-    void widgetTransparent();
-    void liveCode();
-    bool enableLiveCode = false;
-    QString pathLive;
     QString pathApp;
-    QString version;
-    bool debugging;
-    QFileSystemWatcher live;
-    QPrinter printer;
 
 signals:
     void downloadProgress(qint64 received, qint64 total);
@@ -103,6 +101,8 @@ public slots:
     void widgetSizeMin(int w, int h);
     void widgetSize(int w, int h);
     void widgetNoTaskbar();
+    void widgetNoFrame();
+    void widgetTransparent();
     void getToggleFullScreen();
     void getFullScreen(bool screen);
     void showMaximized();
