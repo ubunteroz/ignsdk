@@ -8,6 +8,8 @@
 #include "system.h"
 #include "network.h"
 #include "json.h"
+#include "vfs.h"
+#include "vfsprotocol.h"
 #include <QObject>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QWidget>
@@ -34,7 +36,8 @@ class ign: public QObject {
     Q_OBJECT
 
 private:
-    QWebView web;
+    //QWebView web;
+    VfsView web;
     QWebFrame *frame;
     QFileSystemWatcher live;
     QPrinter printer;
@@ -47,6 +50,7 @@ private:
     ignfilesystem *m_filesystem;
     ignnetwork *m_network;
     ignjson *m_json;
+    ignvfs *m_vfs;
     bool mMoving;
     bool fullscreen;
     bool enableLiveCode = false;
@@ -127,6 +131,7 @@ public slots:
 
     // Filesystem
     QObject *filesystem();
+    QObject *vfs();
 
     // SQL
     QObject *sql();

@@ -14,7 +14,8 @@ ign::ign(QObject *parent): QObject(parent),
     m_system(0),
     m_filesystem(0),
     m_network(0),
-    m_json(0)
+    m_json(0),
+    m_vfs(0)
 {
     this->version = QString(IGNSDK_VERSION);
     this->debugging = false;
@@ -34,7 +35,8 @@ ign::ign(QObject *parent): QObject(parent),
     web.settings()->setAttribute(QWebSettings::JavaEnabled, true);
     web.settings()->setAttribute(QWebSettings::AcceleratedCompositingEnabled, true);
     web.settings()->setAttribute(QWebSettings::WebGLEnabled, true);
-    web.settings()->setAttribute(QWebSettings::LocalContentCanAccessRemoteUrls, false);
+    web.settings()->setAttribute(QWebSettings::LocalContentCanAccessRemoteUrls, true);
+    web.settings()->setAttribute(QWebSettings::LocalContentCanAccessFileUrls, true);
 
     // Webstorage
     QString home = QDir::homePath();
@@ -588,6 +590,14 @@ QObject *ign::filesystem(){
     }
 
     return m_filesystem;
+}
+
+QObject *ign::vfs(){
+    if (!m_vfs){
+        m_vfs = new ignvfs;
+    }
+
+    return m_vfs;
 }
 
 // Network
