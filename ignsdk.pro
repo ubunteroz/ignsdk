@@ -12,11 +12,11 @@ CONFIG += qt c++11 silent
 
 DEFINES *= _FORTIFY_SOURCE=2
 QMAKE_CFLAGS_RELEASE -= -O2
-QMAKE_CFLAGS_RELEASE += -O3 -w -Wformat -Wformat-security -fstack-protector
+QMAKE_CFLAGS_RELEASE += -O3 -Wformat -Wformat-security -fstack-protector
 QMAKE_CXXFLAGS_RELEASE -= -O2
-QMAKE_CXXFLAGS_RELEASE += -O3 -w -Wformat -Wformat-security -fstack-protector
+QMAKE_CXXFLAGS_RELEASE += -O3 -Wformat -Wformat-security -fstack-protector
 QMAKE_LFLAGS_RELEASE -= -Wl,-O1
-QMAKE_LFLAGS_RELEASE += -Wl,-O3 -Wl,-z,relro -Wl,-z,now -pie
+QMAKE_LFLAGS_RELEASE += -Wl,-O3 -Wl,-z,relro -Wl,-z,now
 
 OBJECTS_DIR = build/
 MOC_DIR = build/
@@ -53,7 +53,7 @@ HEADERS  += src/ignsdk.h \
     src/version.h
 
 # TTVFS
-miniz.commands = gcc -w -O3 -DFORTIFY_SOURCE=2 -fPIC -fstack-protector -c -o build/miniz.o src/external/ttvfs/ttvfs/miniz.c
+miniz.commands = $$QMAKE_CC $$QMAKE_CFLAGS_RELEASE -fPIE -c -o build/miniz.o src/external/ttvfs/ttvfs/miniz.c
 QMAKE_EXTRA_TARGETS += miniz
 PRE_TARGETDEPS += miniz
 LIBS += build/miniz.o
@@ -91,7 +91,8 @@ HEADERS += src/external/ttvfs/ttvfs/VFS.h \
     src/external/ttvfs/ttvfs/VFSZipArchiveLoader.h
 
 # LVPA
-lvpa.commands = cd src/external/liblvpa/ && mkdir build && cd build \
+lvpa.commands = cd src/external/liblvpa/ \
+    && cd build \
     && cmake --clean-first \
     -DLVPA_ENABLE_ZLIB=TRUE -DLVPA_USE_INTERNAL_ZLIB=TRUE \
     -DLVPA_ENABLE_LZMA=TRUE -DLVPA_USE_INTERNAL_LZMA=TRUE \
@@ -100,8 +101,8 @@ lvpa.commands = cd src/external/liblvpa/ && mkdir build && cd build \
     -DLVPA_ENABLE_LZHAM=TRUE -DLVPA_USE_INTERNAL_LZHAM=TRUE \
     -DLVPA_BUILD_TTVFS_BINDINGS=TRUE -DLVPA_BUILD_TESTPROG=FALSE \
     -DTTVFS_INCLUDE_DIRS:PATH=../../ttvfs/ttvfs/ \
-    -DCMAKE_CXX_FLAGS_RELEASE=-fPIC -fstack-protector \
-    -DCMAKE_C_FLAGS_RELEASE=-fPIC -fstack-protector \
+    -DCMAKE_CXX_FLAGS_RELEASE="-O3 -fPIE -fstack-protector" \
+    -DCMAKE_C_FLAGS_RELEASE="-O3 -fPIE -fstack-protector" \
     .. \
     && make
 QMAKE_EXTRA_TARGETS += lvpa
