@@ -1,6 +1,0 @@
-[submodule "src/external/ttvfs"]
-	path = src/external/ttvfs
-	url = https://github.com/fgenesis/ttvfs.git
-[submodule "src/external/liblvpa"]
-	path = src/external/liblvpa
-	url = https://github.com/fgenesis/liblvpa.git
