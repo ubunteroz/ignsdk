@@ -14,7 +14,6 @@ QNetworkReply *NetworkAccessManager::createRequest(
     QNetworkAccessManager::Operation operation, const QNetworkRequest &request,
     QIODevice *device)
 {
-    qDebug() << operation << request.url();
     if (operation == GetOperation && request.url().scheme() == "vfs"){
         qDebug() << "DEBUG: Requesting" << request.url().toString() << "from VFS...";
         return new VfsReply(request.url());
@@ -25,9 +24,12 @@ QNetworkReply *NetworkAccessManager::createRequest(
 
 VfsReply::VfsReply(const QUrl &url): QNetworkReply(){
     offset = 0;
-    QString path = url.toString().mid(6);
+
+    QString path = url.toString(QUrl::RemoveQuery | QUrl::RemoveFragment | QUrl::StripTrailingSlash | QUrl::NormalizePathSegments);
+    QString path_fixed = path.mid(6);
+
     open(QNetworkReply::ReadOnly | QNetworkReply::Unbuffered);
-    content = vfs.readFile(path);
+    content = vfs.readFile(path_fixed);
     setHeader(QNetworkRequest::ContentLengthHeader, QVariant(content.size()));
     QTimer::singleShot(0, this, SIGNAL(metaDataChanged()));
     QTimer::singleShot(0, this, SIGNAL(readyRead()));

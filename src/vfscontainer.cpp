@@ -42,32 +42,36 @@ bool vfscontainer::umount(QString path, QString mountpoint){
 }
 
 QByteArray vfscontainer::_readFile(QString vpath, int offset, int length){
-	QByteArray data;
+	QByteArray data = NULL;
 	QByteArray filepath_ba = vpath.toUtf8();
 	char *filepath = filepath_ba.data();
 	ttvfs::VFSFile *vf = vfsHelper.GetFile(filepath);
-	if ((offset < 0) || (length < 0)){
-		printf("DEBUG: Error: Invalid offset/length value, returning NULL\n");
-		return NULL;
-	}
-	if ((offset > vf->size()) || (offset == vf->size())){
-		printf("DEBUG: Warning: Offset %i is beyond/at the end of file size %i, starting at 0\n", offset, vf->size());
-		offset = 0;
-	}
-	if (length == 0){
-		length = vf->size() - offset;
-	}
-	int seek_end = offset + length;
-	if (seek_end > vf->size()){
-		printf("DEBUG: Warning: Seeking beyond file size, stopping at %i\n", vf->size());
-		length = vf->size() - offset;
-	}
-	printf("DEBUG: Reading '%s', offset %i, length %i bytes, file size %i bytes\n", filepath, offset, length, vf->size());
+	
 	if (vf){
+		if ((offset < 0) || (length < 0)){
+			printf("DEBUG: Error: Invalid offset/length value, returning NULL\n");
+			return NULL;
+		}
+		if ((offset > vf->size()) || (offset == vf->size())){
+			printf("DEBUG: Warning: Offset %i is beyond/at the end of file size %i, starting at 0\n", offset, vf->size());
+			offset = 0;
+		}
+		if (length == 0){
+			length = vf->size() - offset;
+		}
+		int seek_end = offset + length;
+		if (seek_end > vf->size()){
+			printf("DEBUG: Warning: Seeking beyond file size, stopping at %i\n", vf->size());
+			length = vf->size() - offset;
+		}
+		
+		printf("DEBUG: Reading '%s', offset %i, length %i bytes, file size %i bytes\n", filepath, offset, length, vf->size());
 		vf->open("rb");
 		data = QByteArray::fromRawData((const char *)vf->getBuf(), vf->size()).mid(offset, length);
 		QDataStream in(&data, QIODevice::ReadOnly);
 		vf->close();
+	} else {
+		printf("DEBUG: \"%s\" not found\n", filepath);
 	}
 
 	return data;
