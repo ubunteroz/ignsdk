@@ -1,11 +1,5 @@
 <RCC>
     <qresource prefix="/">
     	<file>../ignsdk.png</file>
-        <file>../js/jquery.js</file>
-        <file>../js/ign.js</file>
-        <file>../css/ign.css</file>
-        <file>../js/skulpt.js</file>
-        <file>../js/builtin.js</file>
-        <file>../js/include.js</file>
     </qresource>
 </RCC>

@@ -44,9 +44,6 @@ ign::ign(QObject *parent): QObject(parent),
     web.settings()->setLocalStoragePath(home);
     web.settings()->enablePersistentStorage(home);
     web.settings()->setOfflineWebApplicationCachePath(home);
-
-    // Default stylesheet
-    web.settings()->setUserStyleSheetUrl(QUrl("qrc:/css/ign.css"));
     
     // Disable navigation menu by default
     web.page()->action(QWebPage::Back)->setVisible(false);
