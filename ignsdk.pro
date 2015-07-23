@@ -34,7 +34,7 @@ SOURCES += src/main.cpp \
     src/process.cpp \
     src/serial.cpp \
     src/vfs.cpp \
-    src/vfsprotocol.cpp
+    src/vfscontainer.cpp
 
 HEADERS  += src/ignsdk.h \
     src/filesystem.h \
@@ -47,7 +47,7 @@ HEADERS  += src/ignsdk.h \
     src/process.h \
     src/serial.h \
     src/vfs.h \
-    src/vfsprotocol.h \
+    src/vfscontainer.h \
     src/version.h
 
 # TTVFS
