@@ -34,7 +34,6 @@ SOURCES += src/main.cpp \
     src/process.cpp \
     src/serial.cpp \
     src/vfs.cpp \
-    src/vfscontainer.cpp \
     src/vfsprotocol.cpp
 
 HEADERS  += src/ignsdk.h \
@@ -48,7 +47,6 @@ HEADERS  += src/ignsdk.h \
     src/process.h \
     src/serial.h \
     src/vfs.h \
-    src/vfscontainer.h \
     src/vfsprotocol.h \
     src/version.h
 

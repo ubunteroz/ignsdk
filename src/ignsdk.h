@@ -9,7 +9,6 @@
 #include "network.h"
 #include "json.h"
 #include "vfs.h"
-#include "vfsprotocol.h"
 #include <QObject>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QWidget>
@@ -36,8 +35,7 @@ class ign: public QObject {
     Q_OBJECT
 
 private:
-    //QWebView web;
-    VfsView web;
+    QWebView web;
     QWebFrame *frame;
     QFileSystemWatcher live;
     QPrinter printer;
