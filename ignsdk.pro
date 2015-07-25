@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += network core webkitwidgets sql printsupport serialport
+QT += network core webkitwidgets sql printsupport serialport
 
 TARGET = ignsdk
 TEMPLATE = app
@@ -114,12 +114,4 @@ LIBS+=src/external/liblvpa/build/lvpa_ttvfs/liblvpa_ttvfs.a \
     src/external/liblvpa/build/zlib/libzlib.a
 INCLUDEPATH+=src/external/ttvfs/ttvfs/
 
-RESOURCES += \
-    src/ignsdk.qrc
-
-macx{
-ICON += icon/ignsdk-logo.icns
-}
-
-OTHER_FILES += \
-    bar-descriptor.xml
+RESOURCES += src/ignsdk.qrc
