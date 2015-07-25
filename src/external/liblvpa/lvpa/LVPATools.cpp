@@ -386,7 +386,7 @@ std::string GenerateTempFileName(const std::string& fn)
     }
 
     // Last, let the OS decide (this sucks on windows, that's why it's last)
-    if(tmpnam(&buf[0]))
+    if(mkstemp(&buf[0]))
         if(FileIsWriteable(&buf[0]))
             return &buf[0];
 
