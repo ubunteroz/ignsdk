@@ -1,6 +1,5 @@
 scripts/ignsdk-app-creator /usr/bin/
 scripts/ignsdk-app-builder /usr/bin/
-src/external/liblvpa/build/lvpak/lvpak /usr/bin/
 scripts/ignsdk-debian-creator /usr/share/ign-sdk/bin/
 scripts/ignsdk-debian-builder /usr/share/ign-sdk/bin/
 scripts/ignsdk-ign-creator /usr/share/ign-sdk/bin/
