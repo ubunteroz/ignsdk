@@ -1,29 +1,29 @@
 #ifndef NETWORK_H
 #define NETWORK_H
 
-#include <QObject>
-#include <QNetworkInterface>
+#include <QEventLoop>
+#include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
-#include <QJsonArray>
 #include <QJsonParseError>
-#include <QNetworkProxy>
 #include <QNetworkAccessManager>
+#include <QNetworkInterface>
+#include <QNetworkProxy>
 #include <QNetworkReply>
+#include <QObject>
 #include <QUrl>
 #include <QUrlQuery>
-#include <QEventLoop>
 
-class ignnetwork: public QObject{
-    Q_OBJECT
+class ignnetwork : public QObject {
+  Q_OBJECT
 
 public:
-    explicit ignnetwork(QObject *parent = 0);
+  explicit ignnetwork(QObject *parent = 0);
 
 public slots:
-    QString myIP();
-    void setProxy(const QVariant &config);
-    QString get(const QString &url);
+  QString myIP();
+  void setProxy(const QVariant &config);
+  QString get(const QString &url);
 };
 
 #endif // NETWORK_H

@@ -33,7 +33,5 @@ qrc_*.cpp
 
 # Makefile and ignsdk binary
 /Makefile
-bin/ignsdk
-
-# Build directories
-src/external/liblvpa/build/
+bin/
+build/

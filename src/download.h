@@ -1,4 +1,4 @@
-//ibnu.yahya@toroo.org
+// ibnu.yahya@toroo.org
 #ifndef DOWNLOAD_H
 #define DOWNLOAD_H
 
@@ -7,29 +7,29 @@
 #include <QtNetwork/QNetworkAccessManager>
 #include <QtNetwork/QNetworkReply>
 
-class QtDownload: public QObject{
-    Q_OBJECT
+class QtDownload : public QObject {
+  Q_OBJECT
 
 public:
-    explicit QtDownload();
-    ~QtDownload();
+  explicit QtDownload();
+  ~QtDownload();
 
-    void setTarget(const QString &target);
-    void save(const QString &destination);
+  void setTarget(const QString &target);
+  void save(const QString &destination);
 
 private:
-    QNetworkAccessManager manager;
-    QString target;
-    QString saveto;
+  QNetworkAccessManager manager;
+  QString target;
+  QString saveto;
 
 signals:
-    void done();
-    void download_signal(qint64 received, qint64 total);
-    
+  void done();
+  void download_signal(qint64 received, qint64 total);
+
 public slots:
-    void download();
-    void downloadFinished(QNetworkReply *data);
-    void downloadProgress(qint64 received, qint64 total);
+  void download();
+  void downloadFinished(QNetworkReply *data);
+  void downloadProgress(qint64 received, qint64 total);
 };
 
 #endif // DOWNLOAD_H

@@ -1,1 +1,0 @@
-This is myfile.txt from patches dir. It replaces the file from the root dir.

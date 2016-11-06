@@ -25,27 +25,26 @@
 #define DRAGMOVECHARM_H
 
 #include <QObject>
-#include <QtWidgets/QLabel>
-#include <QtWidgets/QDialog>
-#include <QtWidgets/QtWidgets>
-#include <QtWidgets/QTableWidget>
 #include <QtWebKitWidgets/QtWebKitWidgets>
+#include <QtWidgets/QDialog>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QTableWidget>
+#include <QtWidgets/QtWidgets>
 
 class DragMoveCharmPrivate;
 class QWidget;
 
-class DragMoveCharm: public QObject
-{
-    Q_OBJECT
+class DragMoveCharm : public QObject {
+  Q_OBJECT
 public:
-    DragMoveCharm(QObject *parent = 0);
-    ~DragMoveCharm();
-    void activateOn(QWidget *widget);
-    void deactivateFrom(QWidget *widget);
-    bool eventFilter(QObject *object, QEvent *event);
+  DragMoveCharm(QObject *parent = 0);
+  ~DragMoveCharm();
+  void activateOn(QWidget *widget);
+  void deactivateFrom(QWidget *widget);
+  bool eventFilter(QObject *object, QEvent *event);
 
 private:
-    DragMoveCharmPrivate *d;
+  DragMoveCharmPrivate *d;
 };
 
 #endif // DRAGMOVECHARM_H
