@@ -45,9 +45,9 @@ cp -rf scripts/ignsdk-app-creator $RPM_BUILD_ROOT/usr/bin
 cp -rf scripts/ignsdk-ign-creator $RPM_BUILD_ROOT/usr/share/ign-sdk/bin
 cp -rf scripts/ignsdk-app-builder $RPM_BUILD_ROOT/usr/bin
 cp -rf scripts/ignsdk-ign-builder $RPM_BUILD_ROOT/usr/share/ign-sdk/bin
-cp -rf docs/ignsdk.1.gz $RPM_BUILD_ROOT/%{_mandir}/man1
-cp -rf docs/ignsdk-app-builder.1.gz $RPM_BUILD_ROOT/%{_mandir}/man1
-cp -rf docs/ignsdk-app-creator.1.gz $RPM_BUILD_ROOT/%{_mandir}/man1
+gzip -c docs/ignsdk.1 > $RPM_BUILD_ROOT/%{_mandir}/man1/ignsdk.1.gz
+gzip -c docs/ignsdk-app-builder.1 > $RPM_BUILD_ROOT/%{_mandir}/man1/ignsdk-app-builder.1.gz
+gzip -c docs/ignsdk-app-creator.1 > $RPM_BUILD_ROOT/%{_mandir}/man1/ignsdk-app-creator.1.gz
 echo "ign" > $RPM_BUILD_ROOT/etc/ignsdk-dist
 cp -rf examples/* $RPM_BUILD_ROOT/usr/share/ign-sdk/examples
 cp -rf template/main.tpl $RPM_BUILD_ROOT/usr/share/ign-sdk/template
