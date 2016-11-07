@@ -14,7 +14,7 @@ env:
     - OS=debian DIST=stretch
 
 script:
-    - git describe --long
+    - git describe --always
 
 before_deploy:
     - git clone https://github.com/packpack/packpack.git packpack
