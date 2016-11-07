@@ -11,8 +11,8 @@ env:
     - OS=ubuntu DIST=xenial
     - OS=ubuntu DIST=yakkety
     - OS=debian DIST=jessie
-    - OS=debian DIST=wheezy
     - OS=debian DIST=stretch
+    - OS=debian DIST=sid
     - OS=fedora DIST=23
     - OS=fedora DIST=24
     - OS=fedora DIST=rawhide
