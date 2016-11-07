@@ -15,8 +15,6 @@ env:
 
 script:
     - git describe --always
-
-before_deploy:
     - git clone https://github.com/packpack/packpack.git packpack
     - packpack/packpack
 
