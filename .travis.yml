@@ -13,6 +13,10 @@ env:
     - OS=debian DIST=jessie
     - OS=debian DIST=wheezy
     - OS=debian DIST=stretch
+    - OS=fedora DIST=23
+    - OS=fedora DIST=24
+    - OS=fedora DIST=rawhide
+    - OS=el DIST=7
 
 script:
     - git describe --always --long
