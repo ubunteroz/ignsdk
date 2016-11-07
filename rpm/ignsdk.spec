@@ -34,22 +34,22 @@ IGOS Nusantara Software Development Kit (IGNSDK) - development tools
 %install
 install -d -m 755 $RPM_BUILD_ROOT/usr/bin
 install -d -m 755 $RPM_BUILD_ROOT/etc
-install -d -m 755 $RPM_BUILD_ROOT/usr/share/ign-sdk/test
+install -d -m 755 $RPM_BUILD_ROOT/usr/share/ign-sdk/examples
 install -d -m 755 $RPM_BUILD_ROOT/usr/share/ign-sdk/template
 install -d -m 755 $RPM_BUILD_ROOT/usr/share/ign-sdk/bin
 install -d -m 755 $RPM_BUILD_ROOT/usr/share/man/man1
 qmake-qt5
 make
 cp -rf bin/ignsdk $RPM_BUILD_ROOT/usr/bin
-cp -rf bin/ignsdk-app-creator $RPM_BUILD_ROOT/usr/bin
-cp -rf bin/ignsdk-ign-creator $RPM_BUILD_ROOT/usr/share/ign-sdk/bin
-cp -rf bin/ignsdk-app-builder $RPM_BUILD_ROOT/usr/bin
-cp -rf bin/ignsdk-ign-builder $RPM_BUILD_ROOT/usr/share/ign-sdk/bin
-cp -rf doc/ignsdk.1.gz $RPM_BUILD_ROOT/%{_mandir}/man1
-cp -rf doc/ignsdk-app-builder.1.gz $RPM_BUILD_ROOT/%{_mandir}/man1
-cp -rf doc/ignsdk-app-creator.1.gz $RPM_BUILD_ROOT/%{_mandir}/man1
+cp -rf scripts/ignsdk-app-creator $RPM_BUILD_ROOT/usr/bin
+cp -rf scripts/ignsdk-ign-creator $RPM_BUILD_ROOT/usr/share/ign-sdk/bin
+cp -rf scripts/ignsdk-app-builder $RPM_BUILD_ROOT/usr/bin
+cp -rf scripts/ignsdk-ign-builder $RPM_BUILD_ROOT/usr/share/ign-sdk/bin
+cp -rf docs/ignsdk.1.gz $RPM_BUILD_ROOT/%{_mandir}/man1
+cp -rf docs/ignsdk-app-builder.1.gz $RPM_BUILD_ROOT/%{_mandir}/man1
+cp -rf docs/ignsdk-app-creator.1.gz $RPM_BUILD_ROOT/%{_mandir}/man1
 echo "ign" > $RPM_BUILD_ROOT/etc/ignsdk-dist
-cp -rf test/* $RPM_BUILD_ROOT/usr/share/ign-sdk/test
+cp -rf examples/* $RPM_BUILD_ROOT/usr/share/ign-sdk/examples
 cp -rf template/main.tpl $RPM_BUILD_ROOT/usr/share/ign-sdk/template
 cp -rf template/app.spec $RPM_BUILD_ROOT/usr/share/ign-sdk/template
 
