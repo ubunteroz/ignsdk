@@ -5,7 +5,7 @@ Release: 1%{?dist}
 License: BSD
 Group: Development/Other
 URL: http://igos-nusantara.or.id
-Source0: https://github.com/ubunteroz/ignsdk-debian/archive/%{version}/packpack-%{version}.tar.gz
+Source0: https://github.com/ubunteroz/ignsdk-debian/archive/%{version}/ignsdk-debian-%{version}.tar.gz
 BuildRequires: qt5-qtwebkit-devel
 BuildRequires: gcc-c++
 BuildRequires: qt5-qtdeclarative-devel
