@@ -1,5 +1,5 @@
 Summary: IGOS Nusantara Software Development Kit (IGNSDK) - launcher
-Name: ignsdk
+Name: ignsdk-debian
 Version: 1.1.7
 Release: 1%{?dist}
 License: BSD
