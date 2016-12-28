@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<link rel="stylesheet" type="text/css" href="materialize/css/materialize.min.css" media="screen">
+		<link rel="stylesheet" type="text/css" href="../../common/materialize/css/materialize.min.css" media="screen">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 		<style type="text/css">
 			#size, #lastread, #lastmodified, #absolute, #base, #exists, #issymlink,
@@ -15,8 +15,8 @@
 				color: white;
 			}
 		</style>
-		<script type="text/javascript" src="qrc:///js/jquery.js"></script>
-		<script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+		<script type="text/javascript" src="../../common/jquery/dist/jquery.min.js"></script>
+		<script type="text/javascript" src="../../common/materialize/js/materialize.min.js"></script>
 		<script type="text/javascript">
 			ign.widgetSizeMin("600", "400");
 			ign.widgetSizeMax("600", "400");
@@ -30,7 +30,7 @@
 					} else {
 						var file = fs.openDirDialog();
 					}
-					
+
 					var json = JSON.stringify(fs.info(file));
 					var info = $.parseJSON(json);
 					$('#input').val(file);
