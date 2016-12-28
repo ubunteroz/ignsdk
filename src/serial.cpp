@@ -18,8 +18,12 @@ QVariant ignserial::info() {
           (!serial.description().isEmpty() ? serial.description() : blank);
       manufacturer =
           (!serial.manufacturer().isEmpty() ? serial.manufacturer() : blank);
+#if QT_VERSION >= 0x050400
       serialNumber =
           (!serial.serialNumber().isEmpty() ? serial.serialNumber() : blank);
+#else
+      serialNumber = blank;
+#endif
       busy = serial.isBusy();
       info.insert("port", serial.portName());
       info.insert("location", serial.systemLocation());

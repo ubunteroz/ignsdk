@@ -6,6 +6,7 @@
 #include <QObject>
 #include <QTextStream>
 #include <QTimer>
+#include <QtGlobal>
 #include <QtSerialPort/QSerialPort>
 #include <QtSerialPort/QSerialPortInfo>
 
