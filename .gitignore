@@ -31,7 +31,8 @@
 moc_*.cpp
 qrc_*.cpp
 
-# Makefile and ignsdk binary
+# Build-related files and directories
+/.qmake.stash
 /Makefile
 bin/
 build/
