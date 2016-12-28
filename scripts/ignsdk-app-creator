@@ -1,7 +1,7 @@
 #!/bin/bash
 #  Ibnu Yahya <ibnu.yahya@toroo.org>
 
-DESTDIR="$HOME/IGNSDK-APP/"
+DESTDIR="$HOME/ignsdk-app/"
 DEST=false
 HELP=false
 DISTCHK=`cat /etc/ignsdk-dist`

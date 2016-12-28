@@ -46,7 +46,7 @@ _toBeInstalled(){
 			done
 		fi
 	else
-		echo "$1 /opt/ignsdk/$deb_package_name.ign/" >> debian/$deb_package_name.install
+		echo "$1 /usr/bin/ignsdk-app/$deb_package_name.ign/" >> debian/$deb_package_name.install
 	fi
 }
 for file in $(ls --file-type -xU | sed -e 's/debian\///')

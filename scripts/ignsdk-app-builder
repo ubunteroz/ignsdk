@@ -1,10 +1,10 @@
 #!/bin/bash
 #  Ibnu Yahya <ibnu.yahya@toroo.org>
 
-DESTDIR="$HOME/IGNSDK-APP/"
+DESTDIR="$HOME/ignsdk-app/"
 DIR=false
 DISTCHK=`cat /etc/ignsdk-dist`
-IGNSDKAPP="$HOME/IGNSDK-APP"
+IGNSDKAPP="$HOME/ignsdk-app"
 HELP=false
 LIST=false
 
@@ -23,7 +23,7 @@ cat <<EOF
 Usage: ignsdk-app-builder [options] [package_name or project_directory]
 
 Options:
-		
+
 	-p, --pkgname                   Project package name
 	-d, --directory (directory)     Project directory
 	-l, --list                      List existing project inside ~/IGNSDK-APP
@@ -31,7 +31,7 @@ Options:
 	-h, --help                      Show this help
 
 Examples:
-		
+
 	$ ignsdk-app-builder --pkgname control-panel
 
 	$ ignsdk-app-builder --directory /home/igos/IGNSDK-APP/control-panel.ign
@@ -130,7 +130,7 @@ fi
 if [ $LIST == true ]
 then
 	cd $DESTDIR
-	ls > $DESTDIR/.ignsdk-list 
+	ls > $DESTDIR/.ignsdk-list
 	echo ""
 	echo "Existing project: "
 	while read m
