@@ -48,9 +48,9 @@ private:
   ignnetwork *m_network;
   ignjson *m_json;
   bool mMoving;
-  bool fullscreen;
+  bool fullscreen = false;
   bool enableLiveCode = false;
-  bool debugging;
+  bool debugging = false;
   void liveCode();
 
 public:

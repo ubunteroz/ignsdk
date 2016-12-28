@@ -13,12 +13,21 @@ ign::ign(QObject *parent)
     : QObject(parent), m_sql(0), m_system(0), m_filesystem(0), m_network(0),
       m_json(0) {
   this->version = QString(IGNSDK_VERSION);
-  this->debugging = false;
   frame = web.page()->mainFrame();
   connect(frame, SIGNAL(javaScriptWindowObjectCleared()), SLOT(ignJS()));
   this->dl = new QtDownload;
+}
 
-  // Various settings
+void ign::ignJS() { this->frame->addToJavaScriptWindowObject("ign", this); }
+
+// Config loader
+void ign::config(QString path) {
+  QString config_path = path + "/ignsdk.json";
+  QFile config_file;
+  config_file.setFileName(config_path);
+  QByteArray config;
+
+  // Default settings
   QWebSettings::globalSettings()->setAttribute(QWebSettings::PluginsEnabled,
                                                true);
   web.settings()->setAttribute(QWebSettings::PluginsEnabled, true);
@@ -40,23 +49,186 @@ ign::ign(QObject *parent)
   web.settings()->setAttribute(QWebSettings::LocalContentCanAccessFileUrls,
                                true);
 
-  // Webstorage
-  QString home = QDir::homePath();
-  home += "/.ignsdk";
-  web.settings()->setLocalStoragePath(home);
-  web.settings()->enablePersistentStorage(home);
-  web.settings()->setOfflineWebApplicationCachePath(home);
-
   // Disable navigation menu by default
   web.page()->action(QWebPage::Back)->setVisible(false);
   web.page()->action(QWebPage::Forward)->setVisible(false);
   web.page()->action(QWebPage::Reload)->setVisible(false);
   web.page()->action(QWebPage::Stop)->setVisible(false);
 
+  // Disable fullscreen mode by default
   fullscreen = false;
-}
 
-void ign::ignJS() { this->frame->addToJavaScriptWindowObject("ign", this); }
+  // Application storage
+  QString appStorage = "/tmp/ignsdk-app";
+
+  if (config_file.open(QIODevice::ReadOnly)) {
+    qDebug() << "Config file loaded:" << config_path;
+    config = config_file.readAll();
+    QJsonParseError *err = new QJsonParseError();
+    QJsonDocument ignjson = QJsonDocument::fromJson(config, err);
+
+    if (err->error != 0) {
+      qDebug() << err->errorString();
+      exit(1);
+    }
+
+    QJsonObject jObject = ignjson.object();
+    QVariantMap result = jObject.toVariantMap();
+    QVariantMap configure = result["config"].toMap();
+
+    if (configure["package"].toString() != "") {
+      appStorage =
+          QDir::homePath() + "/.ignsdk/" + configure["package"].toString();
+    }
+
+    if (configure["debug"].toBool()) {
+      this->setDev(true);
+      this->enableLiveCode = true;
+    }
+
+    if (configure["debug-port"].toInt()) {
+      this->setDevRemote(configure["debug-port"].toInt());
+    }
+
+    if (configure["set-system-proxy"].toBool()) {
+      QNetworkProxyFactory::setUseSystemConfiguration(true);
+    }
+
+    QVariantMap set_proxy = configure["set-proxy"].toMap();
+
+    if (set_proxy["type"].toString() != "") {
+      QNetworkProxy proxy;
+      QString proxy_type = set_proxy["type"].toString();
+      if (proxy_type == "http") {
+        proxy.setType(QNetworkProxy::HttpProxy);
+      } else if (proxy_type == "socks5") {
+        proxy.setType(QNetworkProxy::Socks5Proxy);
+      } else if (proxy_type == "ftp") {
+        proxy.setType(QNetworkProxy::FtpCachingProxy);
+      } else if (proxy_type == "httpCaching") {
+        proxy.setType(QNetworkProxy::HttpCachingProxy);
+      } else {
+        qDebug()
+            << "Please input your type proxy (http,socks5,ftp,httpCaching)!";
+        exit(0);
+      }
+
+      if (set_proxy["url"].toString() != "") {
+        QString url = set_proxy["url"].toString();
+        QStringList url_proxy = url.split(":");
+        proxy.setHostName(url_proxy.at(0));
+        proxy.setPort(url_proxy.at(1).toInt());
+      } else {
+        qDebug() << "Please input your hostname:port Ex: 127.0.0.1:8080!";
+        exit(0);
+      }
+
+      if (set_proxy["username"].toString() != "") {
+        proxy.setUser(set_proxy["username"].toString());
+      }
+
+      if (set_proxy["password"].toString() != "") {
+        proxy.setPassword(set_proxy["password"].toString());
+      }
+
+      QNetworkProxy::setApplicationProxy(proxy);
+    }
+
+    if (configure["set-ignsdk-proxy"].toBool()) {
+      QFile file("/etc/ignsdk-proxy.conf");
+      QString data_ign_proxy;
+
+      if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QTextStream out(&file);
+        data_ign_proxy = out.readLine();
+        file.close();
+
+        if (this->debugging) {
+          qDebug() << "Enable IGNSDK global proxy setting : " << data_ign_proxy;
+        }
+
+        QStringList url_proxy = data_ign_proxy.split(":");
+        QNetworkProxy proxy;
+        proxy.setType(QNetworkProxy::HttpProxy);
+        proxy.setHostName(url_proxy.at(0));
+        proxy.setPort(url_proxy.at(1).toInt());
+
+        if (url_proxy.at(2) != "") {
+          proxy.setUser(url_proxy.at(2));
+        }
+
+        if (url_proxy.at(3) != "") {
+          proxy.setPassword(url_proxy.at(3));
+        }
+
+        QNetworkProxy::setApplicationProxy(proxy);
+      }
+    }
+
+    if (configure["websecurity"].toBool()) {
+      this->websecurity(true);
+    }
+
+    if (configure["name"].toString() != "") {
+      this->web.setWindowTitle(configure["name"].toString());
+    }
+
+    QVariantMap window = result["window"].toMap();
+
+    if (window["transparent"].toBool()) {
+      this->widgetTransparent();
+    }
+
+    if (window["noframe"].toBool()) {
+      this->widgetNoFrame();
+    }
+
+    if (window["notaskbar"].toBool()) {
+      this->widgetNoTaskbar();
+    }
+
+    if (window["fullscreen"].toBool()) {
+      this->getToggleFullScreen();
+    }
+
+    if (window["maximize"].toBool()) {
+      this->showMaximized();
+    }
+
+    if (window["width"].toInt() != 0) {
+      if (window["height"].toInt() != 0) {
+        this->widgetSize(window["width"].toInt(), window["height"].toInt());
+      }
+    }
+
+    foreach (QVariant navi, result["navigations"].toList()) {
+      if (navi.toString() == "back") {
+        web.page()->action(QWebPage::Back)->setVisible(true);
+      }
+
+      if (navi.toString() == "forward") {
+        web.page()->action(QWebPage::Forward)->setVisible(true);
+      }
+
+      if (navi.toString() == "stop") {
+        web.page()->action(QWebPage::Stop)->setVisible(true);
+      }
+
+      if (navi.toString() == "reload") {
+        web.page()->action(QWebPage::Reload)->setVisible(true);
+      }
+    }
+
+    config_file.close();
+  } else {
+    qDebug() << "Warning: Failed to load configuration file" << config_path;
+  }
+
+  web.settings()->setLocalStoragePath(appStorage);
+  web.settings()->enablePersistentStorage(appStorage);
+  web.settings()->setOfflineWebApplicationCachePath(appStorage);
+  qDebug() << "Application storage:" << appStorage;
+}
 
 void ign::render(QString w) {
   QString pwd("");
@@ -210,26 +382,36 @@ bool ign::print(const QVariant &config) {
 }
 
 // Action trigger
+// TODO: Clean exit
 void ign::quit() { exit(0); }
 
+// Navigate history back
 void ign::back() { this->web.page()->triggerAction(QWebPage::Back, true); }
 
+// Navigate history forward
 void ign::forward() {
   this->web.page()->triggerAction(QWebPage::Forward, true);
 }
 
+// Stop loading url
 void ign::stop() { this->web.page()->triggerAction(QWebPage::Stop, true); }
 
+// Reload current url
 void ign::reload() { this->web.page()->triggerAction(QWebPage::Reload, true); }
 
+// Cut selection to clipboard
 void ign::cut() { this->web.page()->triggerAction(QWebPage::Cut, true); }
 
+// Copy selection to clipboard
 void ign::copy() { this->web.page()->triggerAction(QWebPage::Copy, true); }
 
+// Paste from clipboard
 void ign::paste() { this->web.page()->triggerAction(QWebPage::Paste, true); }
 
+// Undo action
 void ign::undo() { this->web.page()->triggerAction(QWebPage::Undo, true); }
 
+// Redo action
 void ign::redo() { this->web.page()->triggerAction(QWebPage::Redo, true); }
 
 // Debugging mode
@@ -238,6 +420,8 @@ void ign::setDev(bool v) {
   this->debugging = true;
 }
 
+// Set port for development purpose (Only accessible from WebKit/Chrome-based
+// browser)
 void ign::setDevRemote(int port) {
   QString host;
   Q_FOREACH (QHostAddress address, QNetworkInterface::allAddresses()) {
@@ -267,18 +451,24 @@ void ign::websecurity(bool c) {
 }
 
 // Window configuration
+// Set widget max size
 void ign::widgetSizeMax(int w, int h) { this->web.setMaximumSize(w, h); }
 
+// Set widget min size
 void ign::widgetSizeMin(int w, int h) { this->web.setMinimumSize(w, h); }
 
+// Set widget size
 void ign::widgetSize(int w, int h) { this->web.resize(w, h); }
 
+// Frameless widget
 void ign::widgetNoFrame() { this->web.setWindowFlags(Qt::FramelessWindowHint); }
 
+// Don't show application on taskbar
 void ign::widgetNoTaskbar() {
   this->web.setWindowFlags(this->web.windowFlags() | Qt::Tool);
 }
 
+// Transparent background (Only works if background is not styled)
 void ign::widgetTransparent() {
   QPalette pal = this->web.palette();
   pal.setBrush(QPalette::Base, Qt::transparent);
@@ -287,6 +477,7 @@ void ign::widgetTransparent() {
   this->web.setAttribute(Qt::WA_TranslucentBackground, true);
 }
 
+// Toggle fullscreen mode
 void ign::getToggleFullScreen() {
   if (this->fullscreen) {
     this->web.showNormal();
@@ -297,6 +488,7 @@ void ign::getToggleFullScreen() {
   }
 }
 
+// Set application to fullscreen mode
 void ign::getFullScreen(bool screen) {
   if (screen) {
     this->web.showFullScreen();
@@ -325,168 +517,6 @@ QString ign::loadBin(const QString &script) {
   }
 
   return path_bin + "/bin/" + script;
-}
-
-void ign::config(QString path) {
-  QFile config_file;
-  QDir::setCurrent(path);
-  config_file.setFileName("ignsdk.json");
-  QByteArray config;
-
-  if (config_file.open(QIODevice::ReadOnly)) {
-    config = config_file.readAll();
-    QJsonParseError *err = new QJsonParseError();
-    QJsonDocument ignjson = QJsonDocument::fromJson(config, err);
-
-    if (err->error != 0) {
-      qDebug() << err->errorString();
-      exit(1);
-    }
-
-    QJsonObject jObject = ignjson.object();
-    QVariantMap result = jObject.toVariantMap();
-    QVariantMap configure = result["config"].toMap();
-
-    if (configure["debug"].toBool()) {
-      this->setDev(true);
-      this->enableLiveCode = true;
-    }
-
-    if (configure["debug-port"].toInt()) {
-      this->setDevRemote(configure["debug-port"].toInt());
-    }
-
-    if (configure["set-system-proxy"].toBool()) {
-      QNetworkProxyFactory::setUseSystemConfiguration(true);
-    }
-
-    QVariantMap set_proxy = configure["set-proxy"].toMap();
-
-    if (set_proxy["type"].toString() != "") {
-      QNetworkProxy proxy;
-      QString proxy_type = set_proxy["type"].toString();
-      if (proxy_type == "http") {
-        proxy.setType(QNetworkProxy::HttpProxy);
-      } else if (proxy_type == "socks5") {
-        proxy.setType(QNetworkProxy::Socks5Proxy);
-      } else if (proxy_type == "ftp") {
-        proxy.setType(QNetworkProxy::FtpCachingProxy);
-      } else if (proxy_type == "httpCaching") {
-        proxy.setType(QNetworkProxy::HttpCachingProxy);
-      } else {
-        qDebug()
-            << "Please input your type proxy (http,socks5,ftp,httpCaching)!";
-        exit(0);
-      }
-
-      if (set_proxy["url"].toString() != "") {
-        QString url = set_proxy["url"].toString();
-        QStringList url_proxy = url.split(":");
-        proxy.setHostName(url_proxy.at(0));
-        proxy.setPort(url_proxy.at(1).toInt());
-      } else {
-        qDebug() << "Please input your hostname:port Ex: 127.0.0.1:8080!";
-        exit(0);
-      }
-
-      if (set_proxy["username"].toString() != "") {
-        proxy.setUser(set_proxy["username"].toString());
-      }
-
-      if (set_proxy["password"].toString() != "") {
-        proxy.setPassword(set_proxy["password"].toString());
-      }
-
-      QNetworkProxy::setApplicationProxy(proxy);
-    }
-
-    if (configure["set-ignsdk-proxy"].toBool()) {
-      QFile file("/etc/ignsdk-proxy.conf");
-      QString data_ign_proxy;
-
-      if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        QTextStream out(&file);
-        data_ign_proxy = out.readLine();
-        file.close();
-
-        if (this->debugging) {
-          qDebug() << "Enable IGNSDK global proxy setting : " << data_ign_proxy;
-        }
-
-        QStringList url_proxy = data_ign_proxy.split(":");
-        QNetworkProxy proxy;
-        proxy.setType(QNetworkProxy::HttpProxy);
-        proxy.setHostName(url_proxy.at(0));
-        proxy.setPort(url_proxy.at(1).toInt());
-
-        if (url_proxy.at(2) != "") {
-          proxy.setUser(url_proxy.at(2));
-        }
-
-        if (url_proxy.at(3) != "") {
-          proxy.setPassword(url_proxy.at(3));
-        }
-
-        QNetworkProxy::setApplicationProxy(proxy);
-      }
-    }
-
-    if (configure["websecurity"].toBool()) {
-      this->websecurity(true);
-    }
-
-    if (configure["name"].toString() != "") {
-      this->web.setWindowTitle(configure["name"].toString());
-    }
-
-    QVariantMap window = result["window"].toMap();
-
-    if (window["transparent"].toBool()) {
-      this->widgetTransparent();
-    }
-
-    if (window["noframe"].toBool()) {
-      this->widgetNoFrame();
-    }
-
-    if (window["notaskbar"].toBool()) {
-      this->widgetNoTaskbar();
-    }
-
-    if (window["fullscreen"].toBool()) {
-      this->getToggleFullScreen();
-    }
-
-    if (window["maximize"].toBool()) {
-      this->showMaximized();
-    }
-
-    if (window["width"].toInt() != 0) {
-      if (window["height"].toInt() != 0) {
-        this->widgetSize(window["width"].toInt(), window["height"].toInt());
-      }
-    }
-
-    foreach (QVariant button, result["button"].toList()) {
-      if (button.toString() == "back") {
-        web.page()->action(QWebPage::Back)->setVisible(true);
-      }
-
-      if (button.toString() == "forward") {
-        web.page()->action(QWebPage::Forward)->setVisible(true);
-      }
-
-      if (button.toString() == "stop") {
-        web.page()->action(QWebPage::Stop)->setVisible(true);
-      }
-
-      if (button.toString() == "reload") {
-        web.page()->action(QWebPage::Reload)->setVisible(true);
-      }
-    }
-  }
-
-  config_file.close();
 }
 
 void ign::saveFile(const QByteArray &data, QString filename, QString path) {
