@@ -1,9 +1,9 @@
 {
     "config": {
-        "package": "id.web.ignsdk.file-info",
+        "package": "id.web.ignsdk.hash-text",
         "debug": true,
         "websecurity": true,
-        "name": "File Info"
+        "name": "Hash"
     },
 
     "window": {

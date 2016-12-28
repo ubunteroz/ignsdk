@@ -1,17 +1,20 @@
 {
-  "config" : { "debug" : true,
-  "websecurity" : true,
-  "name" : "Kuma Game"
-  },
-  "window" : { 
-	"transparent" : false, 
-	"noframe" : false, 
-	"width" : 645,
-	"height" : 645},
-  "button" : [
-			"back",
-			"forward",
-			"stop",
-			"reload"
-			]
+    "config": {
+        "package": "id.web.ignsdk.kuma",
+        "debug": true,
+        "websecurity": true,
+        "name": "Kuma Game"
+    },
+    "window": {
+        "transparent": false,
+        "noframe": false,
+        "width": 645,
+        "height": 645
+    },
+    "navigations": [
+        "back",
+        "forward",
+        "stop",
+        "reload"
+    ]
 }

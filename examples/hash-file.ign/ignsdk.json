@@ -1,17 +1,18 @@
 {
-  	"config": {
-  		"debug" : true,
-  		"websecurity" : true,
-  		"name" : "Hash File"
-  	},
+    "config": {
+        "package": "id.web.ignsdk.hash-file",
+        "debug": true,
+        "websecurity": true,
+        "name": "Hash File"
+    },
 
-  	"window" : { 
-		"transparent" : false, 
-		"noframe" : false, 
-		"fullscreen" : false,
-		"width" : 600,
-		"height" : 400
-	},
+    "window": {
+        "transparent": false,
+        "noframe": false,
+        "fullscreen": false,
+        "width": 600,
+        "height": 400
+    },
 
-  	"button" : [ "reload" ]
+    "navigations": ["reload"]
 }

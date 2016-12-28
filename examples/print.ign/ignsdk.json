@@ -1,17 +1,18 @@
 {
-  	"config": {
-  		"debug" : true,
-  		"websecurity" : true,
-  		"name" : "Print"
-  	},
+    "config": {
+        "package": "id.web.ignsdk.print",
+        "debug": true,
+        "websecurity": true,
+        "name": "Print"
+    },
 
-  	"window" : { 
-		"transparent" : false, 
-		"noframe" : false, 
-		"fullscreen" : false,
-		"width" : 800,
-		"height" : 600
-	},
+    "window": {
+        "transparent": false,
+        "noframe": false,
+        "fullscreen": false,
+        "width": 800,
+        "height": 600
+    },
 
-  	"button" : [ "reload" ]
+    "navigations": ["reload"]
 }

@@ -1,17 +1,18 @@
 {
-  	"config": {
-  		"debug" : true,
-  		"websecurity" : true,
-  		"name" : "Basic APIs"
-  	},
+    "config": {
+        "package": "id.web.ignsdk.basic",
+        "debug": true,
+        "websecurity": true,
+        "name": "Basic APIs"
+    },
 
-  	"window" : { 
-		"transparent" : true, 
-		"noframe" : false, 
-		"fullscreen" : false,
-		"width" : 600,
-		"height" : 400
-	},
+    "window": {
+        "transparent": true,
+        "noframe": false,
+        "fullscreen": false,
+        "width": 600,
+        "height": 400
+    },
 
-  	"button" : [ "reload" ]
+    "navigations": ["reload"]
 }
