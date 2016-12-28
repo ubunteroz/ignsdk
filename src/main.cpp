@@ -48,9 +48,9 @@ int main(int argc, char *argv[]) {
 
   if (cmd_parser.isSet(cmd_version)) {
     printf("\033[1m\033[37mIGNSDK version %s (%s)\033[0m\nCompiled on %s "
-           "%s\nMaintained by %s\n",
+           "%s\nMaintained by \033[1m\033[37m%s\033[0m <%s>\n",
            IGNSDK_VERSION, IGNSDK_CODENAME, __DATE__, __TIME__,
-           IGNSDK_MAINTAINER);
+           IGNSDK_MAINTAINER, IGNSDK_EMAIL);
     return 0;
   }
 
