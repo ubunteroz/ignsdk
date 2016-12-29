@@ -1,5 +1,5 @@
 #IGOS Nusantara Software Development Kit (IGNSDK)
-[![Build Status](https://travis-ci.org/ubunteroz/ignsdk-debian.png)](https://travis-ci.org/ubunteroz/ignsdk-debian) [![packagecloud](https://packagecloud.io/assets/packagecloud-badge-fbea7fd09f5aab38e8d59fec16f2268c.png)](https://packagecloud.io/ign/ignsdk)
+[![Build Status](https://travis-ci.org/ubunteroz/ignsdk.png)](https://travis-ci.org/ubunteroz/ignsdk) [![packagecloud](https://packagecloud.io/assets/packagecloud-badge-fbea7fd09f5aab38e8d59fec16f2268c.png)](https://packagecloud.io/ign/ignsdk)
 ##Author
 Eka Tresna Irawan/Ibnu Yahya (anak10thn@gmail.com)
 
