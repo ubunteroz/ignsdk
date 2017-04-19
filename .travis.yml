@@ -10,10 +10,12 @@ env:
   matrix:
     - OS=ubuntu DIST=trusty
     - OS=ubuntu DIST=xenial
-    - OS=ubuntu DIST=yakkety
+    - OS=ubuntu DIST=zesty
     - OS=debian DIST=jessie
-    - OS=fedora DIST=23
+    - OS=debian DIST=stretch
+    - OS=debian DIST=sid
     - OS=fedora DIST=24
+    - OS=fedora DIST=25
     - OS=el DIST=7
 
 script:
