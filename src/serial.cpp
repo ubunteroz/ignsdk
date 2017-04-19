@@ -10,7 +10,7 @@ QVariant ignserial::info() {
   QVariantMap output, info;
   QVariantList list;
 
-  output.insert("count", serialPortList.count());
+  output.insert(QStringLiteral("count"), serialPortList.count());
 
   if (serialPortList.count() > 0) {
     foreach (const QSerialPortInfo &serial, serialPortList) {
@@ -25,23 +25,23 @@ QVariant ignserial::info() {
       serialNumber = blank;
 #endif
       busy = serial.isBusy();
-      info.insert("port", serial.portName());
-      info.insert("location", serial.systemLocation());
-      info.insert("vendor",
+      info.insert(QStringLiteral("port"), serial.portName());
+      info.insert(QStringLiteral("location"), serial.systemLocation());
+      info.insert(QStringLiteral("vendor"),
                   (serial.hasVendorIdentifier()
                        ? QByteArray::number(serial.hasVendorIdentifier(), 16)
                        : blank));
-      info.insert("product",
+      info.insert(QStringLiteral("product"),
                   (serial.hasProductIdentifier()
                        ? QByteArray::number(serial.hasProductIdentifier(), 16)
                        : blank));
-      info.insert("isBusy", busy);
-      info.insert("description", description);
-      info.insert("manufacturer", manufacturer);
-      info.insert("serialNumber", serialNumber);
+      info.insert(QStringLiteral("isBusy"), busy);
+      info.insert(QStringLiteral("description"), description);
+      info.insert(QStringLiteral("manufacturer"), manufacturer);
+      info.insert(QStringLiteral("serialNumber"), serialNumber);
       list << info;
     }
-    output.insert("device", list);
+    output.insert(QStringLiteral("device"), list);
   }
 
   QJsonDocument json_enc = QJsonDocument::fromVariant(output);
@@ -50,9 +50,9 @@ QVariant ignserial::info() {
 
 void ignserial::Read(const QVariant &config) {
   QVariantMap configuration = jsonParse->jsonParser(config).toVariantMap();
-  QString port = configuration["port"].toString();
+  QString port = configuration[QStringLiteral("port")].toString();
   int brt =
-      (configuration["baudRate"].toInt() ? configuration["baudRate"].toInt()
+      (configuration[QStringLiteral("baudRate")].toInt() ? configuration[QStringLiteral("baudRate")].toInt()
                                          : QSerialPort::Baud9600);
 
   if (!port.isEmpty()) {
@@ -64,7 +64,7 @@ void ignserial::Read(const QVariant &config) {
   serialPort.setBaudRate(brt);
 
   if (serialPort.open(QIODevice::ReadOnly)) {
-    connect(&serialPort, SIGNAL(readyRead()), this, SLOT(readOut()));
+    connect(&serialPort, &QIODevice::readyRead, this, &ignserial::readOut);
     connect(&serialPort, SIGNAL(error(QSerialPort::SerialPortError)), this,
             SLOT(readOut()));
   } else {

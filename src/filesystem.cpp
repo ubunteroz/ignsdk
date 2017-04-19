@@ -43,9 +43,9 @@ QString ignfilesystem::homePath() {
 
 bool ignfilesystem::dir(const QString &option, const QString &path) {
   QDir directory;
-  if (option == "create") {
+  if (option == QLatin1String("create")) {
     return directory.mkdir(path);
-  } else if (option == "remove") {
+  } else if (option == QLatin1String("remove")) {
     return directory.rmdir(path);
   } else {
     return false;
@@ -141,18 +141,18 @@ QString ignfilesystem::saveFileDialog() {
 
 QString ignfilesystem::saveFileDialog(const QVariant &config) {
   QVariantMap configuration = jsonParse->jsonParser(config).toVariantMap();
-  QString title = "Save File", path = this->homePath(), extension = "";
+  QString title = QStringLiteral("Save File"), path = this->homePath(), extension = QLatin1String("");
 
-  if (configuration["title"].toString() != "") {
-    title = configuration["title"].toString();
+  if (configuration[QStringLiteral("title")].toString() != QLatin1String("")) {
+    title = configuration[QStringLiteral("title")].toString();
   }
 
-  if (configuration["path"].toString() != "") {
-    path = configuration["path"].toString();
+  if (configuration[QStringLiteral("path")].toString() != QLatin1String("")) {
+    path = configuration[QStringLiteral("path")].toString();
   }
 
-  if (configuration["type"].toString() != "") {
-    extension = configuration["type"].toString();
+  if (configuration[QStringLiteral("type")].toString() != QLatin1String("")) {
+    extension = configuration[QStringLiteral("type")].toString();
   }
 
   QFileDialog *fileDialog = new QFileDialog;
@@ -198,27 +198,27 @@ QVariant ignfilesystem::info(const QString &path) {
   QVariant group = info.group();
   QVariant lastModified = info.lastModified();
   QVariant lastRead = info.lastRead();
-  map.insert("size", size);
-  map.insert("absoluteFilePath", absoluteFilePath);
-  map.insert("baseName", baseName);
-  map.insert("isSymlink", isSymlink);
-  map.insert("isAbsolute", isAbsolute);
-  map.insert("isBundle", isBundle);
-  map.insert("isDir", isDir);
-  map.insert("isExecutable", isExecutable);
-  map.insert("isFile", isFile);
-  map.insert("isHidden", isHidden);
-  map.insert("isReadable", isReadable);
-  map.insert("isRelative", isRelative);
-  map.insert("isRoot", isRoot);
-  map.insert("isWritable", isWritable);
-  map.insert("filePath", filePath);
-  map.insert("bundleName", bundleName);
-  map.insert("exists", exists);
-  map.insert("fileName", fileName);
-  map.insert("group", group);
-  map.insert("lastModified", lastModified);
-  map.insert("lastRead", lastRead);
+  map.insert(QStringLiteral("size"), size);
+  map.insert(QStringLiteral("absoluteFilePath"), absoluteFilePath);
+  map.insert(QStringLiteral("baseName"), baseName);
+  map.insert(QStringLiteral("isSymlink"), isSymlink);
+  map.insert(QStringLiteral("isAbsolute"), isAbsolute);
+  map.insert(QStringLiteral("isBundle"), isBundle);
+  map.insert(QStringLiteral("isDir"), isDir);
+  map.insert(QStringLiteral("isExecutable"), isExecutable);
+  map.insert(QStringLiteral("isFile"), isFile);
+  map.insert(QStringLiteral("isHidden"), isHidden);
+  map.insert(QStringLiteral("isReadable"), isReadable);
+  map.insert(QStringLiteral("isRelative"), isRelative);
+  map.insert(QStringLiteral("isRoot"), isRoot);
+  map.insert(QStringLiteral("isWritable"), isWritable);
+  map.insert(QStringLiteral("filePath"), filePath);
+  map.insert(QStringLiteral("bundleName"), bundleName);
+  map.insert(QStringLiteral("exists"), exists);
+  map.insert(QStringLiteral("fileName"), fileName);
+  map.insert(QStringLiteral("group"), group);
+  map.insert(QStringLiteral("lastModified"), lastModified);
+  map.insert(QStringLiteral("lastRead"), lastRead);
   QJsonDocument json_enc = QJsonDocument::fromVariant(map);
   return json_enc.toVariant();
 }

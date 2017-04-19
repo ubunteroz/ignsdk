@@ -3,20 +3,20 @@
 ignsql::ignsql(QObject *parent) : QObject(parent), jsonParse(0) {}
 
 bool ignsql::driver(const QString &driver, QString connection) {
-  if (driver == "mysql") {
-    QStringList details = connection.split(":");
-    this->db = QSqlDatabase::addDatabase("QMYSQL");
+  if (driver == QLatin1String("mysql")) {
+    QStringList details = connection.split(QStringLiteral(":"));
+    this->db = QSqlDatabase::addDatabase(QStringLiteral("QMYSQL"));
     this->db.setHostName(details.value(0));
     this->db.setUserName(details.value(1));
     this->db.setPassword(details.value(2));
     this->db.setDatabaseName(details.value(3));
     return this->db.open();
-  } else if (driver == "sqlite2") {
-    this->db = QSqlDatabase::addDatabase("QSQLITE2");
+  } else if (driver == QLatin1String("sqlite2")) {
+    this->db = QSqlDatabase::addDatabase(QStringLiteral("QSQLITE2"));
     this->db.setDatabaseName(connection);
     return this->db.open();
-  } else if (driver == "sqlite") {
-    this->db = QSqlDatabase::addDatabase("QSQLITE");
+  } else if (driver == QLatin1String("sqlite")) {
+    this->db = QSqlDatabase::addDatabase(QStringLiteral("QSQLITE"));
     this->db.setDatabaseName(connection);
     return this->db.open();
   } else {
@@ -28,26 +28,26 @@ bool ignsql::driver(const QString &driver, QString connection) {
 
 bool ignsql::driver(const QVariant &config) {
   QVariantMap configuration = jsonParse->jsonParser(config).toVariantMap();
-  QString driver = configuration["driver"].toString();
-  QString hostname = configuration["hostname"].toString();
-  QString username = configuration["username"].toString();
-  QString password = configuration["password"].toString();
-  QString database = configuration["db"].toString();
-  database = configuration["database"].toString();
+  QString driver = configuration[QStringLiteral("driver")].toString();
+  QString hostname = configuration[QStringLiteral("hostname")].toString();
+  QString username = configuration[QStringLiteral("username")].toString();
+  QString password = configuration[QStringLiteral("password")].toString();
+  QString database = configuration[QStringLiteral("db")].toString();
+  database = configuration[QStringLiteral("database")].toString();
 
-  if (driver == "mysql") {
-    this->db = QSqlDatabase::addDatabase("QMYSQL");
+  if (driver == QLatin1String("mysql")) {
+    this->db = QSqlDatabase::addDatabase(QStringLiteral("QMYSQL"));
     this->db.setHostName(hostname);
     this->db.setUserName(username);
     this->db.setPassword(password);
     this->db.setDatabaseName(database);
     return this->db.open();
-  } else if (driver == "sqlite2") {
-    this->db = QSqlDatabase::addDatabase("QSQLITE2");
+  } else if (driver == QLatin1String("sqlite2")) {
+    this->db = QSqlDatabase::addDatabase(QStringLiteral("QSQLITE2"));
     this->db.setDatabaseName(database);
     return this->db.open();
-  } else if (driver == "sqlite") {
-    this->db = QSqlDatabase::addDatabase("QSQLITE");
+  } else if (driver == QLatin1String("sqlite")) {
+    this->db = QSqlDatabase::addDatabase(QStringLiteral("QSQLITE"));
     this->db.setDatabaseName(database);
     return this->db.open();
   } else {
@@ -71,10 +71,10 @@ QVariant ignsql::query(const QString &query) {
     status = true;
   } else {
     status = false;
-    contentMap.insert("error", sqlQuery.lastError().text());
+    contentMap.insert(QStringLiteral("error"), sqlQuery.lastError().text());
   }
 
-  contentMap.insert("status", status);
+  contentMap.insert(QStringLiteral("status"), status);
 
   QSqlRecord data = sqlQuery.record();
 
@@ -88,11 +88,11 @@ QVariant ignsql::query(const QString &query) {
     dataRec << map;
   }
 
-  contentMap.insert("content", dataRec);
+  contentMap.insert(QStringLiteral("content"), dataRec);
 
   if (sqlQuery.size() > 0) {
     size = sqlQuery.size();
-    contentMap.insert("size", size);
+    contentMap.insert(QStringLiteral("size"), size);
   }
 
   QJsonDocument json_enc = QJsonDocument::fromVariant(contentMap);

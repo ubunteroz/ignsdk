@@ -12,13 +12,13 @@ using namespace std;
 ign::ign(QObject *parent)
     : QObject(parent), m_sql(0), m_system(0), m_filesystem(0), m_network(0),
       m_json(0) {
-  this->version = QString(IGNSDK_VERSION);
+  this->version = QStringLiteral(IGNSDK_VERSION);
   frame = web.page()->mainFrame();
-  connect(frame, SIGNAL(javaScriptWindowObjectCleared()), SLOT(ignJS()));
+  connect(frame, &QWebFrame::javaScriptWindowObjectCleared, this, &ign::ignJS);
   this->dl = new QtDownload;
 }
 
-void ign::ignJS() { this->frame->addToJavaScriptWindowObject("ign", this); }
+void ign::ignJS() { this->frame->addToJavaScriptWindowObject(QStringLiteral("ign"), this); }
 
 // Config loader
 void ign::config(QString path) {
@@ -59,7 +59,7 @@ void ign::config(QString path) {
   fullscreen = false;
 
   // Application storage
-  QString appStorage = "/tmp/ignsdk-app";
+  QString appStorage = QStringLiteral("/tmp/ignsdk-app");
 
   if (config_file.open(QIODevice::ReadOnly)) {
     qDebug() << "Config file loaded:" << config_path;
@@ -74,38 +74,38 @@ void ign::config(QString path) {
 
     QJsonObject jObject = ignjson.object();
     QVariantMap result = jObject.toVariantMap();
-    QVariantMap configure = result["config"].toMap();
+    QVariantMap configure = result[QStringLiteral("config")].toMap();
 
-    if (configure["package"].toString() != "") {
+    if (configure[QStringLiteral("package")].toString() != QLatin1String("")) {
       appStorage =
-          QDir::homePath() + "/.ignsdk/" + configure["package"].toString();
+          QDir::homePath() + "/.ignsdk/" + configure[QStringLiteral("package")].toString();
     }
 
-    if (configure["debug"].toBool()) {
+    if (configure[QStringLiteral("debug")].toBool()) {
       this->setDev(true);
       this->enableLiveCode = true;
     }
 
-    if (configure["debug-port"].toInt()) {
-      this->setDevRemote(configure["debug-port"].toInt());
+    if (configure[QStringLiteral("debug-port")].toInt()) {
+      this->setDevRemote(configure[QStringLiteral("debug-port")].toInt());
     }
 
-    if (configure["set-system-proxy"].toBool()) {
+    if (configure[QStringLiteral("set-system-proxy")].toBool()) {
       QNetworkProxyFactory::setUseSystemConfiguration(true);
     }
 
-    QVariantMap set_proxy = configure["set-proxy"].toMap();
+    QVariantMap set_proxy = configure[QStringLiteral("set-proxy")].toMap();
 
-    if (set_proxy["type"].toString() != "") {
+    if (set_proxy[QStringLiteral("type")].toString() != QLatin1String("")) {
       QNetworkProxy proxy;
-      QString proxy_type = set_proxy["type"].toString();
-      if (proxy_type == "http") {
+      QString proxy_type = set_proxy[QStringLiteral("type")].toString();
+      if (proxy_type == QLatin1String("http")) {
         proxy.setType(QNetworkProxy::HttpProxy);
-      } else if (proxy_type == "socks5") {
+      } else if (proxy_type == QLatin1String("socks5")) {
         proxy.setType(QNetworkProxy::Socks5Proxy);
-      } else if (proxy_type == "ftp") {
+      } else if (proxy_type == QLatin1String("ftp")) {
         proxy.setType(QNetworkProxy::FtpCachingProxy);
-      } else if (proxy_type == "httpCaching") {
+      } else if (proxy_type == QLatin1String("httpCaching")) {
         proxy.setType(QNetworkProxy::HttpCachingProxy);
       } else {
         qDebug()
@@ -113,9 +113,9 @@ void ign::config(QString path) {
         exit(0);
       }
 
-      if (set_proxy["url"].toString() != "") {
-        QString url = set_proxy["url"].toString();
-        QStringList url_proxy = url.split(":");
+      if (set_proxy[QStringLiteral("url")].toString() != QLatin1String("")) {
+        QString url = set_proxy[QStringLiteral("url")].toString();
+        QStringList url_proxy = url.split(QStringLiteral(":"));
         proxy.setHostName(url_proxy.at(0));
         proxy.setPort(url_proxy.at(1).toInt());
       } else {
@@ -123,19 +123,19 @@ void ign::config(QString path) {
         exit(0);
       }
 
-      if (set_proxy["username"].toString() != "") {
-        proxy.setUser(set_proxy["username"].toString());
+      if (set_proxy[QStringLiteral("username")].toString() != QLatin1String("")) {
+        proxy.setUser(set_proxy[QStringLiteral("username")].toString());
       }
 
-      if (set_proxy["password"].toString() != "") {
-        proxy.setPassword(set_proxy["password"].toString());
+      if (set_proxy[QStringLiteral("password")].toString() != QLatin1String("")) {
+        proxy.setPassword(set_proxy[QStringLiteral("password")].toString());
       }
 
       QNetworkProxy::setApplicationProxy(proxy);
     }
 
-    if (configure["set-ignsdk-proxy"].toBool()) {
-      QFile file("/etc/ignsdk-proxy.conf");
+    if (configure[QStringLiteral("set-ignsdk-proxy")].toBool()) {
+      QFile file(QStringLiteral("/etc/ignsdk-proxy.conf"));
       QString data_ign_proxy;
 
       if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -147,17 +147,17 @@ void ign::config(QString path) {
           qDebug() << "Enable IGNSDK global proxy setting : " << data_ign_proxy;
         }
 
-        QStringList url_proxy = data_ign_proxy.split(":");
+        QStringList url_proxy = data_ign_proxy.split(QStringLiteral(":"));
         QNetworkProxy proxy;
         proxy.setType(QNetworkProxy::HttpProxy);
         proxy.setHostName(url_proxy.at(0));
         proxy.setPort(url_proxy.at(1).toInt());
 
-        if (url_proxy.at(2) != "") {
+        if (url_proxy.at(2) != QLatin1String("")) {
           proxy.setUser(url_proxy.at(2));
         }
 
-        if (url_proxy.at(3) != "") {
+        if (url_proxy.at(3) != QLatin1String("")) {
           proxy.setPassword(url_proxy.at(3));
         }
 
@@ -165,56 +165,56 @@ void ign::config(QString path) {
       }
     }
 
-    if (configure["websecurity"].toBool()) {
+    if (configure[QStringLiteral("websecurity")].toBool()) {
       this->websecurity(true);
     }
 
-    if (configure["name"].toString() != "") {
-      this->web.setWindowTitle(configure["name"].toString());
+    if (configure[QStringLiteral("name")].toString() != QLatin1String("")) {
+      this->web.setWindowTitle(configure[QStringLiteral("name")].toString());
     }
 
-    QVariantMap window = result["window"].toMap();
+    QVariantMap window = result[QStringLiteral("window")].toMap();
 
-    if (window["transparent"].toBool()) {
+    if (window[QStringLiteral("transparent")].toBool()) {
       this->widgetTransparent();
     }
 
-    if (window["noframe"].toBool()) {
+    if (window[QStringLiteral("noframe")].toBool()) {
       this->widgetNoFrame();
     }
 
-    if (window["notaskbar"].toBool()) {
+    if (window[QStringLiteral("notaskbar")].toBool()) {
       this->widgetNoTaskbar();
     }
 
-    if (window["fullscreen"].toBool()) {
+    if (window[QStringLiteral("fullscreen")].toBool()) {
       this->getToggleFullScreen();
     }
 
-    if (window["maximize"].toBool()) {
+    if (window[QStringLiteral("maximize")].toBool()) {
       this->showMaximized();
     }
 
-    if (window["width"].toInt() != 0) {
-      if (window["height"].toInt() != 0) {
-        this->widgetSize(window["width"].toInt(), window["height"].toInt());
+    if (window[QStringLiteral("width")].toInt() != 0) {
+      if (window[QStringLiteral("height")].toInt() != 0) {
+        this->widgetSize(window[QStringLiteral("width")].toInt(), window[QStringLiteral("height")].toInt());
       }
     }
 
     foreach (QVariant navi, result["navigations"].toList()) {
-      if (navi.toString() == "back") {
+      if (navi.toString() == QLatin1String("back")) {
         web.page()->action(QWebPage::Back)->setVisible(true);
       }
 
-      if (navi.toString() == "forward") {
+      if (navi.toString() == QLatin1String("forward")) {
         web.page()->action(QWebPage::Forward)->setVisible(true);
       }
 
-      if (navi.toString() == "stop") {
+      if (navi.toString() == QLatin1String("stop")) {
         web.page()->action(QWebPage::Stop)->setVisible(true);
       }
 
-      if (navi.toString() == "reload") {
+      if (navi.toString() == QLatin1String("reload")) {
         web.page()->action(QWebPage::Reload)->setVisible(true);
       }
     }
@@ -231,19 +231,19 @@ void ign::config(QString path) {
 }
 
 void ign::render(QString w) {
-  QString pwd("");
+  QString pwd(QLatin1String(""));
   QString url_fix;
   char *PWD;
   PWD = getenv("PWD");
   pwd.append(PWD);
-  QStringList url_exp = w.split("/");
+  QStringList url_exp = w.split(QStringLiteral("/"));
 
-  if (url_exp.at(0) == "http:" || url_exp.at(0) == "https:") {
+  if (url_exp.at(0) == QLatin1String("http:") || url_exp.at(0) == QLatin1String("https:")) {
     url_fix = w;
-  } else if (url_exp.at(0) == ".." || url_exp.at(0) == ".") {
+  } else if (url_exp.at(0) == QLatin1String("..") || url_exp.at(0) == QLatin1String(".")) {
     url_fix = "file://" + pwd + "/" + w;
     this->pathLive = pwd + "/" + w;
-  } else if (url_exp.at(0) == "") {
+  } else if (url_exp.at(0) == QLatin1String("")) {
     url_fix = "file://" + w;
     this->pathLive = w;
   } else {
@@ -268,9 +268,9 @@ void ign::showMinimized() { this->web.showMinimized(); }
 
 QString ign::showMessageBox(const QVariant &config) {
   QVariantMap configuration = m_json->jsonParser(config).toVariantMap();
-  QString title = configuration["title"].toString();
-  QString message = configuration["message"].toString();
-  QString buttons = configuration["buttons"].toString();
+  QString title = configuration[QStringLiteral("title")].toString();
+  QString message = configuration[QStringLiteral("message")].toString();
+  QString buttons = configuration[QStringLiteral("buttons")].toString();
 
   QMessageBox msgBox;
 #ifdef Q_OS_MAC
@@ -280,35 +280,35 @@ QString ign::showMessageBox(const QVariant &config) {
 #endif
   msgBox.setInformativeText(message);
 
-  QStringList btnlist = buttons.split(":");
+  QStringList btnlist = buttons.split(QStringLiteral(":"));
   btnlist.removeDuplicates();
 
   for (int n = 0; n < btnlist.size(); n++) {
-    if (btnlist[n] == "ok") {
+    if (btnlist[n] == QLatin1String("ok")) {
       msgBox.addButton(QMessageBox::Ok);
-    } else if (btnlist[n] == "open") {
+    } else if (btnlist[n] == QLatin1String("open")) {
       msgBox.addButton(QMessageBox::Open);
-    } else if (btnlist[n] == "save") {
+    } else if (btnlist[n] == QLatin1String("save")) {
       msgBox.addButton(QMessageBox::Save);
-    } else if (btnlist[n] == "cancel") {
+    } else if (btnlist[n] == QLatin1String("cancel")) {
       msgBox.addButton(QMessageBox::Cancel);
-    } else if (btnlist[n] == "close") {
+    } else if (btnlist[n] == QLatin1String("close")) {
       msgBox.addButton(QMessageBox::Close);
-    } else if (btnlist[n] == "discard") {
+    } else if (btnlist[n] == QLatin1String("discard")) {
       msgBox.addButton(QMessageBox::Discard);
-    } else if (btnlist[n] == "apply") {
+    } else if (btnlist[n] == QLatin1String("apply")) {
       msgBox.addButton(QMessageBox::Apply);
-    } else if (btnlist[n] == "reset") {
+    } else if (btnlist[n] == QLatin1String("reset")) {
       msgBox.addButton(QMessageBox::Reset);
-    } else if (btnlist[n] == "yes") {
+    } else if (btnlist[n] == QLatin1String("yes")) {
       msgBox.addButton(QMessageBox::Yes);
-    } else if (btnlist[n] == "no") {
+    } else if (btnlist[n] == QLatin1String("no")) {
       msgBox.addButton(QMessageBox::No);
-    } else if (btnlist[n] == "abort") {
+    } else if (btnlist[n] == QLatin1String("abort")) {
       msgBox.addButton(QMessageBox::Abort);
-    } else if (btnlist[n] == "retry") {
+    } else if (btnlist[n] == QLatin1String("retry")) {
       msgBox.addButton(QMessageBox::Retry);
-    } else if (btnlist[n] == "ignore") {
+    } else if (btnlist[n] == QLatin1String("ignore")) {
       msgBox.addButton(QMessageBox::Ignore);
     } else {
       qDebug() << "Warning: Unknown message box button:" << btnlist[n];
@@ -320,43 +320,43 @@ QString ign::showMessageBox(const QVariant &config) {
 
   switch (ret) {
   case QMessageBox::Ok:
-    response = "ok";
+    response = QLatin1String("ok");
     break;
   case QMessageBox::Open:
-    response = "open";
+    response = QLatin1String("open");
     break;
   case QMessageBox::Save:
-    response = "save";
+    response = QLatin1String("save");
     break;
   case QMessageBox::Cancel:
-    response = "cancel";
+    response = QLatin1String("cancel");
     break;
   case QMessageBox::Close:
-    response = "close";
+    response = QLatin1String("close");
     break;
   case QMessageBox::Discard:
-    response = "discard";
+    response = QLatin1String("discard");
     break;
   case QMessageBox::Apply:
-    response = "apply";
+    response = QLatin1String("apply");
     break;
   case QMessageBox::Reset:
-    response = "reset";
+    response = QLatin1String("reset");
     break;
   case QMessageBox::Yes:
-    response = "yes";
+    response = QLatin1String("yes");
     break;
   case QMessageBox::No:
-    response = "no";
+    response = QLatin1String("no");
     break;
   case QMessageBox::Abort:
-    response = "abort";
+    response = QLatin1String("abort");
     break;
   case QMessageBox::Retry:
-    response = "retry";
+    response = QLatin1String("retry");
     break;
   case QMessageBox::Ignore:
-    response = "ignore";
+    response = QLatin1String("ignore");
     break;
   default:
     break;
@@ -436,7 +436,7 @@ void ign::setDevRemote(int port) {
   if (host.isEmpty()) {
     server = QString::number(port);
   } else {
-    server = QString("%1:%2").arg(host, QString::number(port));
+    server = QStringLiteral("%1:%2").arg(host, QString::number(port));
   }
 
   qDebug() << "Remote debugging is enable : " << server.toUtf8();
@@ -501,16 +501,16 @@ void ign::getFullScreen(bool screen) {
 
 // Load executable file in bin/
 QString ign::loadBin(const QString &script) {
-  QStringList list = this->pathApp.split("/");
+  QStringList list = this->pathApp.split(QStringLiteral("/"));
 
-  QString pwd("");
+  QString pwd(QLatin1String(""));
   char *PWD;
   PWD = getenv("PWD");
   pwd.append(PWD);
 
   QString path_bin;
 
-  if (list.at(0) != "") {
+  if (list.at(0) != QLatin1String("")) {
     path_bin = pwd + "/" + this->pathApp;
   } else {
     path_bin = this->pathApp;
@@ -537,8 +537,8 @@ void ign::download(QString data, QString path) {
   this->dl->setTarget(data);
   this->dl->save(path);
   this->dl->download();
-  connect(this->dl, SIGNAL(download_signal(qint64, qint64)), this,
-          SLOT(download_signal(qint64, qint64)));
+  connect(this->dl, &QtDownload::download_signal, this,
+          &ign::download_signal);
 }
 
 void ign::download_signal(qint64 received, qint64 total) {
@@ -608,7 +608,7 @@ void ign::liveCode() {
   QString file = this->pathLive;
   QDir dirApp = QFileInfo(file).absoluteDir();
   QStringList list = this->m_filesystem->list(dirApp.absolutePath());
-  QRegularExpression regex("(./[\\.\\.\\-])");
+  QRegularExpression regex(QStringLiteral("(./[\\.\\.\\-])"));
   int dirCount = 0;
   int fileCount = 0;
   foreach (const QString &file, list) {
@@ -623,10 +623,10 @@ void ign::liveCode() {
       }
     }
   }
-  connect(&live, SIGNAL(directoryChanged(const QString &)), this,
-          SLOT(fileChanged(const QString &)));
-  connect(&live, SIGNAL(fileChanged(const QString &)), this,
-          SLOT(fileChanged(const QString &)));
+  connect(&live, &QFileSystemWatcher::directoryChanged, this,
+          &ign::fileChanged);
+  connect(&live, &QFileSystemWatcher::fileChanged, this,
+          &ign::fileChanged);
   printf("Monitoring changes in %i files and %i directories\n", fileCount,
          dirCount);
 }

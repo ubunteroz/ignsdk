@@ -19,28 +19,28 @@ int main(int argc, char *argv[]) {
 
   QCommandLineParser cmd_parser;
   cmd_parser.setApplicationDescription(
-      "IGOS Nusantara Software Development Kit");
+      QStringLiteral("IGOS Nusantara Software Development Kit"));
 
-  QCommandLineOption cmd_project(QStringList() << "p"
-                                               << "project",
-                                 "Specify project directory", "directory");
+  QCommandLineOption cmd_project(QStringList() << QStringLiteral("p")
+                                               << QStringLiteral("project"),
+                                 QStringLiteral("Specify project directory"), QStringLiteral("directory"));
   cmd_parser.addOption(cmd_project);
-  QCommandLineOption cmd_file(QStringList() << "f"
-                                            << "file",
-                              "Load specific HTML file instead of index.html",
-                              "file");
+  QCommandLineOption cmd_file(QStringList() << QStringLiteral("f")
+                                            << QStringLiteral("file"),
+                              QStringLiteral("Load specific HTML file instead of index.html"),
+                              QStringLiteral("file"));
   cmd_parser.addOption(cmd_file);
-  QCommandLineOption cmd_dev(QStringList() << "d"
-                                           << "development",
-                             "Activate development mode");
+  QCommandLineOption cmd_dev(QStringList() << QStringLiteral("d")
+                                           << QStringLiteral("development"),
+                             QStringLiteral("Activate development mode"));
   cmd_parser.addOption(cmd_dev);
-  QCommandLineOption cmd_remote(QStringList() << "r"
-                                              << "remote",
-                                "Activate remote debugging", "port");
+  QCommandLineOption cmd_remote(QStringList() << QStringLiteral("r")
+                                              << QStringLiteral("remote"),
+                                QStringLiteral("Activate remote debugging"), QStringLiteral("port"));
   cmd_parser.addOption(cmd_remote);
-  QCommandLineOption cmd_version(QStringList() << "v"
-                                               << "version",
-                                 "Show version");
+  QCommandLineOption cmd_version(QStringList() << QStringLiteral("v")
+                                               << QStringLiteral("version"),
+                                 QStringLiteral("Show version"));
   cmd_parser.addOption(cmd_version);
   cmd_parser.addHelpOption();
 
@@ -86,10 +86,10 @@ int main(int argc, char *argv[]) {
     }
 
     if (file) {
-      opt += "/";
+      opt += QLatin1String("/");
       opt += optional;
     } else {
-      opt += "/index.html";
+      opt += QLatin1String("/index.html");
     }
 
     if (QFile::exists(opt)) {
@@ -104,7 +104,7 @@ int main(int argc, char *argv[]) {
   } else {
     QWidget *widget = new QWidget();
     QFileDialog *fileDialog =
-        new QFileDialog(widget, "Select project directory...");
+        new QFileDialog(widget, QStringLiteral("Select project directory..."));
 #ifdef Linux
     QTreeView *tree = fileDialog->findChild<QTreeView *>();
     tree->setRootIsDecorated(true);
