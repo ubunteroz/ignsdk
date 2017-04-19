@@ -8,7 +8,7 @@ QT += core gui widgets network webkitwidgets sql printsupport serialport
 
 TARGET = ignsdk
 TEMPLATE = app
-CONFIG += silent
+CONFIG += silent c++11
 GIT_VERSION = $$system(git --git-dir $$PWD/.git --work-tree $$PWD describe --always --long)
 DEFINES += GIT_VERSION=\\\"$$GIT_VERSION\\\"
 
