@@ -9,7 +9,6 @@ services:
 env:
   matrix:
     - OS=ubuntu DIST=bionic
-    - OS=fedora DIST=28
     - OS=el DIST=7
 
 script:
