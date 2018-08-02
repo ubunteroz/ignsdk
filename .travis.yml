@@ -8,14 +8,8 @@ services:
 
 env:
   matrix:
-    - OS=ubuntu DIST=trusty
-    - OS=ubuntu DIST=xenial
-    - OS=ubuntu DIST=zesty
-    - OS=debian DIST=jessie
-    - OS=debian DIST=stretch
-    - OS=debian DIST=sid
-    - OS=fedora DIST=24
-    - OS=fedora DIST=25
+    - OS=ubuntu DIST=bionic
+    - OS=fedora DIST=28
     - OS=el DIST=7
 
 script:
