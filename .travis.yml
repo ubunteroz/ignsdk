@@ -16,7 +16,7 @@ script:
 
 before_deploy:
     - git clone https://github.com/packpack/packpack.git packpack
-    - packpack/packpack
+    - PACKAGECLOUD_USER="" PACKAGECLOUD_REPO="" packpack/packpack
 
 deploy:
   provider: packagecloud
